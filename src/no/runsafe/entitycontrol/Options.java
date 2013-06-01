@@ -10,11 +10,18 @@ public class Options implements IConfigurationChanged
 		return this.disableEnderPortalCreation;
 	}
 
+	public boolean enderDragonDropsEgg()
+	{
+		return this.enderDragonDropsEgg;
+	}
+
 	@Override
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
 		this.disableEnderPortalCreation = configuration.getConfigValueAsBoolean("disableEnderPortalCreation");
+		this.enderDragonDropsEgg = configuration.getConfigValueAsBoolean("enderDragonDropsEgg");
 	}
 
 	private boolean disableEnderPortalCreation;
+	private boolean enderDragonDropsEgg;
 }
