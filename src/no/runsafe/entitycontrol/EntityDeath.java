@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.event.entity.IEntityDeathEvent;
+import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.server.entity.LivingEntity;
 import no.runsafe.framework.server.entity.RunsafeEntity;
 import no.runsafe.framework.server.event.entity.RunsafeEntityDeathEvent;
@@ -19,8 +20,7 @@ public class EntityDeath implements IEntityDeathEvent
 	{
 		RunsafeEntity entity = event.getEntity();
 		if (entity.getEntityType() == LivingEntity.EnderDragon && this.options.enderDragonDropsEgg())
-			entity.getWorld().dropItem(entity.getLocation(), new RunsafeItemStack(Material.DRAGON_EGG.getId(), 1));
-
+			Item.Special.DragonEgg.Drop(entity.getLocation());
 	}
 
 	private Options options;
