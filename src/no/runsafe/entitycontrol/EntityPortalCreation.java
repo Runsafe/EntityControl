@@ -1,8 +1,8 @@
 package no.runsafe.entitycontrol;
 
-import no.runsafe.framework.event.entity.IEntityCreatePortalEvent;
-import no.runsafe.framework.server.entity.LivingEntity;
-import no.runsafe.framework.server.event.entity.RunsafeEntityCreatePortalEvent;
+import no.runsafe.framework.api.event.entity.IEntityCreatePortalEvent;
+import no.runsafe.framework.minecraft.entity.LivingEntity;
+import no.runsafe.framework.minecraft.event.entity.RunsafeEntityCreatePortalEvent;
 
 public class EntityPortalCreation implements IEntityCreatePortalEvent
 {

@@ -1,7 +1,7 @@
 package no.runsafe.entitycontrol;
 
-import no.runsafe.framework.configuration.IConfiguration;
-import no.runsafe.framework.event.IConfigurationChanged;
+import no.runsafe.framework.api.IConfiguration;
+import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 
 public class Options implements IConfigurationChanged
 {

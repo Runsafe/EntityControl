@@ -1,12 +1,10 @@
 package no.runsafe.entitycontrol;
 
-import no.runsafe.framework.event.entity.IEntityDeathEvent;
+import no.runsafe.framework.api.event.entity.IEntityDeathEvent;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.server.entity.LivingEntity;
-import no.runsafe.framework.server.entity.RunsafeEntity;
-import no.runsafe.framework.server.event.entity.RunsafeEntityDeathEvent;
-import no.runsafe.framework.server.item.RunsafeItemStack;
-import org.bukkit.Material;
+import no.runsafe.framework.minecraft.entity.LivingEntity;
+import no.runsafe.framework.minecraft.entity.RunsafeEntity;
+import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDeathEvent;
 
 public class EntityDeath implements IEntityDeathEvent
 {
