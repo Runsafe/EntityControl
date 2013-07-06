@@ -1,2 +1,5 @@
 disableEnderPortalCreation: true
 enderDragonDropsEgg: true
+preventSpawning:
+  Creative:
+    - Horse
