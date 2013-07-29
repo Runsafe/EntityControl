@@ -24,7 +24,6 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 	@Override
 	public boolean OnNaturalSpawn(RunsafeEntity entity, RunsafeLocation location)
 	{
-		this.output.fine("Spawn of %s in world %s", entity.getRaw().getType().getName(), location.getWorld().getName());
 		if (entity.getEntityType() instanceof LivingEntity)
 		{
 			LivingEntity livingEntityType = (LivingEntity) entity.getEntityType();
@@ -35,7 +34,10 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 				this.output.fine("Prevented spawn of %s in world %s.", livingEntityType.getName(), world.getName());
 				return false;
 			}
+			this.output.finer("Permitted spawn of %s in world %s", livingEntityType.getName(), location.getWorld().getName());
 		}
+		else
+			this.output.fine("Spawn of nonliving entity %s in world %s", entity.getEntityType().getName(), location.getWorld().getName());
 		return true;
 	}
 
