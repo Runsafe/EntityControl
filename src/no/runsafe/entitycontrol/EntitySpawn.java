@@ -24,6 +24,7 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 	@Override
 	public boolean OnNaturalSpawn(RunsafeEntity entity, RunsafeLocation location)
 	{
+		this.output.fine("Spawn of %s in world %s", entity, location.getWorld().getName());
 		if (entity.getEntityType() instanceof LivingEntity)
 		{
 			LivingEntity livingEntityType = (LivingEntity) entity.getEntityType();
