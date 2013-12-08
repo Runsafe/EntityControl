@@ -2,7 +2,9 @@ package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.IDebug;
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.event.entity.INaturalSpawn;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
 import no.runsafe.framework.minecraft.RunsafeLocation;
@@ -22,7 +24,7 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 	}
 
 	@Override
-	public boolean OnNaturalSpawn(RunsafeEntity entity, RunsafeLocation location)
+	public boolean OnNaturalSpawn(RunsafeEntity entity, ILocation location)
 	{
 		if (entity.getEntityType() instanceof LivingEntity)
 		{
