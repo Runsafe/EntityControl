@@ -5,6 +5,7 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.entity.INaturalSpawn;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
@@ -16,9 +17,10 @@ import java.util.Map;
 
 public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 {
-	public EntitySpawn(IDebug output)
+	public EntitySpawn(IDebug output, IConsole console)
 	{
 		this.debugger = output;
+		this.console = console;
 	}
 
 	@Override
@@ -77,7 +79,7 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 				}
 				catch (IllegalArgumentException exception)
 				{
-					this.debugger.logError("Invalid entity type %s in config, removing.", entityType);
+					this.console.logError("Invalid entity type %s in config, removing.", entityType);
 					map.get("worldName").remove(entityType);
 					hasRemoved = true;
 				}
@@ -93,4 +95,5 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 
 	private HashMap<String, List<LivingEntity>> preventSpawns = new HashMap<String, List<LivingEntity>>();
 	private IDebug debugger;
+	private IConsole console;
 }
