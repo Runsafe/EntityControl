@@ -1,13 +1,11 @@
 package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.api.IConfiguration;
-import no.runsafe.framework.api.IDebug;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
-import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.event.entity.INaturalSpawn;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
-import no.runsafe.framework.minecraft.RunsafeLocation;
+import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 
