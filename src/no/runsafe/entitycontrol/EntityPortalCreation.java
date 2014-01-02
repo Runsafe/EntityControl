@@ -15,7 +15,7 @@ public class EntityPortalCreation implements IEntityCreatePortalEvent
 	public void OnEntityCreatePortal(RunsafeEntityCreatePortalEvent event)
 	{
 		if (event.getEntity().getEntityType() == LivingEntity.EnderDragon && this.options.disableEnderPortalCreation())
-			event.setCancelled(true);
+			event.cancel();
 	}
 
 	private Options options;

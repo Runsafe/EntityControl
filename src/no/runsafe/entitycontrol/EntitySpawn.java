@@ -1,11 +1,12 @@
 package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.api.IConfiguration;
-import no.runsafe.framework.api.IOutput;
+import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.entity.INaturalSpawn;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
-import no.runsafe.framework.minecraft.RunsafeLocation;
-import no.runsafe.framework.minecraft.RunsafeWorld;
+import no.runsafe.framework.api.log.IConsole;
+import no.runsafe.framework.api.log.IDebug;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 
@@ -16,29 +17,30 @@ import java.util.Map;
 
 public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 {
-	public EntitySpawn(IOutput output)
+	public EntitySpawn(IDebug output, IConsole console)
 	{
-		this.output = output;
+		this.debugger = output;
+		this.console = console;
 	}
 
 	@Override
-	public boolean OnNaturalSpawn(RunsafeEntity entity, RunsafeLocation location)
+	public boolean OnNaturalSpawn(RunsafeEntity entity, ILocation location)
 	{
 		if (entity.getEntityType() instanceof LivingEntity)
 		{
 			LivingEntity livingEntityType = (LivingEntity) entity.getEntityType();
-			RunsafeWorld world = location.getWorld();
+			IWorld world = location.getWorld();
 
 			if (this.isBlocked(world, livingEntityType))
 			{
-				this.output.fine("Prevented spawn of %s in world %s.", livingEntityType.getName(), world.getName());
+				this.debugger.debugFine("Prevented spawn of %s in world %s.", livingEntityType.getName(), world.getName());
 				return false;
 			}
 		}
 		return true;
 	}
 
-	private boolean isBlocked(RunsafeWorld world, LivingEntity livingEntity)
+	private boolean isBlocked(IWorld world, LivingEntity livingEntity)
 	{
 		String worldName = world.getName();
 
@@ -77,7 +79,7 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 				}
 				catch (IllegalArgumentException exception)
 				{
-					this.output.logError("Invalid entity type %s in config, removing.", entityType);
+					this.console.logError("Invalid entity type %s in config, removing.", entityType);
 					map.get("worldName").remove(entityType);
 					hasRemoved = true;
 				}
@@ -92,5 +94,6 @@ public class EntitySpawn implements INaturalSpawn, IConfigurationChanged
 	}
 
 	private HashMap<String, List<LivingEntity>> preventSpawns = new HashMap<String, List<LivingEntity>>();
-	private IOutput output;
+	private IDebug debugger;
+	private IConsole console;
 }
