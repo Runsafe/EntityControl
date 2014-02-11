@@ -18,7 +18,7 @@ public class EntityDeath implements IEntityDeathEvent
 	{
 		RunsafeEntity entity = event.getEntity();
 		if (entity.getEntityType() == LivingEntity.EnderDragon && this.options.enderDragonDropsEgg())
-			Item.Special.DragonEgg.Drop(entity.getLocation());
+			Item.Special.DragonEgg.Drop(entity.getLocation(), 1);
 	}
 
 	private Options options;
