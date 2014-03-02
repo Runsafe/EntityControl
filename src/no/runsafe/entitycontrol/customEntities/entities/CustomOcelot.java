@@ -8,4 +8,22 @@ public class CustomOcelot extends CustomEntity
 	{
 		super(world);
 	}
+
+	@Override
+	protected String t()
+	{
+		return this.random.nextInt(4) == 0 ? "mob.cat.purreow" : "mob.cat.meow";
+	}
+
+	@Override
+	protected String aT()
+	{
+		return "mob.cat.hitt";
+	}
+
+	@Override
+	protected String aU()
+	{
+		return "mob.cat.hitt";
+	}
 }

@@ -8,4 +8,23 @@ public class CustomWitch extends CustomEntity
 	{
 		super(world);
 	}
+
+	@Override
+	protected String t()
+	{
+		return "mob.witch.idle";
+	}
+
+	@Override
+	protected String aT()
+	{
+		return "mob.witch.hurt";
+	}
+
+	@Override
+	protected String aU()
+	{
+		return "mob.witch.death";
+	}
+
 }

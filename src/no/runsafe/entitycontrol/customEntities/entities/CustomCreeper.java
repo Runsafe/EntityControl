@@ -8,4 +8,16 @@ public class CustomCreeper extends CustomEntity
 	{
 		super(world);
 	}
+
+	@Override
+	protected String aT()
+	{
+		return "mob.creeper.say";
+	}
+
+	@Override
+	protected String aU()
+	{
+		return "mob.creeper.death";
+	}
 }

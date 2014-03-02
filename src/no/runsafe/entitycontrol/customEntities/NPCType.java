@@ -14,7 +14,6 @@ public enum NPCType
 	SHEEP(CustomSheep.class, 91),
 	WITCH(CustomWitch.class, 66),
 	SILVERFISH(CustomSilverfish.class, 60),
-	ZOMBIE(CustomZombie.class, 54),
 	SKELETON(CustomSkeleton.class, 51),
 	CREEPER(CustomCreeper.class, 50),
 	SPIDER(CustomSpider.class, 52),

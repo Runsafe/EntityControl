@@ -8,4 +8,22 @@ public class CustomCow extends CustomEntity
 	{
 		super(world);
 	}
+
+	@Override
+	protected String t()
+	{
+		return "mob.cow.say";
+	}
+
+	@Override
+	protected String aT()
+	{
+		return "mob.cow.hurt";
+	}
+
+	@Override
+	protected String aU()
+	{
+		return "mob.cow.hurt";
+	}
 }
