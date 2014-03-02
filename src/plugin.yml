@@ -3,3 +3,6 @@ main: no.runsafe.entitycontrol.Plugin
 version: 1.0.@BUILD@
 author: Kruithne
 description: Entity control
+commands:
+  npc:
+    description: NPC related commands
