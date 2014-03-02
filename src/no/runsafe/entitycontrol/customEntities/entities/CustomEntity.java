@@ -57,10 +57,10 @@ public abstract class CustomEntity extends EntityPig
 	}
 
 	@Override
-	protected void d(DamageSource damagesource, float f)
+	public boolean damageEntity(DamageSource damageSource, float v)
 	{
 		if (!invincible)
-			super.d(damagesource, f);
+			return super.damageEntity(damageSource, v);
 	}
 
 	@Override
