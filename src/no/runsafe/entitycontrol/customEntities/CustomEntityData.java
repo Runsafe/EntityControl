@@ -9,6 +9,7 @@ import no.runsafe.framework.minecraft.item.meta.RunsafeLeatherArmor;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.item.meta.RunsafeSkull;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 public class CustomEntityData
@@ -73,6 +74,20 @@ public class CustomEntityData
 
 		if (dataMap.containsKey("god"))
 			entity.setInvincible(true);
+
+		if (dataMap.containsKey("fireproof"))
+		{
+			try
+			{
+				Field fireproof = Entity.class.getDeclaredField("fireProof");
+				fireproof.setAccessible(true);
+				fireproof.set(entity, true);
+			}
+			catch (Exception e)
+			{
+				// Oh noes!
+			}
+		}
 
 		if (dataMap.containsKey("hp"))
 			entity.setHealth(Float.valueOf(dataMap.get("hp")));
