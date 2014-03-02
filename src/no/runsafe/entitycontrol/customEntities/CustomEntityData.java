@@ -54,16 +54,16 @@ public class CustomEntityData
 		if (dataMap.containsKey("root"))
 			entity.setCanMove(false);
 		else
-			entity.goalSelector().a(new PathfinderGoalRandomStroll(entity, 1.0D));
+			entity.goalSelector().a(5, new PathfinderGoalRandomStroll(entity, 1.0D));
 
 		if (dataMap.containsKey("float"))
-			entity.goalSelector().a(new PathfinderGoalFloat(entity));
+			entity.goalSelector().a(1, new PathfinderGoalFloat(entity));
 
 		if (dataMap.containsKey("flee"))
-			entity.goalSelector().a(new PathfinderGoalFleeSun(entity, 1.0D));
+			entity.goalSelector().a(3, new PathfinderGoalFleeSun(entity, 1.0D));
 
 		if (dataMap.containsKey("watch"))
-			entity.goalSelector().a(new PathfinderGoalLookAtPlayer(entity, EntityHuman.class, 8.0F));
+			entity.goalSelector().a(6, new PathfinderGoalLookAtPlayer(entity, EntityHuman.class, 8.0F));
 
 		if (dataMap.containsKey("atk"))
 		{
@@ -74,7 +74,7 @@ public class CustomEntityData
 				{
 					Class clazz = Class.forName(target);
 					entity.goalSelector().a(new PathfinderGoalMeleeAttack(entity, clazz, 1.2D, false));
-					entity.targetSelector().a(new PathfinderGoalNearestAttackableTarget(entity, clazz, 0, true));
+					entity.targetSelector().a(2, new PathfinderGoalNearestAttackableTarget(entity, clazz, 0, true));
 				}
 				catch (ClassNotFoundException e)
 				{
