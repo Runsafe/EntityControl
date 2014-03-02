@@ -43,7 +43,7 @@ public class CustomEntityData
 		{
 			String[] nodeSplit = part.split(":");
 			String value = nodeSplit.length > 1 ? nodeSplit[1] : null;
-			dataMap.put(part, value);
+			dataMap.put(nodeSplit[0], value);
 		}
 
 		if (dataMap.containsKey("name"))
