@@ -13,9 +13,8 @@ import java.util.HashMap;
 
 public class CustomEntityData
 {
-	public CustomEntityData(int id, ILocation location, NPCType type, String data)
+	public CustomEntityData(ILocation location, NPCType type, String data)
 	{
-		this.id = id;
 		this.location = location;
 		this.world = ObjectUnwrapper.getMinecraft(location.getWorld());
 		this.type = type;
@@ -91,12 +90,6 @@ public class CustomEntityData
 		}
 	}
 
-	public int getId()
-	{
-		return id;
-	}
-
-	private final int id;
 	private final ILocation location;
 	private final World world;
 	private final NPCType type;

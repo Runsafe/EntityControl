@@ -23,9 +23,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		//this.addComponent(EntitySpawn.class);
 
 		// Custom entity stuff
-		addComponent(NPCRepository.class);
 		addComponent(NPCHandler.class);
-		addComponent(NPCSpawner.class);
 
 		Command npcCommand = new Command("npc", "NPC related commands", null);
 		addComponent(npcCommand);
