@@ -158,6 +158,9 @@ public abstract class CustomEntity extends EntitySkeleton
 		if (dataMap.containsKey("god"))
 			setInvincible(true);
 
+		if (dataMap.containsKey("leap"))
+			goalSelector.a(4, new PathfinderGoalLeapAtTarget(this, 3.0F));
+
 		if (dataMap.containsKey("fireproof"))
 		{
 			try
