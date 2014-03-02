@@ -38,7 +38,7 @@ public abstract class CustomEntity extends EntityPig
 	@Override
 	public void move(double d0, double d1, double d2)
 	{
-		if (!canMove)
+		if (canMove)
 			super.move(d0, d1, d2);
 	}
 
