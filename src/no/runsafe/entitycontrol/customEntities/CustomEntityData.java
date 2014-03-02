@@ -67,20 +67,8 @@ public class CustomEntityData
 
 		if (dataMap.containsKey("atk"))
 		{
-			String[] targets = dataMap.get("atk").split("@");
-			for (String target : targets)
-			{
-				try
-				{
-					Class clazz = Class.forName(target);
-					entity.goalSelector().a(new PathfinderGoalMeleeAttack(entity, clazz, 1.2D, false));
-					entity.targetSelector().a(2, new PathfinderGoalNearestAttackableTarget(entity, clazz, 0, true));
-				}
-				catch (ClassNotFoundException e)
-				{
-					// Doh.
-				}
-			}
+			entity.goalSelector().a(2, new PathfinderGoalMeleeAttack(entity, EntityHuman.class, 1.0D, false));
+			entity.targetSelector().a(2, new PathfinderGoalNearestAttackableTarget(entity, EntityHuman.class, 0, true));
 		}
 
 		if (dataMap.containsKey("god"))
