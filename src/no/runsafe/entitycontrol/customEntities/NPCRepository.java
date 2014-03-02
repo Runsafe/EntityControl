@@ -91,6 +91,10 @@ public class NPCRepository extends Repository
 				"PRIMARY KEY (`ID`)" +
 			")"
 		);
+
+		update.addQueries("ALTER TABLE `npcs`" +
+				"CHANGE COLUMN `ID` `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST;");
+
 		return update;
 	}
 
