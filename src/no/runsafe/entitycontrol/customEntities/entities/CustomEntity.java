@@ -1,8 +1,6 @@
 package no.runsafe.entitycontrol.customEntities.entities;
 
-import net.minecraft.server.v1_7_R1.Block;
-import net.minecraft.server.v1_7_R1.EntityPig;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_7_R1.*;
 
 public abstract class CustomEntity extends EntityPig
 {
@@ -42,10 +40,41 @@ public abstract class CustomEntity extends EntityPig
 			super.move(d0, d1, d2);
 	}
 
+	@Override
+	protected void d(DamageSource damagesource, float f)
+	{
+		if (!invincible)
+			super.d(damagesource, f);
+	}
+
+	@Override
+	public boolean a(EntityHuman entityhuman)
+	{
+		return false;
+	}
+
+	@Override
+	protected void dropDeathLoot(boolean flag, int i)
+	{
+		// Do nothing.
+	}
+
+	@Override
+	public EntityAgeable createChild(EntityAgeable entityageable)
+	{
+		return null;
+	}
+
 	public void setCanMove(boolean canMove)
 	{
 		this.canMove = canMove;
 	}
 
+	public void setInvincible(boolean invincible)
+	{
+		this.invincible = invincible;
+	}
+
 	private boolean canMove = true;
+	private boolean invincible = false;
 }
