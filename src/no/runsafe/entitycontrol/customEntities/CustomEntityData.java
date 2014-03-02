@@ -5,8 +5,6 @@ import no.runsafe.entitycontrol.customEntities.entities.CustomEntity;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
-import java.lang.reflect.InvocationTargetException;
-
 public class CustomEntityData
 {
 	public CustomEntityData(int id, ILocation location, NPCType type, String data)
