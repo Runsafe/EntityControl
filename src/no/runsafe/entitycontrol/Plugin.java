@@ -7,7 +7,6 @@ import no.runsafe.framework.api.command.Command;
 import no.runsafe.framework.features.Commands;
 import no.runsafe.framework.features.Database;
 import no.runsafe.framework.features.Events;
-import no.runsafe.framework.tools.nms.EntityRegister;
 
 public class Plugin extends RunsafeConfigurablePlugin
 {
