@@ -53,12 +53,38 @@ public class CustomEntityData
 
 		if (dataMap.containsKey("root"))
 			entity.setCanMove(false);
+		else
+			entity.goalSelector().a(new PathfinderGoalRandomStroll(entity, 1.0D));
+
+		if (dataMap.containsKey("float"))
+			entity.goalSelector().a(new PathfinderGoalFloat(entity));
+
+		if (dataMap.containsKey("flee"))
+			entity.goalSelector().a(new PathfinderGoalFleeSun(entity, 1.0D));
+
+		if (dataMap.containsKey("watch"))
+			entity.goalSelector().a(new PathfinderGoalLookAtPlayer(entity, EntityHuman.class, 8.0F));
+
+		if (dataMap.containsKey("atk"))
+		{
+			String[] targets = dataMap.get("atk").split("@");
+			for (String target : targets)
+			{
+				try
+				{
+					Class clazz = Class.forName(target);
+					entity.goalSelector().a(new PathfinderGoalMeleeAttack(entity, clazz, 1.2D, false));
+					entity.targetSelector().a(new PathfinderGoalNearestAttackableTarget(entity, clazz, 0, true));
+				}
+				catch (ClassNotFoundException e)
+				{
+					// Doh.
+				}
+			}
+		}
 
 		if (dataMap.containsKey("god"))
 			entity.setInvincible(true);
-
-		if (dataMap.containsKey("hostile"))
-			entity.setHostile(true);
 
 		if (dataMap.containsKey("hp"))
 			entity.setHealth(Float.valueOf(dataMap.get("hp")));

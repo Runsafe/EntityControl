@@ -1,12 +1,27 @@
 package no.runsafe.entitycontrol.customEntities.entities;
 
 import net.minecraft.server.v1_7_R1.*;
+import org.bukkit.craftbukkit.v1_7_R1.util.UnsafeList;
 
-public abstract class CustomEntity extends EntitySilverfish
+import java.lang.reflect.Field;
+
+public abstract class CustomEntity extends EntitySkeleton
 {
 	public CustomEntity(World world)
 	{
 		super(world);
+
+		try
+		{
+			Field gsa = PathfinderGoalSelector.class.getDeclaredField("b");
+			gsa.setAccessible(true);
+			gsa.set(this.goalSelector, new UnsafeList());
+			gsa.set(this.targetSelector, new UnsafeList());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -68,11 +83,6 @@ public abstract class CustomEntity extends EntitySilverfish
 		this.invincible = invincible;
 	}
 
-	public void setHostile(boolean hostile)
-	{
-		this.hostile = hostile;
-	}
-
 	@Override
 	public EnumMonsterType getMonsterType()
 	{
@@ -85,16 +95,16 @@ public abstract class CustomEntity extends EntitySilverfish
 		return groupdataentity;
 	}
 
-	@Override
-	protected Entity findTarget()
+	public PathfinderGoalSelector goalSelector()
 	{
-		if (hostile)
-			super.findTarget();
+		return goalSelector;
+	}
 
-		return null;
+	public PathfinderGoalSelector targetSelector()
+	{
+		return targetSelector;
 	}
 
 	private boolean canMove = true;
 	private boolean invincible = false;
-	private boolean hostile = false;
 }
