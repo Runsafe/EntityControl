@@ -54,6 +54,9 @@ public class CustomEntityData
 		if (dataMap.containsKey("root"))
 			entity.setCanMove(false);
 
+		if (dataMap.containsKey("god"))
+			entity.setInvincible(true);
+
 		int colour = -1;
 
 		if (dataMap.containsKey("hex"))
