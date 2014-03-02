@@ -2,7 +2,7 @@ package no.runsafe.entitycontrol.customEntities.entities;
 
 import net.minecraft.server.v1_7_R1.*;
 
-public abstract class CustomEntity extends EntitySpider
+public abstract class CustomEntity extends EntitySilverfish
 {
 	public CustomEntity(World world)
 	{
