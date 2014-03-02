@@ -75,6 +75,16 @@ public abstract class CustomEntity extends EntityPig
 		this.invincible = invincible;
 	}
 
+	public PathfinderGoalSelector getGoalSelector()
+	{
+		return goalSelector;
+	}
+
+	public PathfinderGoalSelector getTargetSelector()
+	{
+		return targetSelector;
+	}
+
 	private boolean canMove = true;
 	private boolean invincible = false;
 }

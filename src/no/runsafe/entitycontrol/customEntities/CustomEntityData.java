@@ -1,5 +1,6 @@
 package no.runsafe.entitycontrol.customEntities;
 
+import net.minecraft.server.v1_7_R1.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.server.v1_7_R1.World;
 import no.runsafe.entitycontrol.customEntities.entities.CustomEntity;
 import no.runsafe.framework.api.ILocation;
@@ -56,6 +57,24 @@ public class CustomEntityData
 
 		if (dataMap.containsKey("god"))
 			entity.setInvincible(true);
+
+		if (dataMap.containsKey("atk"))
+		{
+			int num = 3;
+			String[] targets = dataMap.get("atk").split("@");
+			for (String target : targets)
+			{
+				try
+				{
+					entity.getTargetSelector().a(num, new PathfinderGoalNearestAttackableTarget(entity, Class.forName(target), 0, true));
+				}
+				catch (ClassNotFoundException e)
+				{
+					// Do nothing.
+				}
+				num++;
+			}
+		}
 
 		int colour = -1;
 
