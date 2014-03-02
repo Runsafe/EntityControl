@@ -28,10 +28,6 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(NPCHandler.class);
 		addComponent(NPCSpawner.class);
 
-		// Register entity types
-		for (NPCType type : NPCType.values())
-			EntityRegister.registerEntity(type.getMobType(), "custom" + type.getSimpleName(), type.getEntityID());
-
 		Command npcCommand = new Command("npc", "NPC related commands", null);
 		addComponent(npcCommand);
 

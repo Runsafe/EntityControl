@@ -4,13 +4,15 @@ import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.event.plugin.IConfigurationChanged;
+import no.runsafe.framework.api.event.plugin.IPluginEnabled;
+import no.runsafe.framework.tools.nms.EntityRegister;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class NPCHandler implements IConfigurationChanged
+public class NPCHandler implements IConfigurationChanged, IPluginEnabled
 {
 	public NPCHandler(NPCRepository repository)
 	{
@@ -47,6 +49,14 @@ public class NPCHandler implements IConfigurationChanged
 	public void OnConfigurationChanged(IConfiguration configuration)
 	{
 		entities = repository.getNPCList(); // Load NPC list from database
+	}
+
+	@Override
+	public void OnPluginEnabled()
+	{
+		// Register entity types
+		for (NPCType type : NPCType.values())
+			EntityRegister.registerEntity(type.getMobType(), "custom" + type.getSimpleName(), type.getEntityID());
 	}
 
 	private final NPCRepository repository;
