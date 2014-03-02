@@ -1,12 +1,28 @@
 package no.runsafe.entitycontrol.customEntities.entities;
 
 import net.minecraft.server.v1_7_R1.*;
+import org.bukkit.craftbukkit.v1_7_R1.util.UnsafeList;
+
+import java.lang.reflect.Field;
 
 public abstract class CustomEntity extends EntityPig
 {
 	public CustomEntity(World world)
 	{
 		super(world);
+
+		try
+		{
+			Field gsa = PathfinderGoalSelector.class.getDeclaredField("a");
+			gsa.setAccessible(true);
+
+			gsa.set(this.goalSelector, new UnsafeList());
+			gsa.set(this.targetSelector, new UnsafeList());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
