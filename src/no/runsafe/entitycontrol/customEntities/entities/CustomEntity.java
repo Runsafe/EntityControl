@@ -1,28 +1,12 @@
 package no.runsafe.entitycontrol.customEntities.entities;
 
 import net.minecraft.server.v1_7_R1.*;
-import org.bukkit.craftbukkit.v1_7_R1.util.UnsafeList;
 
-import java.lang.reflect.Field;
-
-public abstract class CustomEntity extends EntityPig
+public abstract class CustomEntity extends EntitySpider
 {
 	public CustomEntity(World world)
 	{
 		super(world);
-
-		try
-		{
-			Field gsa = PathfinderGoalSelector.class.getDeclaredField("a");
-			gsa.setAccessible(true);
-
-			gsa.set(this.goalSelector, new UnsafeList());
-			gsa.set(this.targetSelector, new UnsafeList());
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -74,12 +58,6 @@ public abstract class CustomEntity extends EntityPig
 		// Do nothing.
 	}
 
-	@Override
-	public EntityAgeable createChild(EntityAgeable entityageable)
-	{
-		return null;
-	}
-
 	public void setCanMove(boolean canMove)
 	{
 		this.canMove = canMove;
@@ -90,16 +68,33 @@ public abstract class CustomEntity extends EntityPig
 		this.invincible = invincible;
 	}
 
-	public PathfinderGoalSelector getGoalSelector()
+	public void setHostile(boolean hostile)
 	{
-		return goalSelector;
+		this.hostile = hostile;
 	}
 
-	public PathfinderGoalSelector getTargetSelector()
+	@Override
+	public EnumMonsterType getMonsterType()
 	{
-		return targetSelector;
+		return EnumMonsterType.UNDEFINED;
+	}
+
+	@Override
+	public GroupDataEntity a(GroupDataEntity groupdataentity)
+	{
+		return groupdataentity;
+	}
+
+	@Override
+	protected Entity findTarget()
+	{
+		if (hostile)
+			super.findTarget();
+
+		return null;
 	}
 
 	private boolean canMove = true;
 	private boolean invincible = false;
+	private boolean hostile = false;
 }
