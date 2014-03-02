@@ -1,5 +1,6 @@
 package no.runsafe.entitycontrol.customEntities;
 
+import net.minecraft.server.v1_7_R1.PathfinderGoalMeleeAttack;
 import net.minecraft.server.v1_7_R1.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.server.v1_7_R1.World;
 import no.runsafe.entitycontrol.customEntities.entities.CustomEntity;
@@ -60,19 +61,19 @@ public class CustomEntityData
 
 		if (dataMap.containsKey("atk"))
 		{
-			int num = 3;
 			String[] targets = dataMap.get("atk").split("@");
 			for (String target : targets)
 			{
 				try
 				{
-					entity.getTargetSelector().a(num, new PathfinderGoalNearestAttackableTarget(entity, Class.forName(target), 0, true));
+					Class clazz = Class.forName(target);
+					entity.getTargetSelector().a(0, new PathfinderGoalNearestAttackableTarget(entity, clazz, 0, true));
+					entity.getGoalSelector().a(0, new PathfinderGoalMeleeAttack(entity, clazz, 10.D, true));
 				}
 				catch (ClassNotFoundException e)
 				{
 					// Do nothing.
 				}
-				num++;
 			}
 		}
 
