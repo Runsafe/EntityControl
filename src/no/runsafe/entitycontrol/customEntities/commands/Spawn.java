@@ -23,7 +23,7 @@ public class Spawn extends PlayerCommand
 		if (mobType == null)
 			return "&cInvalid mob type!";
 
-		handler.addNPC(executor.getLocation(), mobType, parameters.containsKey("data") ? parameters.get("data") : "");
+		handler.addNPC(executor.getLocation(), mobType, parameters.get("data"));
 		return "&eNPC spawned!";
 	}
 
