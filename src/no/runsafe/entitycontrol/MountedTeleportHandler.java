@@ -23,15 +23,15 @@ public class MountedTeleportHandler implements IPlayerTeleport
 			if (vehicle.getEntityType() == LivingEntity.Horse)
 			{
 				player.eject();
+				vehicle.teleport(to);
 				scheduler.startSyncTask(new Runnable()
 				{
 					@Override
 					public void run()
 					{
-						vehicle.teleport(player);
 						vehicle.setPassenger(player);
 					}
-				}, 50L);
+				}, 10L);
 			}
 		}
 		return true;
