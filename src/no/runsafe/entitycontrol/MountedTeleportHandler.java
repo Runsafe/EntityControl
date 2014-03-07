@@ -23,7 +23,7 @@ public class MountedTeleportHandler implements IPlayerTeleport
 				if (entity instanceof ILivingEntity)
 				{
 					ILivingEntity livingEntity = (ILivingEntity) entity;
-					if (livingEntity.getLeashHolder() instanceof IPlayer)
+					if (livingEntity.isLeashed() && livingEntity.getLeashHolder() instanceof IPlayer)
 					{
 						IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
 						if (leashHolder.getName().equals(player.getName()))
