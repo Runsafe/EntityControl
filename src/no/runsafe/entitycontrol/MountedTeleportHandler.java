@@ -2,32 +2,26 @@ package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.entity.IEntity;
-import no.runsafe.framework.api.entity.ILivingEntity;
-import no.runsafe.framework.api.event.player.IPlayerTeleportEvent;
+import no.runsafe.framework.api.event.player.IPlayerTeleport;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
-import no.runsafe.framework.minecraft.event.player.RunsafePlayerTeleportEvent;
 
-public class MountedTeleportHandler implements IPlayerTeleportEvent
+public class MountedTeleportHandler implements IPlayerTeleport
 {
 	@Override
-	public void OnPlayerTeleport(RunsafePlayerTeleportEvent event)
+	public boolean OnPlayerTeleport(IPlayer player, ILocation from, ILocation to)
 	{
-		IPlayer player = event.getPlayer();
-		ILocation to = event.getTo();
-		ILocation from = event.getFrom();
-
-		if (to != null && from != null && to.getWorld().isWorld(from.getWorld()) && to.distance(from) > 500)
+		if (to.getWorld().isWorld(from.getWorld()) && to.distance(from) > 500)
 		{
 			IEntity vehicle = player.getVehicle();
 			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
 			{
-				((ILivingEntity) vehicle).setHealth(0);
 				vehicle.eject();
 				vehicle.teleport(to);
 				//player.teleport(to);
-				event.cancel();
+				return false;
 			}
 		}
+		return true;
 	}
 }
