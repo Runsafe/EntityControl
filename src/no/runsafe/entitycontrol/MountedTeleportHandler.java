@@ -2,6 +2,7 @@ package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.entity.IEntity;
+import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.event.player.IPlayerTeleportEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
@@ -21,6 +22,7 @@ public class MountedTeleportHandler implements IPlayerTeleportEvent
 			IEntity vehicle = player.getVehicle();
 			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
 			{
+				((ILivingEntity) vehicle).setHealth(0);
 				vehicle.eject();
 				vehicle.teleport(to);
 				//player.teleport(to);
