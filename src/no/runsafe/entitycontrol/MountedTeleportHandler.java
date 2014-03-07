@@ -19,7 +19,7 @@ public class MountedTeleportHandler implements IPlayerTeleportEvent
 		if (player.isInsideVehicle() && to != null && from != null && to.getWorld().isWorld(from.getWorld()) && to.distance(from) > 500)
 		{
 			IEntity vehicle = player.getVehicle();
-			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
+			if (vehicle != null)
 			{
 				vehicle.eject();
 				vehicle.teleport(to);
