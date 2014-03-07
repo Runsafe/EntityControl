@@ -27,7 +27,10 @@ public class MountedTeleportHandler implements IPlayerTeleport
 					{
 						IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
 						if (leashHolder.getName().equals(player.getName()))
+						{
+							livingEntity.setLeashHolder(null);
 							entity.teleport(to);
+						}
 					}
 				}
 			}
