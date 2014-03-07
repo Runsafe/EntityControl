@@ -31,7 +31,7 @@ public class MountedTeleportHandler implements IPlayerTeleport
 						vehicle.teleport(player);
 						vehicle.setPassenger(player);
 					}
-				}, 1L);
+				}, 10L);
 			}
 		}
 		return true;
