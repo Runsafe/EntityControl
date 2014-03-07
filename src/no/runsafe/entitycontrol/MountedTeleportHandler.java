@@ -24,7 +24,6 @@ public class MountedTeleportHandler implements IPlayerTeleportEvent
 				player.eject();
 				vehicle.teleport(to);
 				player.teleport(to);
-				vehicle.setPassenger(player);
 				event.cancel();
 			}
 		}
