@@ -24,14 +24,7 @@ public class MountedTeleportHandler implements IPlayerTeleport
 			{
 				player.eject();
 				vehicle.teleport(to);
-				scheduler.startSyncTask(new Runnable()
-				{
-					@Override
-					public void run()
-					{
-						vehicle.setPassenger(player);
-					}
-				}, 10L);
+				return false;
 			}
 		}
 		return true;
