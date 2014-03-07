@@ -16,6 +16,7 @@ public class MountedTeleportHandler implements IPlayerTeleport
 		{
 			player.sendColouredMessage("Within world and over 500 blocks away.");
 			IEntity vehicle = player.getVehicle();
+			player.sendColouredMessage(vehicle.getEntityType().getName());
 			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
 			{
 				player.sendColouredMessage("Vehicle is horse!");
