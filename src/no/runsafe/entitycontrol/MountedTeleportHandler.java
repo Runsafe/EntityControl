@@ -38,7 +38,6 @@ public class MountedTeleportHandler implements IPlayerTeleport
 								hasLoaded = true;
 							}
 
-							livingEntity.setLeashHolder(null);
 							entity.teleport(to);
 						}
 					}
