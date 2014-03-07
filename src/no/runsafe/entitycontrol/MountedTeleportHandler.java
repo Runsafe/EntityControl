@@ -30,7 +30,6 @@ public class MountedTeleportHandler implements IPlayerTeleport
 					public void run()
 					{
 						vehicle.eject();
-						vehicle.setPassenger(player);
 					}
 				}, 10L);
 			}
