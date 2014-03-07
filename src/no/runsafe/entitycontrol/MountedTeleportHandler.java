@@ -1,30 +1,37 @@
 package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.entity.IEntity;
+import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.event.player.IPlayerTeleport;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.entity.LivingEntity;
 
 public class MountedTeleportHandler implements IPlayerTeleport
 {
 	@Override
 	public boolean OnPlayerTeleport(IPlayer player, ILocation from, ILocation to)
 	{
-		player.sendColouredMessage("Event detected");
-		if (to.getWorld().isWorld(from.getWorld()) && to.distance(from) > 500)
+		if (to.getWorld().isWorld(from.getWorld()))
 		{
-			player.sendColouredMessage("Within world and over 500 blocks away.");
-			IEntity vehicle = player.getVehicle();
-			player.sendColouredMessage(vehicle.getEntityType().getName());
-			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
+			IWorld world = player.getWorld();
+			if (world == null)
+				return true;
+
+			for (IEntity entity : world.getEntities())
 			{
-				player.sendColouredMessage("Vehicle is horse!");
-				vehicle.eject();
-				vehicle.teleport(to);
-				//player.teleport(to);
-				return false;
+				if (entity instanceof ILivingEntity)
+				{
+					ILivingEntity livingEntity = (ILivingEntity) entity;
+					if (livingEntity.getLeashHolder() instanceof IPlayer)
+					{
+						IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
+						if (leashHolder.getName().equals(player.getName()))
+							entity.teleport(to);
+					}
+				}
 			}
+
 		}
 		return true;
 	}
