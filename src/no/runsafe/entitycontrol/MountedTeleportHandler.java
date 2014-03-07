@@ -18,6 +18,8 @@ public class MountedTeleportHandler implements IPlayerTeleport
 			if (world == null)
 				return true;
 
+			boolean hasLoaded = false;
+
 			for (IEntity entity : world.getEntities())
 			{
 				if (entity instanceof ILivingEntity)
@@ -28,6 +30,14 @@ public class MountedTeleportHandler implements IPlayerTeleport
 						IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
 						if (leashHolder.getName().equals(player.getName()))
 						{
+							if (!hasLoaded)
+							{
+								if (to.getChunk().isUnloaded())
+									to.getChunk().load();
+
+								hasLoaded = true;
+							}
+
 							livingEntity.setLeashHolder(null);
 							entity.teleport(to);
 						}
