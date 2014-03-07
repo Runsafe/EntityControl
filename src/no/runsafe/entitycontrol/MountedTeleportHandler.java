@@ -11,11 +11,14 @@ public class MountedTeleportHandler implements IPlayerTeleport
 	@Override
 	public boolean OnPlayerTeleport(IPlayer player, ILocation from, ILocation to)
 	{
+		player.sendColouredMessage("Event detected");
 		if (to.getWorld().isWorld(from.getWorld()) && to.distance(from) > 500)
 		{
+			player.sendColouredMessage("Within world and over 500 blocks away.");
 			IEntity vehicle = player.getVehicle();
 			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
 			{
+				player.sendColouredMessage("Vehicle is horse!");
 				vehicle.eject();
 				vehicle.teleport(to);
 				//player.teleport(to);
