@@ -22,6 +22,8 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(EntityDeath.class);
 		//this.addComponent(EntitySpawn.class);
 
+		addComponent(MountedTeleportHandler.class);
+
 		// Custom entity stuff
 		addComponent(NPCHandler.class);
 
