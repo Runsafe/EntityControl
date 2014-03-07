@@ -6,6 +6,7 @@ import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.event.player.IPlayerTeleport;
 import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
 public class MountedTeleportHandler implements IPlayerTeleport
 {
@@ -38,7 +39,7 @@ public class MountedTeleportHandler implements IPlayerTeleport
 								hasLoaded = true;
 							}
 
-							entity.teleport(to);
+							ObjectUnwrapper.getMinecraft(entity).setPosition(to.getX(), to.getY(), to.getZ());
 						}
 					}
 				}
