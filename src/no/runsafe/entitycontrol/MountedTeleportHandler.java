@@ -17,7 +17,7 @@ public class MountedTeleportHandler implements IPlayerTeleport
 	@Override
 	public boolean OnPlayerTeleport(final IPlayer player, ILocation from, ILocation to)
 	{
-		if (player.isInsideVehicle() && from.getWorld().isWorld(to.getWorld()))
+		if (player.isInsideVehicle() && from.getWorld().isWorld(to.getWorld()) && from.distance(to) > 500)
 		{
 			final IEntity vehicle = player.getVehicle();
 			if (vehicle.getEntityType() == LivingEntity.Horse)
