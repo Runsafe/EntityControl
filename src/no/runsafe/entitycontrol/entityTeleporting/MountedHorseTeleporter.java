@@ -20,29 +20,32 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 	@Override
 	public boolean OnPlayerTeleport(IPlayer player, ILocation from, final ILocation to)
 	{
-		IWorld world = from.getWorld();
-		for (IEntity entity : world.getEntities())
+		if (from.getWorld().isWorld(to.getWorld()) && from.distance(to) > 200)
 		{
-			if (entity instanceof ILivingEntity)
+			IWorld world = from.getWorld();
+			for (IEntity entity : world.getEntities())
 			{
-				ILivingEntity livingEntity = (ILivingEntity) entity;
-				if (livingEntity.isLeashed() && livingEntity.getLeashHolder() instanceof IPlayer)
+				if (entity instanceof ILivingEntity)
 				{
-					IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
-					if (leashHolder.getName().equals(player.getName()))
+					ILivingEntity livingEntity = (ILivingEntity) entity;
+					if (livingEntity.isLeashed() && livingEntity.getLeashHolder() instanceof IPlayer)
 					{
-						final Class<?> entityClass = ObjectUnwrapper.getMinecraft(livingEntity).getClass();
-						final String entityData = EntityCompacter.convertEntityToString(livingEntity);
-						livingEntity.remove();
-
-						scheduler.startSyncTask(new Runnable()
+						IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
+						if (leashHolder.getName().equals(player.getName()))
 						{
-							@Override
-							public void run()
+							final Class<?> entityClass = ObjectUnwrapper.getMinecraft(livingEntity).getClass();
+							final String entityData = EntityCompacter.convertEntityToString(livingEntity);
+							livingEntity.remove();
+
+							scheduler.startSyncTask(new Runnable()
 							{
-								EntityCompacter.spawnEntityFromString(entityClass, to, entityData);
-							}
-						}, 10L);
+								@Override
+								public void run()
+								{
+									EntityCompacter.spawnEntityFromString(entityClass, to, entityData);
+								}
+							}, 10L);
+						}
 					}
 				}
 			}
