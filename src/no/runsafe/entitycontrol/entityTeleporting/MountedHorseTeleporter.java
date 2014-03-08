@@ -14,6 +14,7 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 	@Override
 	public boolean OnPlayerTeleport(IPlayer player, ILocation from, ILocation to)
 	{
+		player.sendColouredMessage("" + from.distance(to));
 		if (from.getWorld().isWorld(to.getWorld()) && from.distance(to) > 20)
 		{
 			IEntity vehicle = player.getVehicle();
