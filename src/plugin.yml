@@ -6,5 +6,3 @@ description: Entity control
 commands:
   npc:
     description: NPC related commands
-  shfs:
-    description: Spawn a horse from a string

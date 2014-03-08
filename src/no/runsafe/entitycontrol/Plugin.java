@@ -2,8 +2,7 @@ package no.runsafe.entitycontrol;
 
 import no.runsafe.entitycontrol.customEntities.*;
 import no.runsafe.entitycontrol.customEntities.commands.Spawn;
-import no.runsafe.entitycontrol.horseHolder.HorseHolderHandler;
-import no.runsafe.entitycontrol.horseHolder.SpawnHorseFromString;
+import no.runsafe.entitycontrol.entityTeleporting.MountedHorseTeleporter;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.api.command.Command;
 import no.runsafe.framework.features.Commands;
@@ -24,8 +23,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(EntityDeath.class);
 		//this.addComponent(EntitySpawn.class);
 
-		addComponent(HorseHolderHandler.class);
-		addComponent(SpawnHorseFromString.class);
+		addComponent(MountedHorseTeleporter.class);
 
 		// Custom entity stuff
 		addComponent(NPCHandler.class);
