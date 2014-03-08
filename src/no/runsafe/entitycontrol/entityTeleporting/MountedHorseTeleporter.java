@@ -19,6 +19,8 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 			IEntity vehicle = player.getVehicle();
 			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
 			{
+				vehicle.eject();
+				player.sendColouredMessage("This is working.");
 				String data = EntityCompacter.convertEntityToString((ILivingEntity) vehicle);
 				vehicle.remove();
 				EntityCompacter.spawnEntityFromString(EntityHorse.class, to, data);
