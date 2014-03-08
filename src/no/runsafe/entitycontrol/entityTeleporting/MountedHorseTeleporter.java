@@ -1,32 +1,54 @@
 package no.runsafe.entitycontrol.entityTeleporting;
 
-import net.minecraft.server.v1_7_R1.EntityHorse;
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IScheduler;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.event.player.IPlayerTeleport;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.entity.LivingEntity;
+import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.tools.EntityCompacter;
 
 public class MountedHorseTeleporter implements IPlayerTeleport
 {
-	@Override
-	public boolean OnPlayerTeleport(IPlayer player, ILocation from, ILocation to)
+	public MountedHorseTeleporter(IScheduler scheduler)
 	{
-		player.sendColouredMessage("" + from.distance(to));
-		if (from.getWorld().isWorld(to.getWorld()) && from.distance(to) > 20)
+		this.scheduler = scheduler;
+	}
+
+	@Override
+	public boolean OnPlayerTeleport(IPlayer player, ILocation from, final ILocation to)
+	{
+		IWorld world = from.getWorld();
+		for (IEntity entity : world.getEntities())
 		{
-			IEntity vehicle = player.getVehicle();
-			if (vehicle != null && vehicle.getEntityType() == LivingEntity.Horse)
+			if (entity instanceof ILivingEntity)
 			{
-				vehicle.eject();
-				player.sendColouredMessage("This is working.");
-				String data = EntityCompacter.convertEntityToString((ILivingEntity) vehicle);
-				vehicle.remove();
-				EntityCompacter.spawnEntityFromString(EntityHorse.class, to, data);
+				ILivingEntity livingEntity = (ILivingEntity) entity;
+				if (livingEntity.isLeashed() && livingEntity.getLeashHolder() instanceof IPlayer)
+				{
+					IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
+					if (leashHolder.getName().equals(player.getName()))
+					{
+						final Class<?> entityClass = ObjectUnwrapper.getMinecraft(livingEntity).getClass();
+						final String entityData = EntityCompacter.convertEntityToString(livingEntity);
+						livingEntity.remove();
+
+						scheduler.startSyncTask(new Runnable()
+						{
+							@Override
+							public void run()
+							{
+								EntityCompacter.spawnEntityFromString(entityClass, to, entityData);
+							}
+						}, 10L);
+					}
+				}
 			}
 		}
 		return true;
 	}
+
+	private final IScheduler scheduler;
 }
