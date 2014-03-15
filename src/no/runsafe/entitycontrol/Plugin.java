@@ -24,6 +24,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		//this.addComponent(EntitySpawn.class);
 
 		addComponent(MountedHorseTeleporter.class);
+		addComponent(HorseSugar.class);
 
 		// Custom entity stuff
 		addComponent(NPCHandler.class);
