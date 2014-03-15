@@ -13,7 +13,7 @@ public class HorseSugar implements IPlayerInteractEntityEvent
 {
 	public HorseSugar()
 	{
-		speedBuff = Buff.Utility.Movement.IncreaseSpeed.ambient(true).amplification(2).duration(900);
+		speedBuff = Buff.Utility.Movement.IncreaseSpeed.ambient(true).amplification(1).duration(900);
 	}
 
 	@Override
