@@ -2,6 +2,7 @@ package no.runsafe.entitycontrol;
 
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Buff;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.entity.LivingEntity;
@@ -19,7 +20,8 @@ public class HorseSugar implements IPlayerInteractEntityEvent
 	@Override
 	public void OnPlayerInteractEntityEvent(RunsafePlayerInteractEntityEvent event)
 	{
-		RunsafeMeta item = event.getPlayer().getItemInHand();
+		IPlayer player = event.getPlayer();
+		RunsafeMeta item = player.getItemInHand();
 		if (item == null || !item.is(Item.Materials.Sugarcane))
 			return;
 
@@ -27,7 +29,7 @@ public class HorseSugar implements IPlayerInteractEntityEvent
 		if (entity.getEntityType() == LivingEntity.Horse)
 		{
 			speedBuff.applyTo((ILivingEntity) entity);
-			item.remove(1);
+			player.removeExactItem(item, 1);
 			event.cancel();
 		}
 	}
