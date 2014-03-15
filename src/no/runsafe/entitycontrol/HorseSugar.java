@@ -28,6 +28,7 @@ public class HorseSugar implements IPlayerInteractEntityEvent
 		{
 			speedBuff.applyTo((ILivingEntity) entity);
 			event.getPlayer().getInventory().removeExact(Item.Materials.Sugarcane.getItem(), 1);
+			event.cancel();
 		}
 	}
 
