@@ -20,7 +20,7 @@ public class HorseSugar implements IPlayerInteractEntityEvent
 	public void OnPlayerInteractEntityEvent(RunsafePlayerInteractEntityEvent event)
 	{
 		RunsafeMeta item = event.getPlayer().getItemInHand();
-		if (item == null || item.is(Item.Materials.Sugarcane))
+		if (item == null || !item.is(Item.Materials.Sugarcane))
 			return;
 
 		RunsafeEntity entity = event.getRightClicked();
