@@ -1,11 +1,11 @@
 package no.runsafe.entitycontrol.customEntities.entities;
 
-import net.minecraft.server.v1_7_R1.*;
+import net.minecraft.server.v1_7_R2.*;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.item.meta.RunsafeLeatherArmor;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.minecraft.item.meta.RunsafeSkull;
-import org.bukkit.craftbukkit.v1_7_R1.util.UnsafeList;
+import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public abstract class CustomEntity extends EntitySkeleton
 	}
 
 	@Override
-	protected String aU()
+	protected String aS()
 	{
 		return "none";
 	}
