@@ -17,6 +17,7 @@ public class CompanionHandler implements IServerReady
 			CompanionPet pet = new CompanionPet(world);
 			pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
 			world.addEntity(pet);
+			pet.setBaby(true);
 		}
 	}
 
