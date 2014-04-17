@@ -29,7 +29,7 @@ public class CompanionPet extends EntityZombie
 
 	public void setFollowingPlayer(IPlayer player)
 	{
-		goalSelector.a(1, new PathfinderGoalFollowPlayer(ObjectUnwrapper.getMinecraft(player), this, 1.0D, 10F, 2F));
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(ObjectUnwrapper.getMinecraft(player), this, 1.0D, 2F, 2F));
 	}
 
 	@Override
