@@ -94,12 +94,10 @@ public class CompanionPet extends EntityZombie
 			removeRandomThings();
 	}
 
-	private void randomThing()
+	protected void randomThing()
 	{
 		randomThingTicks = 12000;
 		randomThingProgress = 1200;
-
-		setEquipment(0, new ItemStack(Items.IRON_SWORD));
 	}
 
 	private void removeRandomThings()
@@ -124,6 +122,6 @@ public class CompanionPet extends EntityZombie
 	private int soundTicks = 0;
 	private int randomThingTicks = 12000;
 	private int randomThingProgress = 0;
-	private EntityPlayer player;
-	private final Random random = new Random();
+	protected EntityPlayer player;
+	protected final Random random = new Random();
 }

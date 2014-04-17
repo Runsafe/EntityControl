@@ -2,6 +2,7 @@ package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_7_R2.World;
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
@@ -10,9 +11,10 @@ import no.runsafe.framework.tools.nms.EntityRegister;
 
 public class CompanionHandler implements IServerReady
 {
-	public CompanionHandler(IConsole console)
+	public CompanionHandler(IConsole console, IServer server)
 	{
 		this.console = console;
+		CompanionHandler.server = server;
 	}
 
 	public void spawnCompanion(ILocation location, CompanionType type, IPlayer follower)
@@ -44,4 +46,5 @@ public class CompanionHandler implements IServerReady
 	}
 
 	private final IConsole console;
+	public static IServer server;
 }
