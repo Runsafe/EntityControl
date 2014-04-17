@@ -25,6 +25,7 @@ public class ZombieCompanion extends CompanionPet
 	@Override
 	protected void randomThing()
 	{
+		super.randomThing();
 		float ran = random.nextFloat();
 
 		if (ran == 0.2)
