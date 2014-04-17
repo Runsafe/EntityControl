@@ -1,9 +1,6 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_7_R2.DamageSource;
-import net.minecraft.server.v1_7_R2.EntityZombie;
-import net.minecraft.server.v1_7_R2.PathfinderGoalSelector;
-import net.minecraft.server.v1_7_R2.World;
+import net.minecraft.server.v1_7_R2.*;
 import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
 
 import java.lang.reflect.Field;
@@ -49,6 +46,13 @@ public class CompanionPet extends EntityZombie
 	@Override
 	public boolean damageEntity(DamageSource damagesource, float f)
 	{
+		return false;
+	}
+
+	@Override
+	public boolean a(EntityHuman entityhuman)
+	{
+		// Interact with player.
 		return false;
 	}
 }
