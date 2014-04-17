@@ -14,10 +14,17 @@ public class CompanionHandler implements IServerReady
 
 		if (world != null)
 		{
-			CompanionPet pet = new CompanionPet(world);
-			pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
-			world.addEntity(pet);
-			pet.setBaby(true);
+			try
+			{
+				CompanionPet pet = (CompanionPet) type.getEntityClass().newInstance();
+				pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
+				world.addEntity(pet);
+				pet.setBaby(true);
+			}
+			catch (Exception e)
+			{
+				// No.
+			}
 		}
 	}
 
