@@ -6,6 +6,7 @@ import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
 
 import java.lang.reflect.Field;
+import java.util.Random;
 
 public class CompanionPet extends EntityZombie
 {
@@ -79,8 +80,37 @@ public class CompanionPet extends EntityZombie
 		if (soundTicks > 0)
 			soundTicks--;
 
-		if (player == null || !player.world.worldData.getName().equals(world.worldData.getName()))
+		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()))
 			dead = true;
+
+		if (randomThingTicks > 0)
+			randomThingTicks--;
+		else
+			randomThing();
+
+		if (randomThingProgress > 1)
+			randomThingProgress--;
+		else if (randomThingProgress == 1)
+			removeRandomThings();
+	}
+
+	private void randomThing()
+	{
+		//randomThingTicks = 12000;
+		randomThingTicks = 2400;
+		randomThingProgress = 1200;
+
+		setEquipment(0, new ItemStack(Items.IRON_SWORD));
+	}
+
+	private void removeRandomThings()
+	{
+		randomThingProgress = 0;
+		setEquipment(0, null);
+		setEquipment(1, null);
+		setEquipment(2, null);
+		setEquipment(3, null);
+		setEquipment(4, null);
 	}
 
 	public void playSound(String sound)
@@ -93,5 +123,8 @@ public class CompanionPet extends EntityZombie
 	}
 
 	private int soundTicks = 0;
+	private int randomThingTicks = 0;
+	private int randomThingProgress = 0;
 	private EntityPlayer player;
+	private final Random random = new Random();
 }
