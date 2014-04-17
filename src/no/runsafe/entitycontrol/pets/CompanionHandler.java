@@ -4,6 +4,7 @@ import net.minecraft.server.v1_7_R2.World;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.log.IConsole;
+import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.tools.nms.EntityRegister;
 
@@ -14,7 +15,7 @@ public class CompanionHandler implements IServerReady
 		this.console = console;
 	}
 
-	public void spawnCompanion(ILocation location, CompanionType type)
+	public void spawnCompanion(ILocation location, CompanionType type, IPlayer follower)
 	{
 		World world = ObjectUnwrapper.getMinecraft(location.getWorld());
 
@@ -26,6 +27,7 @@ public class CompanionHandler implements IServerReady
 				pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
 				world.addEntity(pet);
 				pet.setBaby(true);
+				pet.setFollowingPlayer(follower);
 			}
 			catch (Exception e)
 			{

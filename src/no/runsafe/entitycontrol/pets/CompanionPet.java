@@ -1,6 +1,8 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_7_R2.*;
+import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
 
 import java.lang.reflect.Field;
@@ -23,6 +25,11 @@ public class CompanionPet extends EntityZombie
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void setFollowingPlayer(IPlayer player)
+	{
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(ObjectUnwrapper.getMinecraft(player), this, 1.0D, 10F, 2F));
 	}
 
 	@Override
