@@ -22,7 +22,7 @@ public class CompanionHandler implements IServerReady
 		{
 			try
 			{
-				CompanionPet pet = (CompanionPet) type.getEntityClass().newInstance();
+				CompanionPet pet = (CompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
 				pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
 				world.addEntity(pet);
 				pet.setBaby(true);
