@@ -8,7 +8,7 @@ import no.runsafe.framework.tools.nms.EntityRegister;
 
 public class CompanionHandler implements IServerReady
 {
-	public void spawnCompanion(ILocation location)
+	public void spawnCompanion(ILocation location, CompanionType type)
 	{
 		World world = ObjectUnwrapper.getMinecraft(location.getWorld());
 
@@ -24,6 +24,7 @@ public class CompanionHandler implements IServerReady
 	@Override
 	public void OnServerReady()
 	{
-		EntityRegister.registerEntity(CompanionPet.class, "CompanionPet", 54);
+		for (CompanionType type : CompanionType.values())
+			EntityRegister.registerEntity(type.getEntityClass(), type.getName(), type.getId());
 	}
 }
