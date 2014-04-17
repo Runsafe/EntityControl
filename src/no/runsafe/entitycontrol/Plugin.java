@@ -4,7 +4,7 @@ import no.runsafe.entitycontrol.customEntities.*;
 import no.runsafe.entitycontrol.customEntities.commands.Spawn;
 import no.runsafe.entitycontrol.entityTeleporting.MountedHorseTeleporter;
 import no.runsafe.entitycontrol.pets.CompanionHandler;
-import no.runsafe.entitycontrol.pets.SpawnCompanion;
+import no.runsafe.entitycontrol.pets.commands.SpawnCompanion;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.api.command.Command;
 import no.runsafe.framework.features.Commands;
