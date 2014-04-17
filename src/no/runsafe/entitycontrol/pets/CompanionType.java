@@ -2,8 +2,7 @@ package no.runsafe.entitycontrol.pets;
 
 public enum CompanionType
 {
-	ZOMBIE("Zombie", ZombieCompanion.class, 54),
-	SKELETON("Skeleton", SkeletonCompanion.class, 51);
+	ZOMBIE("Zombie", ZombieCompanion.class, 54);
 
 	private CompanionType(String name, Class entityClass, int id)
 	{
