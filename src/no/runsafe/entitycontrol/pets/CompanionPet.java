@@ -1,5 +1,6 @@
 package no.runsafe.entitycontrol.pets;
 
+import net.minecraft.server.v1_7_R2.DamageSource;
 import net.minecraft.server.v1_7_R2.EntityZombie;
 import net.minecraft.server.v1_7_R2.PathfinderGoalSelector;
 import net.minecraft.server.v1_7_R2.World;
@@ -43,5 +44,11 @@ public class CompanionPet extends EntityZombie
 	protected String aS()
 	{
 		return "none"; // Death sound.
+	}
+
+	@Override
+	public boolean damageEntity(DamageSource damagesource, float f)
+	{
+		return false;
 	}
 }
