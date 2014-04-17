@@ -26,6 +26,8 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		{
 			e.printStackTrace();
 		}
+
+		setBaby(true);
 	}
 
 	public void setFollowingPlayer(IPlayer player)

@@ -25,12 +25,8 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 		{
 			e.printStackTrace();
 		}
-	}
 
-	@Override
-	public void setBaby(boolean flag)
-	{
-		ageFreeze = flag ? -1000 : 0;
+		setAge(-1000);
 	}
 
 	public void setFollowingPlayer(IPlayer player)
@@ -86,7 +82,7 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 			soundTicks--;
 
 		if (isAlive())
-			setAge(ageFreeze);
+			setAge(-1000);
 
 		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()))
 			dead = true;
@@ -101,7 +97,6 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 		}
 	}
 
-	private int ageFreeze = 0;
 	private int soundTicks = 0;
 	protected EntityPlayer player;
 }
