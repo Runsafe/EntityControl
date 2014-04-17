@@ -6,7 +6,7 @@ public enum CompanionType
 	CHICKEN("Chicken", ChickenCompanion.class, 93),
 	COW("Cow", CowCompanion.class, 92),
 	MOOSHROOM("Mooshroom", MooshroomCompanion.class, 96),
-	PIG("Pig", PigCompanion.class, 90),
+	BACON("Pig", PigCompanion.class, 90),
 	PIG_ZOMBIE("PigZombie", PigZombieCompanion.class, 57),
 	SHEEP("Sheep", SheepCompanion.class, 91),
 	WOLF("Wolf", WolfCompanion.class, 95);
