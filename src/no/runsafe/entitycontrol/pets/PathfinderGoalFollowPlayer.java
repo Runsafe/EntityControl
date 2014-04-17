@@ -39,7 +39,6 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void d()
 	{
-		player = null;
 		g.h();
 		entity.getNavigation().a(this.i);
 	}
