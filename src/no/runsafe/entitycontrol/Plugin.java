@@ -4,6 +4,7 @@ import no.runsafe.entitycontrol.customEntities.*;
 import no.runsafe.entitycontrol.customEntities.commands.Spawn;
 import no.runsafe.entitycontrol.entityTeleporting.MountedHorseTeleporter;
 import no.runsafe.entitycontrol.pets.CompanionHandler;
+import no.runsafe.entitycontrol.pets.commands.CreateEgg;
 import no.runsafe.entitycontrol.pets.commands.SpawnCompanion;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.api.command.Command;
@@ -42,5 +43,6 @@ public class Plugin extends RunsafeConfigurablePlugin
 		Command companionCommand = new SecondaryCommand("companion", "Companion related commands", null);
 		addComponent(companionCommand);
 		companionCommand.addSubCommand(getInstance(SpawnCompanion.class));
+		companionCommand.addSubCommand(getInstance(CreateEgg.class));
 	}
 }
