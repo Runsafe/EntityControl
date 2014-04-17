@@ -39,7 +39,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		// Companions
 		addComponent(CompanionHandler.class);
 
-		Command companionCommand = new Command("companion", "Companion related commands", null);
+		Command companionCommand = new SecondaryCommand("companion", "Companion related commands", null);
 		addComponent(companionCommand);
 		companionCommand.addSubCommand(getInstance(SpawnCompanion.class));
 	}
