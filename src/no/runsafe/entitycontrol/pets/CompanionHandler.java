@@ -25,6 +25,6 @@ public class CompanionHandler implements IServerReady
 	public void OnServerReady()
 	{
 		for (CompanionType type : CompanionType.values())
-			EntityRegister.registerEntity(type.getEntityClass(), type.getName(), type.getId());
+			EntityRegister.registerEntity(type.getEntityClass(), "Companion" + type.getName(), type.getId());
 	}
 }
