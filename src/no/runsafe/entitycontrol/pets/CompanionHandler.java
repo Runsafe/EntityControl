@@ -3,11 +3,17 @@ package no.runsafe.entitycontrol.pets;
 import net.minecraft.server.v1_7_R2.World;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.event.IServerReady;
+import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.tools.nms.EntityRegister;
 
 public class CompanionHandler implements IServerReady
 {
+	public CompanionHandler(IConsole console)
+	{
+		this.console = console;
+	}
+
 	public void spawnCompanion(ILocation location, CompanionType type)
 	{
 		World world = ObjectUnwrapper.getMinecraft(location.getWorld());
@@ -23,7 +29,7 @@ public class CompanionHandler implements IServerReady
 			}
 			catch (Exception e)
 			{
-				// No.
+				console.logException(e);
 			}
 		}
 	}
@@ -34,4 +40,6 @@ public class CompanionHandler implements IServerReady
 		for (CompanionType type : CompanionType.values())
 			EntityRegister.registerEntity(type.getEntityClass(), "Companion" + type.getName(), type.getId());
 	}
+
+	private final IConsole console;
 }
