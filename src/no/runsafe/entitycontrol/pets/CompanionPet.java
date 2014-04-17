@@ -61,4 +61,10 @@ public class CompanionPet extends EntityZombie
 	{
 		// Do nothing! We don't want loot.
 	}
+
+	@Override
+	public void e(float f, float f1)
+	{
+		// Do nothing! We don't want the mob to move.
+	}
 }
