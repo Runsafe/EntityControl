@@ -30,6 +30,12 @@ public class CompanionPetSlime extends EntitySlime implements ICompanionPet
 	}
 
 	@Override
+	protected void bp()
+	{
+		// Do nothing, we don't want our slimes buggering off.
+	}
+
+	@Override
 	public void setFollowingPlayer(IPlayer player)
 	{
 		this.player = ObjectUnwrapper.getMinecraft(player);
