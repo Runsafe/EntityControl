@@ -55,4 +55,10 @@ public class CompanionPet extends EntityZombie
 		// Interact with player.
 		return false;
 	}
+
+	@Override
+	protected void dropDeathLoot(boolean flag, int i)
+	{
+		// Do nothing! We don't want loot.
+	}
 }
