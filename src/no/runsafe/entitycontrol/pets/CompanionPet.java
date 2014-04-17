@@ -26,4 +26,22 @@ public class CompanionPet extends EntityZombie
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	protected String t()
+	{
+		return "none";
+	}
+
+	@Override
+	protected String aT()
+	{
+		return "none";
+	}
+
+	@Override
+	protected String aS()
+	{
+		return "none";
+	}
 }
