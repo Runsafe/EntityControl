@@ -29,7 +29,8 @@ public class CompanionPet extends EntityZombie
 
 	public void setFollowingPlayer(IPlayer player)
 	{
-		goalSelector.a(1, new PathfinderGoalFollowPlayer(ObjectUnwrapper.getMinecraft(player), this, 1.0D, 2F, 2F));
+		this.player = ObjectUnwrapper.getMinecraft(player);
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
 	}
 
 	@Override
@@ -77,6 +78,9 @@ public class CompanionPet extends EntityZombie
 
 		if (soundTicks > 0)
 			soundTicks--;
+
+		if (player == null || !player.world.worldData.getName().equals(world.worldData.getName()))
+			dead = true;
 	}
 
 	public void playSound(String sound)
@@ -89,4 +93,5 @@ public class CompanionPet extends EntityZombie
 	}
 
 	private int soundTicks = 0;
+	private EntityPlayer player;
 }

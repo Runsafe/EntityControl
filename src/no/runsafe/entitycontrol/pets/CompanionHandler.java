@@ -28,6 +28,7 @@ public class CompanionHandler implements IServerReady
 				world.addEntity(pet);
 				pet.setBaby(true);
 				pet.setFollowingPlayer(follower);
+				world.broadcastEntityEffect(pet, (byte) 16);
 			}
 			catch (Exception e)
 			{
