@@ -9,7 +9,9 @@ public enum CompanionType
 	BACON("Pig", PigCompanion.class, 90),
 	PIG_ZOMBIE("PigZombie", PigZombieCompanion.class, 57),
 	SHEEP("Sheep", SheepCompanion.class, 91),
-	WOLF("Wolf", WolfCompanion.class, 95);
+	WOLF("Wolf", WolfCompanion.class, 95),
+	SLIME("Slime", SlimeCompanion.class, 55),
+	MAGMA_CUBE("MagmaCube", MagmaCubeCompanion.class, 62);
 
 	private CompanionType(String name, Class entityClass, int id)
 	{
