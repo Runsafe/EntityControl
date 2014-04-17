@@ -61,4 +61,25 @@ public class CompanionPet extends EntityZombie
 	{
 		// Do nothing! We don't want loot.
 	}
+
+	@Override
+	public void B()
+	{
+		// Entity base tick
+		super.B();
+
+		if (soundTicks > 0)
+			soundTicks--;
+	}
+
+	public void playSound(String sound)
+	{
+		if (soundTicks == 0)
+		{
+			makeSound(sound, be(), bf());
+			soundTicks = 40;
+		}
+	}
+
+	private int soundTicks = 0;
 }
