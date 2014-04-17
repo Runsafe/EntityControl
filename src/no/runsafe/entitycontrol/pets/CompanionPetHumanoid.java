@@ -8,9 +8,9 @@ import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-public class CompanionPet extends EntityZombie
+public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 {
-	public CompanionPet(World world)
+	public CompanionPetHumanoid(World world)
 	{
 		super(world);
 

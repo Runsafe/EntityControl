@@ -8,7 +8,7 @@ import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeSkull;
 
-public class PigZombieCompanion extends CompanionPet
+public class PigZombieCompanion extends CompanionPetHumanoid
 {
 	public PigZombieCompanion(World world)
 	{

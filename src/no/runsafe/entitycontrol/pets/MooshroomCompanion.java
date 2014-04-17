@@ -3,7 +3,7 @@ package no.runsafe.entitycontrol.pets;
 import net.minecraft.server.v1_7_R2.EntityHuman;
 import net.minecraft.server.v1_7_R2.World;
 
-public class MooshroomCompanion extends CompanionPet
+public class MooshroomCompanion extends CompanionPetAnimal
 {
 	public MooshroomCompanion(World world)
 	{

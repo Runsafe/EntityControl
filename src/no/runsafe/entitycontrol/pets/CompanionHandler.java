@@ -1,5 +1,6 @@
 package no.runsafe.entitycontrol.pets;
 
+import net.minecraft.server.v1_7_R2.EntityInsentient;
 import net.minecraft.server.v1_7_R2.World;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
@@ -25,11 +26,11 @@ public class CompanionHandler implements IServerReady
 		{
 			try
 			{
-				CompanionPet pet = (CompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
+				ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
 				pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
 				pet.setBaby(true);
 				pet.setFollowingPlayer(follower);
-				world.addEntity(pet);
+				world.addEntity((EntityInsentient) pet);
 			}
 			catch (Exception e)
 			{
