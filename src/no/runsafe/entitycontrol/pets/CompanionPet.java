@@ -30,18 +30,18 @@ public class CompanionPet extends EntityZombie
 	@Override
 	protected String t()
 	{
-		return "none";
+		return "none"; // Idle sound.
 	}
 
 	@Override
 	protected String aT()
 	{
-		return "none";
+		return "none"; // Hurt sound.
 	}
 
 	@Override
 	protected String aS()
 	{
-		return "none";
+		return "none"; // Death sound.
 	}
 }
