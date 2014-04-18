@@ -3,11 +3,12 @@ package no.runsafe.entitycontrol.pets;
 import net.minecraft.server.v1_7_R2.EntityHuman;
 import net.minecraft.server.v1_7_R2.World;
 
-public class VillagerCompanion extends CompanionPetAnimal
+public class LibrarianCompanion extends CompanionPetAnimal
 {
-	public VillagerCompanion(World world)
+	public LibrarianCompanion(World world)
 	{
 		super(world);
+		this.datawatcher.watch(16, 1);
 	}
 
 	@Override
