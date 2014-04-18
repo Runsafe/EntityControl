@@ -16,7 +16,9 @@ import no.runsafe.framework.minecraft.event.player.RunsafePlayerChangedWorldEven
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.tools.nms.EntityRegister;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent
@@ -41,8 +43,11 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 				world.addEntity((EntityInsentient) pet);
 
 				String playerName = follower.getName();
-				summonedPets.put(playerName, type);
-				summonedPetIds.put(playerName, ((EntityInsentient) pet).getId());
+
+				if (!summonedPets.containsKey(playerName))
+					summonedPets.put(playerName, new ArrayList<SummonedPet>(1));
+
+				summonedPets.get(playerName).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
 			}
 			catch (Exception e)
 			{
@@ -84,18 +89,12 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 
 				if (type != null)
 				{
-					String playerName = player.getName();
-					if (summonedPets.containsKey(playerName))
-					{
-						if (summonedPets.get(playerName) == type)
-							untrackPlayer(player);
-						else
-							spawnCompanion(player.getLocation(), type, player);
-					}
-					else
-					{
+					SummonedPet summonedPet = getPlayerSummoned(player, type);
+
+					if (summonedPet == null)
 						spawnCompanion(player.getLocation(), type, player);
-					}
+					else
+						removeSummonedPet(player, summonedPet);
 				}
 
 				return false;
@@ -104,18 +103,38 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 		return true;
 	}
 
+	public SummonedPet getPlayerSummoned(IPlayer player, CompanionType type)
+	{
+		String playerName = player.getName();
+		if (!summonedPets.containsKey(playerName))
+			return null;
+
+		for (SummonedPet summonedPet : summonedPets.get(playerName))
+			if (summonedPet.getType() == type)
+				return summonedPet;
+
+		return null;
+	}
+
+	public static boolean entityIsSummoned(EntityInsentient entity)
+	{
+		for (Map.Entry<String, List<SummonedPet>> node : summonedPets.entrySet())
+			for (SummonedPet pet : node.getValue())
+				if (entity.getId() == pet.getEntityID())
+					return true;
+
+		return false;
+	}
+
+	public void removeSummonedPet(IPlayer player, SummonedPet pet)
+	{
+		summonedPets.get(player.getName()).remove(pet);
+	}
+
 	@Override
 	public void OnPlayerChangedWorld(RunsafePlayerChangedWorldEvent event)
 	{
-		untrackPlayer(event.getPlayer());
-	}
-
-	private void untrackPlayer(IPlayer player)
-	{
-		String playerName = player.getName();
-
-		summonedPets.remove(playerName);
-		summonedPetIds.remove(playerName);
+		summonedPets.remove(event.getPlayer().getName());
 	}
 
 	@Override
@@ -127,6 +146,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 
 	private final IConsole console;
 	public static IServer server;
-	public static ConcurrentHashMap<String, CompanionType> summonedPets = new ConcurrentHashMap<String, CompanionType>(0);
-	public static ConcurrentHashMap<String, Integer> summonedPetIds = new ConcurrentHashMap<String, Integer>(0);
+	public static ConcurrentHashMap<String, List<SummonedPet>> summonedPets = new ConcurrentHashMap<String, List<SummonedPet>>(0);
+	//public static ConcurrentHashMap<String, List<CompanionType>> summonedPets = new ConcurrentHashMap<String, List<CompanionType>>(0);
+	//public static ConcurrentHashMap<String, List<Integer>> summonedPetIds = new ConcurrentHashMap<String, List<Integer>>(0);
 }

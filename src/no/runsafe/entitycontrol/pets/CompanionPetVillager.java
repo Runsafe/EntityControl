@@ -92,7 +92,7 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 		if (isAlive())
 			setAge(-1000);
 
-		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()) || !CompanionHandler.summonedPetIds.containsValue(this.getId()))
+		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
 	}
 

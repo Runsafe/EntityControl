@@ -83,7 +83,7 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		if (soundTicks > 0)
 			soundTicks--;
 
-		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()) || !CompanionHandler.summonedPetIds.containsValue(this.getId()))
+		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
 
 		if (randomThingTicks > 0)
