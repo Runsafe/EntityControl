@@ -8,3 +8,5 @@ commands:
     description: NPC related commands
   companion:
     description: Companion related commands
+  sit:
+    description: Sit down!
