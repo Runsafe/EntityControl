@@ -30,6 +30,7 @@ public class SeatCommand extends PlayerCommand implements IServerReady
 			SeatEntity seat = new SeatEntity(world);
 			seat.setPosition(location.getX(), location.getY(), location.getZ());
 			seat.addEffect(new MobEffect(MobEffectList.INVISIBILITY.id, 864000, 1));
+			seat.setAge(-1000);
 			world.addEntity(seat);
 
 			EntityPlayer player = ObjectUnwrapper.getMinecraft(executor);
