@@ -30,6 +30,12 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 		setAge(-1000);
 	}
 
+	@Override
+	public void setLeashHolder(Entity entity, boolean flag)
+	{
+		// No.
+	}
+
 	public void setFollowingPlayer(IPlayer player)
 	{
 		this.player = ObjectUnwrapper.getMinecraft(player);
