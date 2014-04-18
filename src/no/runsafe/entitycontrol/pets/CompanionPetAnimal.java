@@ -26,6 +26,7 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 			e.printStackTrace();
 		}
 
+		goalSelector.a(0, new PathfinderGoalFloat(this));
 		setAge(-1000);
 	}
 

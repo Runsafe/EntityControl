@@ -27,6 +27,7 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 			e.printStackTrace();
 		}
 
+		goalSelector.a(0, new PathfinderGoalFloat(this));
 		setBaby(true);
 	}
 
