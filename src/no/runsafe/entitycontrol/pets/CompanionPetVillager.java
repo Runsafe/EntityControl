@@ -27,6 +27,7 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 		}
 
 		goalSelector.a(0, new PathfinderGoalFloat(this));
+		setAge(-1000);
 	}
 
 	@Override
