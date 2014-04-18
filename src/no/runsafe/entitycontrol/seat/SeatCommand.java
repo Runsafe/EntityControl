@@ -1,6 +1,8 @@
 package no.runsafe.entitycontrol.seat;
 
 import net.minecraft.server.v1_7_R2.EntityPlayer;
+import net.minecraft.server.v1_7_R2.MobEffect;
+import net.minecraft.server.v1_7_R2.MobEffectList;
 import net.minecraft.server.v1_7_R2.World;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.command.argument.IArgumentList;
@@ -27,6 +29,7 @@ public class SeatCommand extends PlayerCommand implements IServerReady
 		{
 			SeatEntity seat = new SeatEntity(world);
 			seat.setPosition(location.getX(), location.getY(), location.getZ());
+			seat.addEffect(new MobEffect(MobEffectList.INVISIBILITY.id, 864000, 1));
 			world.addEntity(seat);
 
 			EntityPlayer player = ObjectUnwrapper.getMinecraft(executor);
