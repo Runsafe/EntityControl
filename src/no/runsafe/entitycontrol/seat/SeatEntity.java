@@ -23,6 +23,8 @@ public class SeatEntity extends EntityPig
 		{
 			e.printStackTrace();
 		}
+
+		addEffect(new MobEffect(MobEffectList.INVISIBILITY.id, 864000, 0));
 	}
 
 	@Override
@@ -54,6 +56,12 @@ public class SeatEntity extends EntityPig
 	{
 		// Interact with player.
 		return false;
+	}
+
+	@Override
+	public void a(Entity entity, float f, float f1)
+	{
+		// Nope!
 	}
 
 	@Override

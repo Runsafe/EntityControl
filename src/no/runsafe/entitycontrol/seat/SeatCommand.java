@@ -42,6 +42,6 @@ public class SeatCommand extends PlayerCommand implements IServerReady
 	@Override
 	public void OnServerReady()
 	{
-		EntityRegister.registerEntity(SeatEntity.class, "Seat", 48);
+		EntityRegister.registerEntity(SeatEntity.class, "Seat", 93);
 	}
 }
