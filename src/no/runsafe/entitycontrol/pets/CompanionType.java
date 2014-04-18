@@ -13,7 +13,10 @@ public enum CompanionType
 	SHEEP("Sheep", SheepCompanion.class, 91, "Bart (Sheep)", Item.Miscellaneous.MonsterEgg.Sheep),
 	WOLF("Wolf", WolfCompanion.class, 95, "Whiskers (Wolf)", Item.Miscellaneous.MonsterEgg.Wolf),
 	SLIME("Slime", SlimeCompanion.class, 55, "Slippy (Slime)", Item.Miscellaneous.MonsterEgg.Slime),
-	MAGMA_CUBE("MagmaCube", MagmaCubeCompanion.class, 62, "Flames (Magma Cube)", Item.Miscellaneous.MonsterEgg.MagmaCube);
+	MAGMA_CUBE("MagmaCube", MagmaCubeCompanion.class, 62, "Flames (Magma Cube)", Item.Miscellaneous.MonsterEgg.MagmaCube),
+	VILLAGER("Villager", VillagerCompanion.class, 120, "Vinny (Villager)", Item.Miscellaneous.MonsterEgg.Villager),
+	OCELOT("Ocelot", OcelotCompanion.class, 98, "Nibbles (Ocelot)", Item.Miscellaneous.MonsterEgg.Ocelot),
+	SILVERFISH("Silverfish", SilverfishCompanion.class, 60, "Yoppers (Silverfish)", Item.Miscellaneous.MonsterEgg.Silverfish);
 
 	private CompanionType(String name, Class entityClass, int id, String title, Item spawnerItem)
 	{
