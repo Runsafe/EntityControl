@@ -22,7 +22,10 @@ public enum CompanionType
 	BUTCHER("Butcher", ButcherCompanion.class, 120, "Vug (Villager - Butcher)", Item.Miscellaneous.MonsterEgg.Villager),
 	OCELOT("Ocelot", OcelotCompanion.class, 98, "Nibbles (Ocelot)", Item.Miscellaneous.MonsterEgg.Ocelot),
 	SILVERFISH("Silverfish", SilverfishCompanion.class, 60, "Yoppers (Silverfish)", Item.Miscellaneous.MonsterEgg.Silverfish),
-	BAT("Bat", BatCompanion.class, 65, "Flappy (Bat)", Item.Miscellaneous.MonsterEgg.Bat);
+	BAT("Bat", BatCompanion.class, 65, "Flappy (Bat)", Item.Miscellaneous.MonsterEgg.Bat),
+	FLUFFERS("Fluffers", CatCompanionFluffers.class, 98, "Fluffers (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot),
+	MITTENS("Mittens", CatCompanionMittens.class, 98, "Mittens (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot),
+	MURPS("Murps", CatCompanionMurps.class, 98, "Murps (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot);
 
 	private CompanionType(String name, Class entityClass, int id, String title, Item spawnerItem)
 	{
