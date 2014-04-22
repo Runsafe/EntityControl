@@ -30,14 +30,6 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(MountedHorseTeleporter.class);
 		addComponent(HorseSugar.class);
 
-		// Custom entity stuff
-		addComponent(NPCHandler.class);
-
-		Command npcCommand = new Command("npc", "NPC related commands", null);
-		addComponent(npcCommand);
-
-		npcCommand.addSubCommand(getInstance(Spawn.class));
-
 		// Companions
 		addComponent(CompanionHandler.class);
 
@@ -45,7 +37,5 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(companionCommand);
 		companionCommand.addSubCommand(getInstance(SpawnCompanion.class));
 		companionCommand.addSubCommand(getInstance(CreateEgg.class));
-
-		addComponent(SeatCommand.class);
 	}
 }

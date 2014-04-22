@@ -4,9 +4,5 @@ version: 1.0.@BUILD@
 author: Kruithne
 description: Entity control
 commands:
-  npc:
-    description: NPC related commands
   companion:
     description: Companion related commands
-  sit:
-    description: Sit down!
