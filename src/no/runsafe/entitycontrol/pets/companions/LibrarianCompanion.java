@@ -1,14 +1,15 @@
-package no.runsafe.entitycontrol.pets;
+package no.runsafe.entitycontrol.pets.companions;
 
 import net.minecraft.server.v1_7_R2.EntityHuman;
 import net.minecraft.server.v1_7_R2.World;
+import no.runsafe.entitycontrol.pets.CompanionPetVillager;
 
-public class PriestCompanion extends CompanionPetVillager
+public class LibrarianCompanion extends CompanionPetVillager
 {
-	public PriestCompanion(World world)
+	public LibrarianCompanion(World world)
 	{
 		super(world);
-		setProfession(2);
+		setProfession(1);
 	}
 
 	@Override

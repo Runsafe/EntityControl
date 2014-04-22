@@ -1,9 +1,10 @@
-package no.runsafe.entitycontrol.pets;
+package no.runsafe.entitycontrol.pets.companions;
 
 import net.minecraft.server.v1_7_R2.EntityHuman;
 import net.minecraft.server.v1_7_R2.ItemStack;
 import net.minecraft.server.v1_7_R2.Items;
 import net.minecraft.server.v1_7_R2.World;
+import no.runsafe.entitycontrol.pets.CompanionPetHumanoid;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.item.meta.RunsafeSkull;

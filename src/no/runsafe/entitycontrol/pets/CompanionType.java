@@ -1,5 +1,6 @@
 package no.runsafe.entitycontrol.pets;
 
+import no.runsafe.entitycontrol.pets.companions.*;
 import no.runsafe.framework.minecraft.Item;
 
 public enum CompanionType

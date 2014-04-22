@@ -1,6 +1,9 @@
-package no.runsafe.entitycontrol.pets;
+package no.runsafe.entitycontrol.pets.companions;
 
 import net.minecraft.server.v1_7_R2.*;
+import no.runsafe.entitycontrol.pets.CompanionHandler;
+import no.runsafe.entitycontrol.pets.ICompanionPet;
+import no.runsafe.entitycontrol.pets.PathfinderGoalFollowPlayer;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;

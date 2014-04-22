@@ -1,14 +1,15 @@
-package no.runsafe.entitycontrol.pets;
+package no.runsafe.entitycontrol.pets.companions;
 
 import net.minecraft.server.v1_7_R2.EntityHuman;
 import net.minecraft.server.v1_7_R2.World;
+import no.runsafe.entitycontrol.pets.CompanionPetVillager;
 
-public class FarmerCompanion extends CompanionPetVillager
+public class ButcherCompanion extends CompanionPetVillager
 {
-	public FarmerCompanion(World world)
+	public ButcherCompanion(World world)
 	{
 		super(world);
-		setProfession(0);
+		setProfession(4);
 	}
 
 	@Override
