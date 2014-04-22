@@ -24,7 +24,7 @@ public class SheepCompanion extends CompanionPetAnimal
 	{
 		super.B(); // Entiy base tick
 
-		if (colourChangeTicks > 0)
+		if (colourChangeTicks == 0)
 		{
 			colourChangeTicks = 12000;
 			datawatcher.watch(16, datawatcher.getByte(16) & 240 | (random.nextInt(15) + 1) & 15);
