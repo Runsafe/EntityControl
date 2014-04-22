@@ -1,15 +1,69 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_7_R2.EntityHuman;
-import net.minecraft.server.v1_7_R2.World;
+import net.minecraft.server.v1_7_R2.*;
+import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
+import org.bukkit.craftbukkit.v1_7_R2.util.UnsafeList;
 
-import java.util.Random;
+import java.lang.reflect.Field;
 
-public class SheepCompanion extends CompanionPetAnimal
+public class SheepCompanion extends EntitySheep implements ICompanionPet
 {
 	public SheepCompanion(World world)
 	{
 		super(world);
+
+		// Remove all default path-finders.
+		try
+		{
+			Field gsa = PathfinderGoalSelector.class.getDeclaredField("b");
+			gsa.setAccessible(true);
+			gsa.set(this.goalSelector, new UnsafeList());
+			gsa.set(this.targetSelector, new UnsafeList());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		goalSelector.a(0, new PathfinderGoalFloat(this));
+		setAge(-1000);
+	}
+
+	@Override
+	public void setLeashHolder(Entity entity, boolean flag)
+	{
+		// No.
+	}
+
+	public void setFollowingPlayer(IPlayer player)
+	{
+		this.player = ObjectUnwrapper.getMinecraft(player);
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
+	}
+
+	@Override
+	protected String t()
+	{
+		return "none"; // Idle sound.
+	}
+
+	@Override
+	protected String aT()
+	{
+		return "none"; // Hurt sound.
+	}
+
+	@Override
+	protected String aS()
+	{
+		return "none"; // Death sound.
+	}
+
+	@Override
+	public boolean damageEntity(DamageSource damagesource, float f)
+	{
+		return false;
 	}
 
 	@Override
@@ -20,21 +74,44 @@ public class SheepCompanion extends CompanionPetAnimal
 	}
 
 	@Override
+	protected void dropDeathLoot(boolean flag, int i)
+	{
+		// Do nothing! We don't want loot.
+	}
+
+	@Override
 	public void B()
 	{
-		super.B(); // Entiy base tick
+		// Entity base tick
+		super.B();
+
+		if (soundTicks > 0)
+			soundTicks--;
+
+		if (isAlive())
+			setAge(-1000);
+
+		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()) || !CompanionHandler.entityIsSummoned(this))
+			dead = true;
 
 		if (colourChangeTicks == 0)
 		{
 			colourChangeTicks = 12000;
-			int randomColour = colours[random.nextInt(colours.length)];
-			datawatcher.watch(16, datawatcher.getByte(16) & 240 | randomColour & 15);
+			setColor(random.nextInt(15) + 1);
 		}
 		colourChangeTicks--;
 	}
 
-	//private int colourChangeTicks = 12000;
-	private int colourChangeTicks = 1000;
-	private final Random random = new Random();
-	private int[] colours = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+	public void playSound(String sound)
+	{
+		if (soundTicks == 0)
+		{
+			makeSound(sound, be(), bf());
+			soundTicks = 40;
+		}
+	}
+
+	private int soundTicks = 0;
+	private int colourChangeTicks = 12000;
+	protected EntityPlayer player;
 }
