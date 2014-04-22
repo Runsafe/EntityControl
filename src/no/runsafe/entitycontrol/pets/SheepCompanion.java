@@ -32,6 +32,7 @@ public class SheepCompanion extends CompanionPetAnimal
 		colourChangeTicks--;
 	}
 
-	private int colourChangeTicks = 12000;
+	//private int colourChangeTicks = 12000;
+	private int colourChangeTicks = 1000;
 	private final Random random = new Random();
 }
