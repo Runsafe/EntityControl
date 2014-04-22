@@ -22,7 +22,6 @@ public class Plugin extends RunsafeConfigurablePlugin
 		this.addComponent(Options.class);
 		this.addComponent(EntityPortalCreation.class);
 		this.addComponent(EntityDeath.class);
-		//this.addComponent(EntitySpawn.class);
 
 		addComponent(MountedHorseTeleporter.class);
 		addComponent(HorseSugar.class);
