@@ -4,6 +4,7 @@ import no.runsafe.entitycontrol.entityTeleporting.MountedHorseTeleporter;
 import no.runsafe.entitycontrol.pets.CompanionHandler;
 import no.runsafe.entitycontrol.pets.commands.CreateEgg;
 import no.runsafe.entitycontrol.pets.commands.SpawnCompanion;
+import no.runsafe.entitycontrol.slime.SlimeAnywhere;
 import no.runsafe.framework.RunsafeConfigurablePlugin;
 import no.runsafe.framework.api.command.Command;
 import no.runsafe.framework.features.Commands;
@@ -33,5 +34,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(companionCommand);
 		companionCommand.addSubCommand(getInstance(SpawnCompanion.class));
 		companionCommand.addSubCommand(getInstance(CreateEgg.class));
+
+		addComponent(SlimeAnywhere.class);
 	}
 }
