@@ -99,7 +99,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 
 		if (colourChangeTicks == 0)
 		{
-			colourChangeTicks = 12000;
+			colourChangeTicks = 6000;
 			setColor(random.nextInt(15) + 1);
 		}
 		colourChangeTicks--;
@@ -115,6 +115,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	}
 
 	private int soundTicks = 0;
-	private int colourChangeTicks = 12000;
+	private int colourChangeTicks = 6000;
 	protected EntityPlayer player;
 }
