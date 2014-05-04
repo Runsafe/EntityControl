@@ -36,5 +36,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		companionCommand.addSubCommand(getInstance(CreateEgg.class));
 
 		addComponent(SlimeAnywhere.class);
+
+		addComponent(SpawnBlocker.class);
 	}
 }
