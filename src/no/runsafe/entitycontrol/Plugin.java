@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol;
 
 import no.runsafe.entitycontrol.entityTeleporting.MountedHorseTeleporter;
+import no.runsafe.entitycontrol.guardians.SpawnGuardian;
 import no.runsafe.entitycontrol.pets.CompanionHandler;
 import no.runsafe.entitycontrol.pets.commands.CreateEgg;
 import no.runsafe.entitycontrol.pets.commands.SpawnCompanion;
@@ -38,5 +39,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 		addComponent(SlimeAnywhere.class);
 
 		addComponent(SpawnBlocker.class);
+
+		addComponent(SpawnGuardian.class);
 	}
 }
