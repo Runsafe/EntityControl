@@ -33,13 +33,6 @@ public class EntityGuardian extends EntityIronGolem
 	}
 
 	@Override
-	protected void aC()
-	{
-		super.aC();
-		getAttributeInstance(GenericAttributes.e).setValue(40D);
-	}
-
-	@Override
 	public boolean damageEntity(DamageSource damagesource, float f)
 	{
 		return super.damageEntity(damagesource, 0);
