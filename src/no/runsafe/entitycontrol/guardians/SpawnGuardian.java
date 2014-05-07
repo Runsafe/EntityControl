@@ -7,11 +7,10 @@ import no.runsafe.framework.api.command.argument.RequiredArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
-import no.runsafe.framework.tools.nms.EntityRegister;
 
 public class SpawnGuardian extends PlayerCommand
 {
-	protected SpawnGuardian()
+	public SpawnGuardian()
 	{
 		super("spawnguardian", "Spawns a guardian", "runsafe.guardians.spawn", new RequiredArgument("name"));
 	}
