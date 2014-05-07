@@ -6,3 +6,5 @@ description: Entity control
 commands:
   companion:
     description: Companion related commands
+  spawnguardian:
+    description: Spawn a guardian
