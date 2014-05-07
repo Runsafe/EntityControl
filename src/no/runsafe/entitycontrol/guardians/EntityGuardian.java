@@ -35,6 +35,14 @@ public class EntityGuardian extends EntityIronGolem
 	@Override
 	public boolean damageEntity(DamageSource damagesource, float f)
 	{
+		Entity attackingEntity = damagesource.getEntity();
+		if (attackingEntity != null)
+		{
+			double heightDist = StrictMath.abs(locY - attackingEntity.locY);
+			double dist = StrictMath.abs(locX - attackingEntity.locX) + heightDist + StrictMath.abs(locZ - attackingEntity.locZ);
+			if (dist > 20 || heightDist > 2)
+				setPosition(attackingEntity.locX, attackingEntity.locY, attackingEntity.locX);
+		}
 		return super.damageEntity(damagesource, 0);
 	}
 
