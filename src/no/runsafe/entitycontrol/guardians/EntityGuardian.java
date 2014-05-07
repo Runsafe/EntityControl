@@ -31,6 +31,7 @@ public class EntityGuardian extends EntityIronGolem
 		targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
 		targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityPigZombie.class, 0, true));
 	}
+
 	@Override
 	protected void aC()
 	{
