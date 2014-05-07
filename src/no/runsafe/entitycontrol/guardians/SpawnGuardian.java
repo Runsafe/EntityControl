@@ -5,12 +5,11 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.argument.RequiredArgument;
 import no.runsafe.framework.api.command.player.PlayerCommand;
-import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.tools.nms.EntityRegister;
 
-public class SpawnGuardian extends PlayerCommand implements IServerReady
+public class SpawnGuardian extends PlayerCommand
 {
 	protected SpawnGuardian()
 	{
@@ -30,11 +29,5 @@ public class SpawnGuardian extends PlayerCommand implements IServerReady
 			guardian.setCustomName(parameters.get("name"));
 		}
 		return null;
-	}
-
-	@Override
-	public void OnServerReady()
-	{
-		EntityRegister.registerEntity(EntityGuardian.class, "Guardian", 99);
 	}
 }

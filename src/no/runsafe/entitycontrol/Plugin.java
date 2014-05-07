@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol;
 
 import no.runsafe.entitycontrol.entityTeleporting.MountedHorseTeleporter;
+import no.runsafe.entitycontrol.guardians.GuardianHandler;
 import no.runsafe.entitycontrol.guardians.SpawnGuardian;
 import no.runsafe.entitycontrol.pets.CompanionHandler;
 import no.runsafe.entitycontrol.pets.commands.CreateEgg;
@@ -40,6 +41,7 @@ public class Plugin extends RunsafeConfigurablePlugin
 
 		addComponent(SpawnBlocker.class);
 
+		addComponent(GuardianHandler.class);
 		addComponent(SpawnGuardian.class);
 	}
 }
