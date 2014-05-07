@@ -41,7 +41,7 @@ public class EntityGuardian extends EntityIronGolem
 			double heightDist = StrictMath.abs(locY - attackingEntity.locY);
 			double dist = StrictMath.abs(locX - attackingEntity.locX) + heightDist + StrictMath.abs(locZ - attackingEntity.locZ);
 			if (dist > 20 || heightDist > 2)
-				setPosition(attackingEntity.locX, attackingEntity.locY, attackingEntity.locX);
+				setPosition(attackingEntity.locX, attackingEntity.locY, attackingEntity.locZ);
 		}
 		return super.damageEntity(damagesource, 0);
 	}
