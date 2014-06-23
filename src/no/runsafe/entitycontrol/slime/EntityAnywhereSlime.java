@@ -1,6 +1,6 @@
 package no.runsafe.entitycontrol.slime;
 
-import net.minecraft.server.v1_7_R2.*;
+import net.minecraft.server.v1_7_R3.*;
 
 public class EntityAnywhereSlime extends EntitySlime
 {

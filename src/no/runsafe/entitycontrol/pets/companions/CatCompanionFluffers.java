@@ -1,6 +1,6 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_7_R2.World;
+import net.minecraft.server.v1_7_R3.World;
 
 public class CatCompanionFluffers extends OcelotCompanion
 {
