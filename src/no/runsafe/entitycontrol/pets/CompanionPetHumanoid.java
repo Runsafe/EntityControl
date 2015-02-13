@@ -1,9 +1,9 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_7_R3.*;
+import net.minecraft.server.v1_8_R1.*;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
-import org.bukkit.craftbukkit.v1_7_R3.util.UnsafeList;
+import org.bukkit.craftbukkit.v1_8_R1.util.UnsafeList;
 
 import java.lang.reflect.Field;
 import java.util.Random;
