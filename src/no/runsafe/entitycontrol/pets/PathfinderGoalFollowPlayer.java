@@ -16,6 +16,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.a(3); // I have no idea what this does.
 	}
 
+	/*
+	* Returns true if player exists and is further away than value c
+	*/
 	@Override
 	public boolean a()
 	{
@@ -25,6 +28,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_8_R3: .g(player)
 		* v1_9_R2: .g(player)
 		* v1_10_R1: .g(player)
+		* This function returns distance squared
 		*/
 		return !(player == null || entity.g(player) < (double) (c * c));
 	}
@@ -38,6 +42,8 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_8_R3: m(), .g(player)
 		* v1_9_R2: n(), .g(player)
 		* v1_10_R1: n(), .g(player)
+		* First function returns true if the path is null OR when path has reached a certain point
+		* Second function returns distance squared
 		*/
 		return !g.m() && entity.g(player) > (double) (b * b);
 	}
@@ -100,8 +106,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_8_R3: .g(player)
 		* v1_9_R2: .g(player)
 		* v1_10_R1: .g(player)
+		* This function returns distance squared
 		*/
-		if (entity.g(player) >= 144.0D)
+		if (entity.g(player) >= 144.0D)//If player is more than 144 blocks away
 		{
 			int i = MathHelper.floor(player.locX) - 2;
 			int j = MathHelper.floor(player.locZ) - 2;
@@ -115,7 +122,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 						&& World.a(world, new BlockPosition(i + l, k - 1, j + i1))
 						&& !world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
 						&& !world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
-							)
+					)
 					{
 						entity.setPositionRotation(
 								(double) ((float) (i + l) + 0.5F),
