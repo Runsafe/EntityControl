@@ -43,7 +43,7 @@ public class ZombieCompanion extends CompanionPetHumanoid
 		}
 		else if (ran == 0.5)
 		{
-			setEquipment(0, new ItemStack(Items.CARROT_STICK));
+			setEquipment(0, new ItemStack(Items.CARROT_ON_A_STICK));
 		}
 		else if (ran == 0.6)
 		{
