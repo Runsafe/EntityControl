@@ -10,7 +10,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.world = entity.world;
 		this.player = player;
 		this.f = d0;
-		this.g = entity.getNavigation();
+        this.g = (Navigation) entity.getNavigation();
 		this.c = f;
 		this.b = f1;
 		this.a(3); // I have no idea what this does.
@@ -19,68 +19,119 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public boolean a()
 	{
-		return !(player == null || entity.f(player) < (double) (c * c));
+		/*
+		* Function names:
+		* v1_7_R3:  .f(player)
+		* v1_8_R3:  .g(player)
+		* v1_9_R2:  .g(player)
+		* v1_10_R1: .g(player)
+		*/
+		return !(player == null || entity.g(player) < (double) (c * c));
 	}
 
 	@Override
 	public boolean b()
 	{
-		return !g.g() && entity.f(player) > (double) (b * b);
+		/*
+		* Function names:
+		* v1_7_R3:  g(), .f(player)
+		* v1_8_R3:  m(), .g(player)
+		* v1_9_R2:  n(), .g(player)
+		* v1_10_R1: n(), .g(player)
+		*/
+		return !g.m() && entity.g(player) > (double) (b * b);
 	}
 
 	@Override
 	public void c()
 	{
+		/*
+		* Function names:
+		* v1_7_R3:  a(), a(false)
+		* v1_8_R3:  e(), a(false)
+		* v1_9_R2:  f(), c(false)
+		* v1_10_R1: f(), c(false)
+		*/
 		h = 0;
-		i = entity.getNavigation().a();
-		entity.getNavigation().a(false);
+		i = ((Navigation) entity.getNavigation()).e();
+		((Navigation) entity.getNavigation()).a(false);
 	}
 
 	@Override
 	public void d()
 	{
-		g.h();
-		entity.getNavigation().a(this.i);
+        /*
+		* Function names:
+		* v1_7_R3:  .h(), a(this.i)
+		* v1_8_R3:  .n(), a(this.i)
+		* v1_9_R2:  .o(), c(this.i)
+		* v1_10_R1: .o(), c(this.i)
+		*/
+		g.n();
+		((Navigation) entity.getNavigation()).a(this.i);
 	}
 
 	@Override
 	public void e()
 	{
-		entity.getControllerLook().a(player, 10.0F, (float) entity.bv());
+		entity.getControllerLook().a(player, 10.0F, (float) 40);//entity.bv() returns 40 in 1.7, doesn't exist in 1.8
 
 		if (--this.h > 0)
 			return;
 
 		this.h = 10;
-		if (this.g.a(player, this.f))
+		if (this.g.a(player, this.f))// .a(player, this.f) has the same name in 1.7 - 1.10
 			return;
 
-		if (entity.bN())
+		/*
+		* Function names:
+		* v1_7_R3:  .bN()
+		* v1_8_R3:  .cc()
+		* v1_9_R2:  .isLeashed()
+		* v1_10_R1: .isLeashed()
+		*/
+		if (entity.cc())//If entity is leashed, stop function.
 			return;
 
-		if (entity.f(player) >= 144.0D)
+		/*
+		* Function names:
+		* v1_7_R3:  .f(player)
+		* v1_8_R3:  .g(player)
+		* v1_9_R2:  .g(player)
+		* v1_10_R1: .g(player)
+		*/
+		if (entity.g(player) >= 144.0D)
 		{
 			int i = MathHelper.floor(player.locX) - 2;
 			int j = MathHelper.floor(player.locZ) - 2;
-			int k = MathHelper.floor(player.boundingBox.b);
+			int k = MathHelper.floor(player.getBoundingBox().b);
 
 			for (int l = 0; l <= 4; ++l)
 			{
 				for (int i1 = 0; i1 <= 4; ++i1)
 				{
 					if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) &&
-						World.a(world, i + l, k - 1, j + i1) &&
-						!world.getType(i + l, k, j + i1).r() &&
-						!world.getType(i + l, k + 1, j + i1).r()
+						World.a(world, new BlockPosition(i + l, k - 1, j + i1)) &&
+						!world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding() &&
+						!world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
 					)
 					{
 						entity.setPositionRotation(
 								(double) ((float) (i + l) + 0.5F),
-								(double) k, (double) ((float) (j + i1) + 0.5F),
+								(double) k,
+								(double) ((float) (j + i1) + 0.5F),
 								entity.yaw,
 								entity.pitch
 						);
-						this.g.h();
+
+						/*
+						* Function names:
+						* v1_7_R3:  .h()
+						* v1_8_R3:  .n()
+						* v1_9_R2:  .o()
+						* v1_10_R1: .o()
+						*/
+						this.g.n();
 						return;
 					}
 				}
