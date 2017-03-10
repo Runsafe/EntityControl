@@ -10,7 +10,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.world = entity.world;
 		this.player = player;
 		this.f = d0;
-        this.g = (Navigation) entity.getNavigation();
+    	this.g = (Navigation) entity.getNavigation();
 		this.c = f;
 		this.b = f1;
 		this.a(3); // I have no idea what this does.
