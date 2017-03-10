@@ -29,7 +29,7 @@ public class EntityGuardian extends EntityIronGolem
 		goalSelector.a(4, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 6.0F));
 		goalSelector.a(5, new PathfinderGoalRandomLookaround(this));
 		targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
-		targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityPigZombie.class, 0, true));
+		targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityPigZombie.class, false, true));
 	}
 
 	@Override
