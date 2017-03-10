@@ -12,6 +12,8 @@ public class EntityAnywhereSlime extends EntitySlime
 	@Override
 	public boolean canSpawn()
 	{
-		return !(world.getWorldData().getType() == WorldType.FLAT && random.nextInt(4) != 1) && (getSize() == 1 || world.difficulty != EnumDifficulty.PEACEFUL) && random.nextInt(10) == 0;
+		return !(world.getWorldData().getType() == WorldType.FLAT && random.nextInt(4) != 1) &&
+				(getSize() == 1 || world.getDifficulty() != EnumDifficulty.PEACEFUL) &&
+				random.nextInt(10) == 0;
 	}
 }
