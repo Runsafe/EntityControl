@@ -74,7 +74,8 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void e()
 	{
-		entity.getControllerLook().a(player, 10.0F, (float) 40);//entity.bv() returns 40 in 1.7, doesn't exist in 1.8
+		final float Z_PITCH = 40;//Likely used in changing the z pitch of where entity is looking
+		entity.getControllerLook().a(player, 10.0F, Z_PITCH);
 
 		if (--this.h > 0)
 			return;
