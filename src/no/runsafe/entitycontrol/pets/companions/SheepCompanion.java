@@ -10,6 +10,8 @@ import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 
 import java.lang.reflect.Field;
 
+import static net.minecraft.server.v1_8_R3.EnumColor.fromInvColorIndex;
+
 public class SheepCompanion extends EntitySheep implements ICompanionPet
 {
 	public SheepCompanion(World world)
@@ -124,7 +126,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 		if (colourChangeTicks == 0)
 		{
 			colourChangeTicks = 6000;
-			setColor(random.nextInt(15) + 1);
+            setColor(fromInvColorIndex(random.nextInt(15) + 1));
 		}
 		colourChangeTicks--;
 	}
