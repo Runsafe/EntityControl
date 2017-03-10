@@ -7,9 +7,7 @@ import no.runsafe.entitycontrol.pets.PathfinderGoalFollowPlayer;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
-
 import java.lang.reflect.Field;
-
 import static net.minecraft.server.v1_8_R3.EnumColor.fromInvColorIndex;
 
 public class SheepCompanion extends EntitySheep implements ICompanionPet
