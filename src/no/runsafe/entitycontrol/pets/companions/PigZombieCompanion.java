@@ -31,15 +31,15 @@ public class PigZombieCompanion extends CompanionPetHumanoid
 
 		if (ran == 0.2)
 		{
-			setEquipment(0, new ItemStack(Items.POTATO_POISON));
+			setEquipment(0, new ItemStack(Items.POISONOUS_POTATO));
 		}
 		else if (ran == 0.3)
 		{
-			setEquipment(0, new ItemStack(Items.FIREBALL));
+			setEquipment(0, new ItemStack(Items.FIRE_CHARGE));
 		}
 		else if (ran == 0.4)
 		{
-			setEquipment(0, new ItemStack(Items.GOLD_SWORD));
+			setEquipment(0, new ItemStack(Items.GOLDEN_SWORD));
 		}
 		else if (ran == 0.5)
 		{
