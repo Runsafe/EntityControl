@@ -45,22 +45,46 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
 	}
 
+	/*
+	* Play idle sound
+	* Names of this function in different spigot versions:
+	* v1_7_R3: t
+	* v1_8_R3: z
+	* v1_9_R2: G, returns SoundEffect
+	* v1_10_R1: G, returns SoundEffect
+	 */
 	@Override
-	protected String t()
+	protected String z()
 	{
-		return "none"; // Idle sound.
+		return "none";
 	}
 
+	/*
+	* Play death sound
+	* Names of this function in various spigot versions:
+	* v1_7_R3: aT
+	* v1_8_R3: bp
+	* v1_9_R2: bT, returns SoundEffect
+	* v1_10_R1: bW, returns SoundEffect
+	 */
 	@Override
-	protected String aT()
+	protected String bp()
 	{
-		return "none"; // Hurt sound.
+		return "none";
 	}
 
+	/*
+	* Play hurt sound
+	* Names of this function in various spigot versions:
+	* v1_7_R3: aS
+	* v1_8_R3: bo
+	* v1_9_R2: bS, returns SoundEffect
+	* v1_10_R1: bV, returns SoundEffect
+	 */
 	@Override
-	protected String aS()
+	protected String bo()
 	{
-		return "none"; // Death sound.
+		return "none";
 	}
 
 	@Override
@@ -102,7 +126,14 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 	{
 		if (soundTicks == 0)
 		{
-			makeSound(sound, be(), bf());
+			/*
+			* Function names:
+			* v1_7_R3: be(), bf()
+			* v1_8_R3: bB(), bC()
+			* v1_9_R2: ce(), cf()
+			* v1_10_R1: ch(), ci()
+			*/
+			makeSound(sound, bB(), bC());
 			soundTicks = 40;
 		}
 	}
