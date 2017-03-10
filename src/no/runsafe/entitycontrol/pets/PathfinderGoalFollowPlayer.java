@@ -47,31 +47,41 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	public void e()
 	{
 		entity.getControllerLook().a(player, 10.0F, (float) entity.bv());
-		if (--this.h <= 0)
-		{
-			this.h = 10;
-			if (!this.g.a(player, this.f))
-			{
-				if (!entity.bN())
-				{
-					if (entity.f(player) >= 144.0D)
-					{
-						int i = MathHelper.floor(player.locX) - 2;
-						int j = MathHelper.floor(player.locZ) - 2;
-						int k = MathHelper.floor(player.boundingBox.b);
 
-						for (int l = 0; l <= 4; ++l)
-						{
-							for (int i1 = 0; i1 <= 4; ++i1)
-							{
-								if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && World.a(world, i + l, k - 1, j + i1) && !world.getType(i + l, k, j + i1).r() && !world.getType(i + l, k + 1, j + i1).r())
-								{
-									entity.setPositionRotation((double) ((float) (i + l) + 0.5F), (double) k, (double) ((float) (j + i1) + 0.5F), entity.yaw, entity.pitch);
-									this.g.h();
-									return;
-								}
-							}
-						}
+		if (--this.h > 0)
+			return;
+
+		this.h = 10;
+		if (this.g.a(player, this.f))
+			return;
+
+		if (entity.bN())
+			return;
+
+		if (entity.f(player) >= 144.0D)
+		{
+			int i = MathHelper.floor(player.locX) - 2;
+			int j = MathHelper.floor(player.locZ) - 2;
+			int k = MathHelper.floor(player.boundingBox.b);
+
+			for (int l = 0; l <= 4; ++l)
+			{
+				for (int i1 = 0; i1 <= 4; ++i1)
+				{
+					if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) &&
+						World.a(world, i + l, k - 1, j + i1) &&
+						!world.getType(i + l, k, j + i1).r() &&
+						!world.getType(i + l, k + 1, j + i1).r()
+					)
+					{
+						entity.setPositionRotation(
+								(double) ((float) (i + l) + 0.5F),
+								(double) k, (double) ((float) (j + i1) + 0.5F),
+								entity.yaw,
+								entity.pitch
+						);
+						this.g.h();
+						return;
 					}
 				}
 			}
