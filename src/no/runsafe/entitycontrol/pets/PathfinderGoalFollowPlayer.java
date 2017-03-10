@@ -10,7 +10,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.world = entity.world;
 		this.player = player;
 		this.f = d0;
-    	this.g = (Navigation) entity.getNavigation();
+		this.g = (Navigation) entity.getNavigation();
 		this.c = f;
 		this.b = f1;
 		this.a(3); // I have no idea what this does.
@@ -21,9 +21,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		/*
 		* Function names:
-		* v1_7_R3:  .f(player)
-		* v1_8_R3:  .g(player)
-		* v1_9_R2:  .g(player)
+		* v1_7_R3: .f(player)
+		* v1_8_R3: .g(player)
+		* v1_9_R2: .g(player)
 		* v1_10_R1: .g(player)
 		*/
 		return !(player == null || entity.g(player) < (double) (c * c));
@@ -34,9 +34,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		/*
 		* Function names:
-		* v1_7_R3:  g(), .f(player)
-		* v1_8_R3:  m(), .g(player)
-		* v1_9_R2:  n(), .g(player)
+		* v1_7_R3: g(), .f(player)
+		* v1_8_R3: m(), .g(player)
+		* v1_9_R2: n(), .g(player)
 		* v1_10_R1: n(), .g(player)
 		*/
 		return !g.m() && entity.g(player) > (double) (b * b);
@@ -47,9 +47,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		/*
 		* Function names:
-		* v1_7_R3:  a(), a(false)
-		* v1_8_R3:  e(), a(false)
-		* v1_9_R2:  f(), c(false)
+		* v1_7_R3: a(), a(false)
+		* v1_8_R3: e(), a(false)
+		* v1_9_R2: f(), c(false)
 		* v1_10_R1: f(), c(false)
 		*/
 		h = 0;
@@ -60,11 +60,11 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void d()
 	{
-        /*
+		/*
 		* Function names:
-		* v1_7_R3:  .h(), a(this.i)
-		* v1_8_R3:  .n(), a(this.i)
-		* v1_9_R2:  .o(), c(this.i)
+		* v1_7_R3: .h(), a(this.i)
+		* v1_8_R3: .n(), a(this.i)
+		* v1_9_R2: .o(), c(this.i)
 		* v1_10_R1: .o(), c(this.i)
 		*/
 		g.n();
@@ -86,9 +86,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 
 		/*
 		* Function names:
-		* v1_7_R3:  .bN()
-		* v1_8_R3:  .cc()
-		* v1_9_R2:  .isLeashed()
+		* v1_7_R3: .bN()
+		* v1_8_R3: .cc()
+		* v1_9_R2: .isLeashed()
 		* v1_10_R1: .isLeashed()
 		*/
 		if (entity.cc())//If entity is leashed, stop function.
@@ -96,9 +96,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 
 		/*
 		* Function names:
-		* v1_7_R3:  .f(player)
-		* v1_8_R3:  .g(player)
-		* v1_9_R2:  .g(player)
+		* v1_7_R3: .f(player)
+		* v1_8_R3: .g(player)
+		* v1_9_R2: .g(player)
 		* v1_10_R1: .g(player)
 		*/
 		if (entity.g(player) >= 144.0D)
@@ -111,11 +111,11 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 			{
 				for (int i1 = 0; i1 <= 4; ++i1)
 				{
-					if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) &&
-						World.a(world, new BlockPosition(i + l, k - 1, j + i1)) &&
-						!world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding() &&
-						!world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
-					)
+					if ((l < 1 || i1 < 1 || l > 3 || i1 > 3)
+						&& World.a(world, new BlockPosition(i + l, k - 1, j + i1))
+						&& !world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
+						&& !world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
+							)
 					{
 						entity.setPositionRotation(
 								(double) ((float) (i + l) + 0.5F),
@@ -127,9 +127,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 
 						/*
 						* Function names:
-						* v1_7_R3:  .h()
-						* v1_8_R3:  .n()
-						* v1_9_R2:  .o()
+						* v1_7_R3: .h()
+						* v1_8_R3: .n()
+						* v1_9_R2: .o()
 						* v1_10_R1: .o()
 						*/
 						this.g.n();

@@ -126,7 +126,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 		if (colourChangeTicks == 0)
 		{
 			colourChangeTicks = 6000;
-            setColor(fromInvColorIndex(random.nextInt(15) + 1));
+			setColor(fromInvColorIndex(random.nextInt(15) + 1));
 		}
 		colourChangeTicks--;
 	}
