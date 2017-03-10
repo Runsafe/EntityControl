@@ -33,6 +33,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		return !(player == null || entity.g(player) < (double) (c * c));
 	}
 
+	/*
+	* Returns True when path is null or reached a certain point
+	* 			AND when player is further away than b.
+	*/
 	@Override
 	public boolean b()
 	{
@@ -72,6 +76,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_8_R3: .n(), a(this.i)
 		* v1_9_R2: .o(), c(this.i)
 		* v1_10_R1: .o(), c(this.i)
+		* First function sets path equal to null
 		*/
 		g.n();
 		((Navigation) entity.getNavigation()).a(this.i);
@@ -87,15 +92,14 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 			return;
 
 		this.h = 10;
-		if (this.g.a(player, this.f))// .a(player, this.f) has the same name in 1.7 - 1.10
+		if (this.g.a(player, this.f))
 			return;
 
 		/*
 		* Function names:
 		* v1_7_R3: .bN()
 		* v1_8_R3: .cc()
-		* v1_9_R2: .isLeashed()
-		* v1_10_R1: .isLeashed()
+		* v1_9_R2 and up: .isLeashed()
 		*/
 		if (entity.cc())//If entity is leashed, stop function.
 			return;
@@ -108,26 +112,27 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_10_R1: .g(player)
 		* This function returns distance squared
 		*/
-		if (entity.g(player) >= 144.0D)//If player is more than 144 blocks away
+		if (entity.g(player) >= 144.0D)//If player is more than 12 units(Blocks?) away
 		{
-			int i = MathHelper.floor(player.locX) - 2;
-			int j = MathHelper.floor(player.locZ) - 2;
-			int k = MathHelper.floor(player.getBoundingBox().b);
+			int blockLocX = MathHelper.floor(player.locX) - 2;
+			int blockLocZ = MathHelper.floor(player.locZ) - 2;
+			int blockLocY = MathHelper.floor(player.getBoundingBox().b);
 
-			for (int l = 0; l <= 4; ++l)
+			//Check blocks around the current object in a hollow 3x3block square
+			for (int indexX = 0; indexX <= 4; ++indexX)
 			{
-				for (int i1 = 0; i1 <= 4; ++i1)
+				for (int indexZ = 0; indexZ <= 4; ++indexZ)
 				{
-					if ((l < 1 || i1 < 1 || l > 3 || i1 > 3)
-						&& World.a(world, new BlockPosition(i + l, k - 1, j + i1))
-						&& !world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
-						&& !world.getType(new BlockPosition(i + l, k - 1, j + i1)).getBlock().isOccluding()
+					if ((indexX < 1 || indexZ < 1 || indexX > 3 || indexZ > 3)
+						&& World.a(world, new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ))
+						&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
+						&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
 					)
 					{
 						entity.setPositionRotation(
-								(double) ((float) (i + l) + 0.5F),
-								(double) k,
-								(double) ((float) (j + i1) + 0.5F),
+								(double) ((float) (blockLocX + indexX) + 0.5F),
+								(double) blockLocY,
+								(double) ((float) (blockLocZ + indexZ) + 0.5F),
 								entity.yaw,
 								entity.pitch
 						);
@@ -138,6 +143,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 						* v1_8_R3: .n()
 						* v1_9_R2: .o()
 						* v1_10_R1: .o()
+						* Set path equal to null
 						*/
 						this.g.n();
 						return;
@@ -153,7 +159,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private double f;
 	private Navigation g;
 	private int h;
-	private float b;
-	private float c;
+	private float b; //Distance
+	private float c; //Distance
 	private boolean i;
 }
