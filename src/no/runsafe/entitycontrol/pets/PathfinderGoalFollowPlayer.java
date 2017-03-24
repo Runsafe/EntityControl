@@ -94,9 +94,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void e()
 	{
-		final float Z_PITCH = 40;//Likely used in changing the z pitch of where entity is looking
-		final float UNKNOWN_FLOAT = 10.0F; //TODO: Find out what this does
-		entity.getControllerLook().a(player, UNKNOWN_FLOAT, Z_PITCH);
+		final float Z_PITCH = 40;  //Head tilt pitch
+		final float SPEED = 10.0F;
+		entity.getControllerLook().a(player, SPEED, Z_PITCH);
 
 		if (--this.h > 0)
 			return;

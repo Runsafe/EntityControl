@@ -36,7 +36,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 
 	/**
 	 * Attempt to spawn a companion.
-	 * @param location Location to spawn companion.
+	 * @param location Companion spawn point.
 	 * @param type Companion type to spawn.
 	 * @param follower Player the companion will follow.
 	 */
