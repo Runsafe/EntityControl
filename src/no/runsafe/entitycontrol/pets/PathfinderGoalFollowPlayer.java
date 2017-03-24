@@ -4,6 +4,14 @@ import net.minecraft.server.v1_8_R3.*;
 
 public class PathfinderGoalFollowPlayer extends PathfinderGoal
 {
+	/**
+	 * Constructor for PathfinderGoalFollowPlayer
+	 * @param player Player to follow
+	 * @param entity This entity.
+	 * @param d0 a double.
+	 * @param f a distance.
+	 * @param f1 a distance.
+	 */
 	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double d0, float f, float f1)
 	{
 		this.entity = entity;
@@ -16,9 +24,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.a(3); // I have no idea what this does.
 	}
 
-	/*
-	* Returns true if player exists and is further away than value c
-	*/
+	/**
+	 * Check if player is too far away.
+	 * @return True if player exists and is further away than value c.
+	 */
 	@Override
 	public boolean a()
 	{
@@ -33,10 +42,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		return !(player == null || entity.g(player) < (double) (c * c));
 	}
 
-	/*
-	* Returns True when path is null or reached a certain point
-	* 			AND when player is further away than b.
-	*/
+	/**
+	 *
+	 * @return True when path is null or reached a certain point AND when player is further away than b.
+	 */
 	@Override
 	public boolean b()
 	{
@@ -47,7 +56,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_9_R2: n(), .g(player)
 		* v1_10_R1: n(), .g(player)
 		* First function returns true if the path is null OR when path has reached a certain point
-		* Second function returns distance squared
+		* Second function returns player distance squared
 		*/
 		return !g.m() && entity.g(player) > (double) (b * b);
 	}
@@ -86,7 +95,8 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	public void e()
 	{
 		final float Z_PITCH = 40;//Likely used in changing the z pitch of where entity is looking
-		entity.getControllerLook().a(player, 10.0F, Z_PITCH);
+		final float UNKNOWN_FLOAT = 10.0F; //TODO: Find out what this does
+		entity.getControllerLook().a(player, UNKNOWN_FLOAT, Z_PITCH);
 
 		if (--this.h > 0)
 			return;
@@ -129,6 +139,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 						&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
 					)
 					{
+						//Move entity.
 						entity.setPositionRotation(
 								(double) ((float) (blockLocX + indexX) + 0.5F),
 								(double) blockLocY,

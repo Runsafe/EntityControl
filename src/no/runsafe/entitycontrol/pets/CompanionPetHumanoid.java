@@ -10,6 +10,10 @@ import java.util.Random;
 
 public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 {
+	/**
+	 * Constructor for CompanionPetHumanoid
+	 * @param world World object is created in
+	 */
 	public CompanionPetHumanoid(World world)
 	{
 		super(world);
@@ -31,19 +35,24 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		setBaby(true);
 	}
 
+	/**
+	 * Sets the player the object will follow.
+	 * @param player Player to follow.
+	 */
 	public void setFollowingPlayer(IPlayer player)
 	{
 		this.player = ObjectUnwrapper.getMinecraft(player);
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
 	}
 
-	/*
-	* Play idle sound
-	* Names of this function in different spigot versions:
-	* v1_7_R3: t
-	* v1_8_R3: z
-	* v1_9_R2: G, returns SoundEffect
-	* v1_10_R1: G, returns SoundEffect
+	/**
+	 * Play idle sound
+	 * Names of this function in different spigot versions:
+	 * v1_7_R3: t
+	 * v1_8_R3: z
+	 * v1_9_R2: G, returns SoundEffect
+	 * v1_10_R1: G, returns SoundEffect
+	 * @return string "none"
 	 */
 	@Override
 	protected String z()
@@ -51,13 +60,14 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		return "none";
 	}
 
-	/*
-	* Play death sound
-	* Names of this function in various spigot versions:
-	* v1_7_R3: aT
-	* v1_8_R3: bp
-	* v1_9_R2: bT, returns SoundEffect
-	* v1_10_R1: bW, returns SoundEffect
+	/**
+	 * Play death sound
+	 * Names of this function in various spigot versions:
+	 * v1_7_R3: aT
+	 * v1_8_R3: bp
+	 * v1_9_R2: bT, returns SoundEffect
+	 * v1_10_R1: bW, returns SoundEffect
+	 * @return string "none"
 	 */
 	@Override
 	protected String bp()
@@ -65,13 +75,14 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		return "none";
 	}
 
-	/*
-	* Play hurt sound
-	* Names of this function in various spigot versions:
-	* v1_7_R3: aS
-	* v1_8_R3: bo
-	* v1_9_R2: bS, returns SoundEffect
-	* v1_10_R1: bV, returns SoundEffect
+	/**
+	 * Play hurt sound
+	 * Names of this function in various spigot versions:
+	 * v1_7_R3: aS
+	 * v1_8_R3: bo
+	 * v1_9_R2: bS, returns SoundEffect
+	 * v1_10_R1: bV, returns SoundEffect
+	 * @return string "none"
 	 */
 	@Override
 	protected String bo()
@@ -79,12 +90,26 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		return "none";
 	}
 
+	/**
+	 * Damages entity if possible.
+	 * This entity can't be damaged.
+	 * @param damagesource Source of damage
+	 * @param f Amount of damage
+	 * @return true if damaged, otherwise false. Always false here.
+	 */
 	@Override
 	public boolean damageEntity(DamageSource damagesource, float f)
 	{
 		return false;
 	}
 
+	/**
+	 * In spigot checks if player can give this object a golden apple if it's a zombie villager.
+	 * Here it does nothing.
+	 * Function name might not change in future spigot versions.
+	 * @param entityhuman Player interacting with object.
+	 * @return True if successful, otherwise false. Always false here.
+	 */
 	@Override
 	public boolean a(EntityHuman entityhuman)
 	{
@@ -92,6 +117,12 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		return false;
 	}
 
+	/**
+	 * Decides amount of loot to drop on death and drops it.
+	 * Object will never drop loot.
+	 * @param flag Nothing
+	 * @param i Nothing / Number of items to drop.
+	 */
 	@Override
 	protected void dropDeathLoot(boolean flag, int i)
 	{
@@ -137,18 +168,23 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		setEquipment(4, null);
 	}
 
+	/**
+	 * Plays a sound.
+	 * @param sound sound name to play.
+	 */
 	public void playSound(String sound)
 	{
 		if (soundTicks == 0)
 		{
 			/*
-			* Function names:
-			* v1_7_R3: be(), bf()
-			* v1_8_R3: bB(), bC()
-			* v1_9_R2: ce(), cf()
-			* v1_10_R1: ch(), ci()
-			*/
-			makeSound(sound, bB(), bC());
+			 * Function names for sound pitch:
+			 * v1_7_R3: bf()
+			 * v1_8_R3: bC()
+			 * v1_9_R2: cf()
+			 * v1_10_R1: ci()
+			 */
+			final float SOUND_VOLUME = 1.0F;
+			makeSound(sound, SOUND_VOLUME, bC());
 			soundTicks = 40;
 		}
 	}
