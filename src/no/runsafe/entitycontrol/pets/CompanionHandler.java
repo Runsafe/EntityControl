@@ -33,26 +33,26 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	{
 		World world = ObjectUnwrapper.getMinecraft(location.getWorld());
 
-		if (world != null)
+		if (world == null)
+			return;
+
+		try
 		{
-			try
-			{
-				ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
-				pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
-				pet.setFollowingPlayer(follower);
-				world.addEntity((EntityInsentient) pet);
+			ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
+			pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
+			pet.setFollowingPlayer(follower);
+			world.addEntity((EntityInsentient) pet);
 
-				String playerName = follower.getName();
+			String playerName = follower.getName();
 
-				if (!summonedPets.containsKey(playerName))
-					summonedPets.put(playerName, new ArrayList<SummonedPet>(1));
+			if (!summonedPets.containsKey(playerName))
+				summonedPets.put(playerName, new ArrayList<SummonedPet>(1));
 
-				summonedPets.get(playerName).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
-			}
-			catch (Exception e)
-			{
-				console.logException(e);
-			}
+			summonedPets.get(playerName).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
+		}
+		catch (Exception e)
+		{
+			console.logException(e);
 		}
 	}
 
