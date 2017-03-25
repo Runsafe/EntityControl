@@ -8,16 +8,16 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * Constructor for PathfinderGoalFollowPlayer
 	 * @param player Player to follow
 	 * @param entity This entity.
-	 * @param d0 a double.
+	 * @param entitySpeed a double.
 	 * @param f a distance.
 	 * @param f1 a distance.
 	 */
-	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double d0, float f, float f1)
+	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float f, float f1)
 	{
 		this.entity = entity;
 		this.world = entity.world;
 		this.player = player;
-		this.f = d0;
+		this.speed = entitySpeed;
 		this.entityNavigation = (Navigation) entity.getNavigation();
 		this.c = f;
 		this.b = f1;
@@ -103,7 +103,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 			return;
 
 		this.h = 10;
-		if (this.entityNavigation.a(player, this.f))
+		if (this.entityNavigation.a(player, this.speed))
 			return;
 
 		/*
@@ -168,7 +168,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private EntityInsentient entity;
 	private EntityPlayer player;
 	private World world;
-	private double f;
+	private double speed;
 	private Navigation entityNavigation;
 	private int h;
 	private float b; //Distance
