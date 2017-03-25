@@ -9,24 +9,24 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * @param player Player to follow
 	 * @param entity This entity.
 	 * @param entitySpeed a double.
-	 * @param f a distance.
+	 * @param sqrtPlayerDistanceLimit Sqrt of the distance before entity will run to player.
 	 * @param f1 a distance.
 	 */
-	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float f, float f1)
+	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float sqrtPlayerDistanceLimit, float f1)
 	{
 		this.entity = entity;
 		this.world = entity.world;
 		this.player = player;
 		this.speed = entitySpeed;
 		this.entityNavigation = (Navigation) entity.getNavigation();
-		this.c = f;
+		this.playerDistanceLimit = sqrtPlayerDistanceLimit;
 		this.b = f1;
 		this.a(3); // I have no idea what this does.
 	}
 
 	/**
-	 * Check if player is too far away.
-	 * @return True if player exists and is further away than value c.
+	 * Check if player is too far away so the companion can run to them.
+	 * @return True if the player is further away than playerDistanceLimit squared.
 	 */
 	@Override
 	public boolean a()
@@ -39,7 +39,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_10_R1: .g(player)
 		* This function returns distance squared
 		*/
-		return !(player == null || entity.g(player) < (double) (c * c));
+		return !(player == null || entity.g(player) < (double) (playerDistanceLimit * playerDistanceLimit));
 	}
 
 	/**
@@ -172,6 +172,6 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private Navigation entityNavigation;
 	private int h;
 	private float b; //Distance
-	private float c; //Distance
+	private float playerDistanceLimit; // Sqrt of the distance before entity will run to player.
 	private boolean i;
 }
