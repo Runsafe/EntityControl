@@ -9,18 +9,19 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * @param player Player to follow
 	 * @param entity This entity.
 	 * @param entitySpeed a double.
-	 * @param sqrtPlayerDistanceLimit Sqrt of the distance before entity will run to player.
-	 * @param sqrtClosestPointToPlayer Sqrt of the distance before entity will stop running to player.
+	 * @param inputPlayerDistanceLimit Distance before entity will run to player.
+	 * @param inputClosestPointToPlayer Distance before entity will stop running to player.
 	 */
-	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float sqrtPlayerDistanceLimit, float sqrtClosestPointToPlayer)
+	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float inputPlayerDistanceLimit, float inputClosestPointToPlayer
+	)
 	{
 		this.entity = entity;
 		this.world = entity.world;
 		this.player = player;
 		this.speed = entitySpeed;
 		this.entityNavigation = (Navigation) entity.getNavigation();
-		this.playerDistanceLimit = sqrtPlayerDistanceLimit;
-		this.closestPointToPlayer = sqrtClosestPointToPlayer;
+		this.playerDistanceLimit = inputPlayerDistanceLimit;
+		this.closestPointToPlayer = inputClosestPointToPlayer;
 		this.a(3); // I have no idea what this does.
 	}
 
@@ -39,7 +40,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_10_R1: .g(player)
 		* This function returns distance.
 		*/
-		return !(player == null || entity.g(player) < (double) (playerDistanceLimit * playerDistanceLimit));
+		return !(player == null || entity.g(player) < (double) (playerDistanceLimit));
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* First function returns true if the path is null OR when path has reached a certain point
 		* Second function returns player distance.
 		*/
-		return !entityNavigation.m() && entity.g(player) > (double) (closestPointToPlayer * closestPointToPlayer);
+		return !entityNavigation.m() && entity.g(player) > (double) (closestPointToPlayer);
 	}
 
 	@Override
@@ -171,7 +172,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private double speed;
 	private Navigation entityNavigation;
 	private int h;
-	private float closestPointToPlayer; // Sqrt of the distance before entity will stop running to player.
-	private float playerDistanceLimit; // Sqrt of the distance before entity will run to player.
+	private float closestPointToPlayer; // Distance before entity will stop running to player.
+	private float playerDistanceLimit; // Distance before entity will run to player.
 	private boolean i;
 }
