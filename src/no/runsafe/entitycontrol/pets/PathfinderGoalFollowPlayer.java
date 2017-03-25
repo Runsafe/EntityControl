@@ -10,9 +10,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * @param entity This entity.
 	 * @param entitySpeed a double.
 	 * @param sqrtPlayerDistanceLimit Sqrt of the distance before entity will run to player.
-	 * @param f1 a distance.
+	 * @param sqrtClosestPointToPlayer Sqrt of the distance before entity will stop running to player.
 	 */
-	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float sqrtPlayerDistanceLimit, float f1)
+	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float sqrtPlayerDistanceLimit, float sqrtClosestPointToPlayer)
 	{
 		this.entity = entity;
 		this.world = entity.world;
@@ -20,7 +20,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.speed = entitySpeed;
 		this.entityNavigation = (Navigation) entity.getNavigation();
 		this.playerDistanceLimit = sqrtPlayerDistanceLimit;
-		this.b = f1;
+		this.closestPointToPlayer = sqrtClosestPointToPlayer;
 		this.a(3); // I have no idea what this does.
 	}
 
@@ -43,8 +43,8 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	}
 
 	/**
-	 *
-	 * @return True when path is null or reached a certain point AND when player is further away than b.
+	 * Check if companion should keep running towards the player.
+	 * @return True when distance from player is further than closestPointToPlayer squared.
 	 */
 	@Override
 	public boolean b()
@@ -58,7 +58,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* First function returns true if the path is null OR when path has reached a certain point
 		* Second function returns player distance squared
 		*/
-		return !entityNavigation.m() && entity.g(player) > (double) (b * b);
+		return !entityNavigation.m() && entity.g(player) > (double) (closestPointToPlayer * closestPointToPlayer);
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private double speed;
 	private Navigation entityNavigation;
 	private int h;
-	private float b; //Distance
+	private float closestPointToPlayer; // Sqrt of the distance before entity will stop running to player.
 	private float playerDistanceLimit; // Sqrt of the distance before entity will run to player.
 	private boolean i;
 }
