@@ -18,7 +18,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.world = entity.world;
 		this.player = player;
 		this.f = d0;
-		this.g = (Navigation) entity.getNavigation();
+		this.entityNavigation = (Navigation) entity.getNavigation();
 		this.c = f;
 		this.b = f1;
 		this.a(3); // I have no idea what this does.
@@ -58,7 +58,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* First function returns true if the path is null OR when path has reached a certain point
 		* Second function returns player distance squared
 		*/
-		return !g.m() && entity.g(player) > (double) (b * b);
+		return !entityNavigation.m() && entity.g(player) > (double) (b * b);
 	}
 
 	@Override
@@ -72,8 +72,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_10_R1: f(), c(false)
 		*/
 		h = 0;
-		i = ((Navigation) entity.getNavigation()).e();
-		((Navigation) entity.getNavigation()).a(false);
+		Navigation entityNewNavigation = (Navigation) entity.getNavigation();
+		i = (entityNewNavigation).e();
+		(entityNewNavigation).a(false);
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_10_R1: .o(), c(this.i)
 		* First function sets path equal to null
 		*/
-		g.n();
+		entityNavigation.n();
 		((Navigation) entity.getNavigation()).a(this.i);
 	}
 
@@ -102,7 +103,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 			return;
 
 		this.h = 10;
-		if (this.g.a(player, this.f))
+		if (this.entityNavigation.a(player, this.f))
 			return;
 
 		/*
@@ -156,7 +157,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 						* v1_10_R1: .o()
 						* Set path equal to null
 						*/
-						this.g.n();
+						this.entityNavigation.n();
 						return;
 					}
 				}
@@ -168,7 +169,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private EntityPlayer player;
 	private World world;
 	private double f;
-	private Navigation g;
+	private Navigation entityNavigation;
 	private int h;
 	private float b; //Distance
 	private float c; //Distance
