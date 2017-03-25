@@ -37,7 +37,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_8_R3: .g(player)
 		* v1_9_R2: .g(player)
 		* v1_10_R1: .g(player)
-		* This function returns distance squared
+		* This function returns distance.
 		*/
 		return !(player == null || entity.g(player) < (double) (playerDistanceLimit * playerDistanceLimit));
 	}
@@ -56,7 +56,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_9_R2: n(), .g(player)
 		* v1_10_R1: n(), .g(player)
 		* First function returns true if the path is null OR when path has reached a certain point
-		* Second function returns player distance squared
+		* Second function returns player distance.
 		*/
 		return !entityNavigation.m() && entity.g(player) > (double) (closestPointToPlayer * closestPointToPlayer);
 	}
@@ -121,9 +121,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_8_R3: .g(player)
 		* v1_9_R2: .g(player)
 		* v1_10_R1: .g(player)
-		* This function returns distance squared
+		* This function returns distance.
 		*/
-		if (entity.g(player) >= 144.0D)//If player is more than 12 units(Blocks?) away
+		if (entity.g(player) >= 144.0D)//If player is more than 144 units(Blocks?) away
 		{
 			int blockLocX = MathHelper.floor(player.locX) - 2;
 			int blockLocZ = MathHelper.floor(player.locZ) - 2;
