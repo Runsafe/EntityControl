@@ -1,6 +1,6 @@
 package no.runsafe.entitycontrol.guardians;
 
-import net.minecraft.server.v1_7_R3.World;
+import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.argument.RequiredArgument;

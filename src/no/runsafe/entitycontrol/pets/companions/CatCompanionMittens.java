@@ -1,6 +1,6 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_7_R3.World;
+import net.minecraft.server.v1_8_R3.World;
 
 public class CatCompanionMittens extends OcelotCompanion
 {

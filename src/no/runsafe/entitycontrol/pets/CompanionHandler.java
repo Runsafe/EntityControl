@@ -1,7 +1,7 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_7_R3.EntityInsentient;
-import net.minecraft.server.v1_7_R3.World;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.block.IBlock;
@@ -23,44 +23,64 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent
 {
+	/**
+	 * Constructor for CompanionHandler.
+	 * @param console The console.
+	 * @param server The server.
+	 */
 	public CompanionHandler(IConsole console, IServer server)
 	{
 		this.console = console;
 		CompanionHandler.server = server;
 	}
 
+	/**
+	 * Attempt to spawn a companion.
+	 * @param location Companion spawn point.
+	 * @param type Companion type to spawn.
+	 * @param follower Player the companion will follow.
+	 */
 	public void spawnCompanion(ILocation location, CompanionType type, IPlayer follower)
 	{
 		World world = ObjectUnwrapper.getMinecraft(location.getWorld());
 
-		if (world != null)
+		if (world == null)
+			return;
+
+		try
 		{
-			try
-			{
-				ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
-				pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
-				pet.setFollowingPlayer(follower);
-				world.addEntity((EntityInsentient) pet);
+			ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
+			pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
+			pet.setFollowingPlayer(follower);
+			world.addEntity((EntityInsentient) pet);
 
-				String playerName = follower.getName();
+			String playerName = follower.getName();
 
-				if (!summonedPets.containsKey(playerName))
-					summonedPets.put(playerName, new ArrayList<SummonedPet>(1));
+			if (!summonedPets.containsKey(playerName))
+				summonedPets.put(playerName, new ArrayList<SummonedPet>(1));
 
-				summonedPets.get(playerName).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
-			}
-			catch (Exception e)
-			{
-				console.logException(e);
-			}
+			summonedPets.get(playerName).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
+		}
+		catch (Exception e)
+		{
+			console.logException(e);
 		}
 	}
 
+	/**
+	 * Detect when a player tries to summon/remove a companion.
+	 * @param player Companion owner.
+	 * @param usingItem Item the player is holding.
+	 * @param targetBlock Targeted block. Influences nothing.
+	 * @return True when player isn't holding a companion egg.
+	 */
 	@Override
 	public boolean OnPlayerRightClick(IPlayer player, RunsafeMeta usingItem, IBlock targetBlock)
 	{
+		//Check if player is holding a monster egg
 		if (usingItem != null && usingItem.is(Item.Miscellaneous.MonsterEgg.Any))
 		{
+			//Check if monster egg has lore set
 			List<String> lore = usingItem.getLore();
 			if (lore != null && !lore.isEmpty())
 			{
@@ -77,6 +97,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 				if (petString == null)
 					return false;
 
+				//Get the companion's type
 				CompanionType type = null;
 				for (CompanionType companionType : CompanionType.values())
 				{
@@ -87,6 +108,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 					}
 				}
 
+				//Summon or remove companion
 				if (type != null)
 				{
 					SummonedPet summonedPet = getPlayerSummoned(player, type);
@@ -103,6 +125,12 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 		return true;
 	}
 
+	/**
+	 * Gets companion pet the player has summoned if they have summoned one.
+	 * @param player Companion pet owner.
+	 * @param type Companion pet type.
+	 * @return Companion pet. Returns null if not summoned yet.
+	 */
 	public SummonedPet getPlayerSummoned(IPlayer player, CompanionType type)
 	{
 		String playerName = player.getName();
@@ -116,6 +144,11 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 		return null;
 	}
 
+	/**
+	 * Find whether or not an entity is summoned.
+	 * @param entity Entity to find if summoned.
+	 * @return True if entity is summoned, otherwise false.
+	 */
 	public static boolean entityIsSummoned(EntityInsentient entity)
 	{
 		for (Map.Entry<String, List<SummonedPet>> node : summonedPets.entrySet())
@@ -126,11 +159,21 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 		return false;
 	}
 
+	/**
+	 * Removes a player's pet.
+	 * @param player Pet owner.
+	 * @param pet Object do delete.
+	 */
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
 		summonedPets.get(player.getName()).remove(pet);
 	}
 
+	/**
+	 * Triggered when player changes world.
+	 * Kill player's companion pets.
+	 * @param event Event that happens when a player changes worlds.
+	 */
 	@Override
 	public void OnPlayerChangedWorld(RunsafePlayerChangedWorldEvent event)
 	{

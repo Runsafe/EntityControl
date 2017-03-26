@@ -1,9 +1,9 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_7_R3.EntityHuman;
-import net.minecraft.server.v1_7_R3.ItemStack;
-import net.minecraft.server.v1_7_R3.Items;
-import net.minecraft.server.v1_7_R3.World;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.ItemStack;
+import net.minecraft.server.v1_8_R3.Items;
+import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetHumanoid;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
@@ -43,7 +43,7 @@ public class ZombieCompanion extends CompanionPetHumanoid
 		}
 		else if (ran == 0.5)
 		{
-			setEquipment(0, new ItemStack(Items.CARROT_STICK));
+			setEquipment(0, new ItemStack(Items.CARROT_ON_A_STICK));
 		}
 		else if (ran == 0.6)
 		{
