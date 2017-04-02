@@ -166,7 +166,10 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
+		int petID = pet.getEntityID();
 		summonedPets.get(player.getName()).remove(pet);
+		player.getWorld().getEntityById(petID).remove();
+
 	}
 
 	/**
@@ -177,7 +180,13 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	@Override
 	public void OnPlayerChangedWorld(RunsafePlayerChangedWorldEvent event)
 	{
-		summonedPets.remove(event.getPlayer().getName());
+		IPlayer player = event.getPlayer();
+		for (SummonedPet pet : summonedPets.get(event.getPlayer().getName()))
+		{
+			int petID = pet.getEntityID();
+			summonedPets.get(player.getName()).remove(pet);
+			event.getSourceWorld().getEntityById(petID).remove();
+		}
 	}
 
 	@Override
