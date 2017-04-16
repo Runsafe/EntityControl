@@ -107,10 +107,10 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 	}
 
 	@Override
-	public void B()
+	public void K()
 	{
 		// Entity base tick
-		super.B();
+		super.K();
 
 		if (soundTicks > 0)
 			soundTicks--;

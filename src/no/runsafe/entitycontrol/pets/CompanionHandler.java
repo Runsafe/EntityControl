@@ -7,12 +7,14 @@ import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.player.IPlayerChangedWorldEvent;
+import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClick;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChangedWorldEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.tools.nms.EntityRegister;
 
@@ -21,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent
+public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent, IPlayerQuitEvent
 {
 	/**
 	 * Constructor for CompanionHandler.
@@ -166,10 +168,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
-		int petID = pet.getEntityID();
 		summonedPets.get(player.getName()).remove(pet);
-		player.getWorld().getEntityById(petID).remove();
-
 	}
 
 	/**
@@ -180,13 +179,17 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	@Override
 	public void OnPlayerChangedWorld(RunsafePlayerChangedWorldEvent event)
 	{
-		IPlayer player = event.getPlayer();
-		for (SummonedPet pet : summonedPets.get(event.getPlayer().getName()))
-		{
-			int petID = pet.getEntityID();
-			summonedPets.get(player.getName()).remove(pet);
-			event.getSourceWorld().getEntityById(petID).remove();
-		}
+		summonedPets.remove(event.getPlayer().getName());
+	}
+
+	/**
+	 * Kill player's companion pets when they log out.
+	 * @param event Player log out event.
+	 */
+	@Override
+	public void OnPlayerQuit(RunsafePlayerQuitEvent event)
+	{
+		summonedPets.remove(event.getPlayer().getName());
 	}
 
 	@Override
