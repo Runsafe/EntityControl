@@ -169,7 +169,6 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
 		summonedPets.get(player.getName()).remove(pet);
-
 	}
 
 	/**
