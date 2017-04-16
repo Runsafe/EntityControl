@@ -130,10 +130,10 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	}
 
 	@Override
-	public void B()
+	public void K()
 	{
 		// Entity base tick
-		super.B();
+		super.K();
 
 		if (soundTicks > 0)
 			soundTicks--;

@@ -142,10 +142,10 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 	}
 
 	@Override
-	public void B()
+	public void K()
 	{
 		// Entity base tick
-		super.B();
+		super.K();
 
 		if (soundTicks > 0)
 			soundTicks--;
