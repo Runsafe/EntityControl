@@ -31,7 +31,7 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 					if (livingEntity.isLeashed() && livingEntity.getLeashHolder() instanceof IPlayer)
 					{
 						IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
-						if (leashHolder.getName().equals(player.getName()))
+						if (leashHolder.equals(player))
 						{
 							final Class<?> entityClass = ObjectUnwrapper.getMinecraft(livingEntity).getClass();
 							final String entityData = EntityCompacter.convertEntityToString(livingEntity);
