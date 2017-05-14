@@ -21,6 +21,7 @@ import no.runsafe.framework.tools.nms.EntityRegister;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent, IPlayerQuitEvent
@@ -56,12 +57,12 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 			pet.setFollowingPlayer(follower);
 			world.addEntity((EntityInsentient) pet);
 
-			String playerName = follower.getName();
+			UUID playerUUID = follower.getUniqueId();
 
-			if (!summonedPets.containsKey(playerName))
-				summonedPets.put(playerName, new ArrayList<SummonedPet>(1));
+			if (!summonedPets.containsKey(playerUUID))
+				summonedPets.put(playerUUID, new ArrayList<SummonedPet>(1));
 
-			summonedPets.get(playerName).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
+			summonedPets.get(playerUUID).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
 		}
 		catch (Exception e)
 		{
@@ -135,11 +136,11 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public SummonedPet getPlayerSummoned(IPlayer player, CompanionType type)
 	{
-		String playerName = player.getName();
-		if (!summonedPets.containsKey(playerName))
+		UUID playerUUID = player.getUniqueId();
+		if (!summonedPets.containsKey(playerUUID))
 			return null;
 
-		for (SummonedPet summonedPet : summonedPets.get(playerName))
+		for (SummonedPet summonedPet : summonedPets.get(playerUUID))
 			if (summonedPet.getType() == type)
 				return summonedPet;
 
@@ -153,7 +154,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public static boolean entityIsSummoned(EntityInsentient entity)
 	{
-		for (Map.Entry<String, List<SummonedPet>> node : summonedPets.entrySet())
+		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
 			for (SummonedPet pet : node.getValue())
 				if (entity.getId() == pet.getEntityID())
 					return true;
@@ -168,7 +169,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
-		summonedPets.get(player.getName()).remove(pet);
+		summonedPets.get(player.getUniqueId()).remove(pet);
 	}
 
 	/**
@@ -179,7 +180,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	@Override
 	public void OnPlayerChangedWorld(RunsafePlayerChangedWorldEvent event)
 	{
-		summonedPets.remove(event.getPlayer().getName());
+		summonedPets.remove(event.getPlayer().getUniqueId());
 	}
 
 	/**
@@ -189,7 +190,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	@Override
 	public void OnPlayerQuit(RunsafePlayerQuitEvent event)
 	{
-		summonedPets.remove(event.getPlayer().getName());
+		summonedPets.remove(event.getPlayer().getUniqueId());
 	}
 
 	@Override
@@ -201,7 +202,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 
 	private final IConsole console;
 	public static IServer server;
-	public static ConcurrentHashMap<String, List<SummonedPet>> summonedPets = new ConcurrentHashMap<String, List<SummonedPet>>(0);
+	public static ConcurrentHashMap<UUID, List<SummonedPet>> summonedPets = new ConcurrentHashMap<UUID, List<SummonedPet>>(0);
 	//public static ConcurrentHashMap<String, List<CompanionType>> summonedPets = new ConcurrentHashMap<String, List<CompanionType>>(0);
 	//public static ConcurrentHashMap<String, List<Integer>> summonedPetIds = new ConcurrentHashMap<String, List<Integer>>(0);
 }

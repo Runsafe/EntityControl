@@ -176,15 +176,9 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	{
 		if (soundTicks == 0)
 		{
-			/*
-			 * Function names for sound pitch:
-			 * v1_7_R3: bf()
-			 * v1_8_R3: bC()
-			 * v1_9_R2: cf()
-			 * v1_10_R1: ci()
-			 */
 			final float SOUND_VOLUME = 1.0F;
-			makeSound(sound, SOUND_VOLUME, bC());
+			final float SOUND_PITCH = (random.nextFloat() - random.nextFloat()) * 0.2F + 1.5F;
+			makeSound(sound, SOUND_VOLUME, SOUND_PITCH);
 			soundTicks = 40;
 		}
 	}
