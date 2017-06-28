@@ -1,11 +1,11 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
+import no.runsafe.framework.api.IWorld;
 
 public class CowCompanion extends CompanionPetAnimal
 {
-	public CowCompanion(World world)
+	public CowCompanion(IWorld world)
 	{
 		super(world);
 	}

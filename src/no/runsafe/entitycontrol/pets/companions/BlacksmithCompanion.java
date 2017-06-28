@@ -1,11 +1,11 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetVillager;
+import no.runsafe.framework.api.IWorld;
 
 public class BlacksmithCompanion extends CompanionPetVillager
 {
-	public BlacksmithCompanion(World world)
+	public BlacksmithCompanion(IWorld world)
 	{
 		super(world);
 		setProfession(3);

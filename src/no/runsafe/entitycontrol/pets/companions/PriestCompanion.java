@@ -1,11 +1,11 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetVillager;
+import no.runsafe.framework.api.IWorld;
 
 public class PriestCompanion extends CompanionPetVillager
 {
-	public PriestCompanion(World world)
+	public PriestCompanion(IWorld world)
 	{
 		super(world);
 		setProfession(2);

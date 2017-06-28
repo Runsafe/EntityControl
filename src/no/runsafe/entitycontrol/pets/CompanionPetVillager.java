@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_8_R3.*;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
@@ -13,9 +14,9 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 	 * Constructor for CompanionPetVillager
 	 * @param world World object is created in
 	 */
-	public CompanionPetVillager(World world)
+	public CompanionPetVillager(IWorld world)
 	{
-		super(world);
+		super(ObjectUnwrapper.getMinecraft(world));
 
 		// Remove all default path-finders.
 		try

@@ -4,6 +4,7 @@ import net.minecraft.server.v1_8_R3.EntityInsentient;
 import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.player.IPlayerChangedWorldEvent;
@@ -45,17 +46,18 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public void spawnCompanion(ILocation location, CompanionType type, IPlayer follower)
 	{
-		World world = ObjectUnwrapper.getMinecraft(location.getWorld());
+		IWorld world = location.getWorld();
+		World rawWorld = ObjectUnwrapper.getMinecraft(location.getWorld());
 
-		if (world == null)
+		if (rawWorld == null)
 			return;
 
 		try
 		{
-			ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(World.class).newInstance(world);
+			ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(IWorld.class).newInstance(world);
 			pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
 			pet.setFollowingPlayer(follower);
-			world.addEntity((EntityInsentient) pet);
+			rawWorld.addEntity((EntityInsentient) pet);
 
 			UUID playerUUID = follower.getUniqueId();
 

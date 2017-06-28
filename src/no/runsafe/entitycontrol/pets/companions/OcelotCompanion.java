@@ -4,6 +4,7 @@ import net.minecraft.server.v1_8_R3.*;
 import no.runsafe.entitycontrol.pets.CompanionHandler;
 import no.runsafe.entitycontrol.pets.ICompanionPet;
 import no.runsafe.entitycontrol.pets.PathfinderGoalFollowPlayer;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
@@ -12,9 +13,9 @@ import java.lang.reflect.Field;
 
 public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 {
-	public OcelotCompanion(World world)
+	public OcelotCompanion(IWorld world)
 	{
-		super(world);
+		super(ObjectUnwrapper.getMinecraft(world));
 
 		// Remove all default path-finders.
 		try
