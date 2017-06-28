@@ -1,6 +1,5 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.ItemStack;
 import net.minecraft.server.v1_8_R3.Items;
 import net.minecraft.server.v1_8_R3.World;
@@ -17,10 +16,9 @@ public class ZombieCompanion extends CompanionPetHumanoid
 	}
 
 	@Override
-	public boolean a(EntityHuman entityhuman)
+	public String getInteractSound()
 	{
-		playSound("mob.zombie.say");
-		return false;
+		return "mob.zombie.say";
 	}
 
 	@Override

@@ -1,6 +1,5 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
 
@@ -13,9 +12,8 @@ public class MagmaCubeCompanion extends CompanionPetAnimal
 	}
 
 	@Override
-	public boolean a(EntityHuman entityhuman)
+	public String getInteractSound()
 	{
-		playSound("mob.magmacube.small");
-		return false;
+		return "mob.magmacube.small";
 	}
 }

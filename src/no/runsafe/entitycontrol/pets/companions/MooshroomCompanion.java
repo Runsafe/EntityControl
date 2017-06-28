@@ -1,6 +1,5 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
 
@@ -12,9 +11,8 @@ public class MooshroomCompanion extends CompanionPetAnimal
 	}
 
 	@Override
-	public boolean a(EntityHuman entityhuman)
+	public String getInteractSound()
 	{
-		playSound("mob.cow.say");
-		return false;
+		return "mob.cow.say";
 	}
 }

@@ -114,7 +114,17 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	public boolean a(EntityHuman entityhuman)
 	{
 		// Interact with player.
+		playSound(getInteractSound());
 		return false;
+	}
+
+	/**
+	 * Gets the sound to be made when right clicked by a player.
+	 * @return Sound to make when right clicked by a player.
+	 */
+	public String getInteractSound()
+	{
+		return "";
 	}
 
 	/**
