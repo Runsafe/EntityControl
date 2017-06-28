@@ -25,7 +25,7 @@ public class SpawnGuardian extends PlayerCommand
 			EntityGuardian guardian = new EntityGuardian(rawWorld);
 			guardian.setPosition(position.getX(), position.getY(), position.getZ());
 			rawWorld.addEntity(guardian);
-			guardian.setCustomName(parameters.get("name"));
+			guardian.setCustomName(parameters.getRequired("name"));
 		}
 		return null;
 	}
