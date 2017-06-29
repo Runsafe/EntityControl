@@ -110,44 +110,44 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		if (entity.cc())//If entity is leashed, stop function.
 			return;
 
-		if (getOwnerDistance() >= 144.0D)//If player is more than 144 units(Blocks?) away
+		if (getOwnerDistance() < 144.0D)//If player is more than 144 units(Blocks?) away
+			return;
+
+		int blockLocX = MathHelper.floor(player.locX) - 2;
+		int blockLocZ = MathHelper.floor(player.locZ) - 2;
+		int blockLocY = MathHelper.floor(player.getBoundingBox().b);
+
+		//Check blocks around the current object in a hollow 3x3block square
+		for (int indexX = 0; indexX <= 4; ++indexX)
 		{
-			int blockLocX = MathHelper.floor(player.locX) - 2;
-			int blockLocZ = MathHelper.floor(player.locZ) - 2;
-			int blockLocY = MathHelper.floor(player.getBoundingBox().b);
-
-			//Check blocks around the current object in a hollow 3x3block square
-			for (int indexX = 0; indexX <= 4; ++indexX)
+			for (int indexZ = 0; indexZ <= 4; ++indexZ)
 			{
-				for (int indexZ = 0; indexZ <= 4; ++indexZ)
-				{
-					if ((indexX < 1 || indexZ < 1 || indexX > 3 || indexZ > 3)
-						&& World.a(world, new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ))
-						&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
-						&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
-					)
-					{
-						//Move entity.
-						entity.setPositionRotation(
-								(double) ((float) (blockLocX + indexX) + 0.5F),
-								(double) blockLocY,
-								(double) ((float) (blockLocZ + indexZ) + 0.5F),
-								entity.yaw,
-								entity.pitch
-						);
+				if (!((indexX < 1 || indexZ < 1 || indexX > 3 || indexZ > 3)
+					&& World.a(world, new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ))
+					&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
+					&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
+				))
+					continue;
 
-						/*
-						* Function names:
-						* v1_7_R3: .h()
-						* v1_8_R3: .n()
-						* v1_9_R2: .o()
-						* v1_10_R1: .o()
-						* Set path equal to null
-						*/
-						this.entityNavigation.n();
-						return;
-					}
-				}
+				//Move entity.
+				entity.setPositionRotation(
+					(double) ((float) (blockLocX + indexX) + 0.5F),
+					(double) blockLocY,
+					(double) ((float) (blockLocZ + indexZ) + 0.5F),
+					entity.yaw,
+					entity.pitch
+				);
+
+				/*
+				* Function names:
+				* v1_7_R3: .h()
+				* v1_8_R3: .n()
+				* v1_9_R2: .o()
+				* v1_10_R1: .o()
+				* Set path equal to null
+				*/
+				this.entityNavigation.n();
+				return;
 			}
 		}
 	}

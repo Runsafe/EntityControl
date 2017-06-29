@@ -20,35 +20,35 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 	@Override
 	public boolean OnPlayerTeleport(IPlayer player, ILocation from, final ILocation to)
 	{
-		if (from.getWorld().isWorld(to.getWorld()) && from.distance(to) > 200)
-		{
-			IWorld world = from.getWorld();
-			for (IEntity entity : world.getEntities())
-			{
-				if (entity instanceof ILivingEntity)
-				{
-					ILivingEntity livingEntity = (ILivingEntity) entity;
-					if (livingEntity.isLeashed() && livingEntity.getLeashHolder() instanceof IPlayer)
-					{
-						IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
-						if (leashHolder.equals(player))
-						{
-							final Class<?> entityClass = ObjectUnwrapper.getMinecraft(livingEntity).getClass();
-							final String entityData = EntityCompacter.convertEntityToString(livingEntity);
-							livingEntity.remove();
+		if (!from.getWorld().isWorld(to.getWorld()) || from.distance(to) < 200)
+			return true;
 
-							scheduler.startSyncTask(new Runnable()
-							{
-								@Override
-								public void run()
-								{
-									EntityCompacter.spawnEntityFromString(entityClass, to, entityData);
-								}
-							}, 10L);
-						}
-					}
+		IWorld world = from.getWorld();
+		for (IEntity entity : world.getEntities())
+		{
+			if (!(entity instanceof ILivingEntity))
+				continue;
+
+			ILivingEntity livingEntity = (ILivingEntity) entity;
+			if (!livingEntity.isLeashed() || !(livingEntity.getLeashHolder() instanceof IPlayer))
+				continue;
+
+			IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
+			if (!leashHolder.equals(player))
+				continue;
+
+			final Class<?> entityClass = ObjectUnwrapper.getMinecraft(livingEntity).getClass();
+			final String entityData = EntityCompacter.convertEntityToString(livingEntity);
+			livingEntity.remove();
+
+			scheduler.startSyncTask(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					EntityCompacter.spawnEntityFromString(entityClass, to, entityData);
 				}
-			}
+			}, 10L);
 		}
 		return true;
 	}

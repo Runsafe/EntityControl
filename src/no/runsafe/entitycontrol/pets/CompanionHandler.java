@@ -83,51 +83,49 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	public boolean OnPlayerRightClick(IPlayer player, RunsafeMeta usingItem, IBlock targetBlock)
 	{
 		//Check if player is holding a monster egg
-		if (usingItem != null && usingItem.is(Item.Miscellaneous.MonsterEgg.Any))
+		if (usingItem == null || !usingItem.is(Item.Miscellaneous.MonsterEgg.Any))
+			return true;
+
+		//Check if monster egg has lore set
+		List<String> lore = usingItem.getLore();
+		if (lore == null || lore.isEmpty())
+			return true;
+
+		String petString = null;
+		for (String loreString : lore)
 		{
-			//Check if monster egg has lore set
-			List<String> lore = usingItem.getLore();
-			if (lore != null && !lore.isEmpty())
-			{
-				String petString = null;
-				for (String loreString : lore)
-				{
-					if (loreString.startsWith("§7Pet: "))
-					{
-						petString = loreString;
-						break;
-					}
-				}
+			if (!loreString.startsWith("§7Pet: "))
+				continue;
 
-				if (petString == null)
-					return false;
-
-				//Get the companion's type
-				CompanionType type = null;
-				for (CompanionType companionType : CompanionType.values())
-				{
-					if (petString.endsWith(companionType.getTitle()))
-					{
-						type = companionType;
-						break;
-					}
-				}
-
-				//Summon or remove companion
-				if (type != null)
-				{
-					SummonedPet summonedPet = getPlayerSummoned(player, type);
-
-					if (summonedPet == null)
-						spawnCompanion(player.getLocation(), type, player);
-					else
-						removeSummonedPet(player, summonedPet);
-				}
-
-				return false;
-			}
+			petString = loreString;
+			break;
 		}
-		return true;
+
+		if (petString == null)
+			return false;
+
+		//Get the companion's type
+		CompanionType type = null;
+		for (CompanionType companionType : CompanionType.values())
+		{
+			if (!petString.endsWith(companionType.getTitle()))
+				continue;
+
+			type = companionType;
+			break;
+		}
+
+		//Summon or remove companion
+		if (type == null)
+			return false;
+		SummonedPet summonedPet = getPlayerSummoned(player, type);
+
+		if (summonedPet == null)
+			spawnCompanion(player.getLocation(), type, player);
+		else
+			removeSummonedPet(player, summonedPet);
+
+		return false;
 	}
 
 	/**
