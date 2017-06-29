@@ -35,7 +35,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public boolean a()
 	{
-		return !(player == null || getOwnerDistance() < (double) (playerDistanceLimit));
+		return !(player == null || getOwnerDistance() < playerDistanceLimit);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* v1_10_R1: n()
 		* First function returns true if the path is null OR when path has reached a certain point
 		*/
-		return !entityNavigation.m() && getOwnerDistance() > (double) (closestPointToPlayer);
+		return !entityNavigation.m() && getOwnerDistance() > closestPointToPlayer;
 	}
 
 	@Override
@@ -131,9 +131,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 
 				//Move entity.
 				entity.setPositionRotation(
-					(double) ((float) (blockLocX + indexX) + 0.5F),
-					(double) blockLocY,
-					(double) ((float) (blockLocZ + indexZ) + 0.5F),
+					blockLocX + indexX + 0.5F,
+					blockLocY,
+					blockLocZ + indexZ + 0.5F,
 					entity.yaw,
 					entity.pitch
 				);
