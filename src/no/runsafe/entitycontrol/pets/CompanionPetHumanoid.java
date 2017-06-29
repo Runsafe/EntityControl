@@ -47,48 +47,18 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	}
 
 	/**
-	 * Play idle sound
-	 * Names of this function in different spigot versions:
-	 * v1_7_R3: t
-	 * v1_8_R3: z
-	 * v1_9_R2: G, returns SoundEffect
-	 * v1_10_R1: G, returns SoundEffect
-	 * @return string "none"
+	 * Volume to make noises at.
+	 * Names of this method in various spigot versions:
+	 * v1_8_R3: bB
+	 * v1_9_R2: ce
+	 * v1_10_R1: ch
+	 * v1_11_R1: ci
+	 * @return Volume.
 	 */
 	@Override
-	protected String z()
+	protected float bB()
 	{
-		return "none";
-	}
-
-	/**
-	 * Play death sound
-	 * Names of this function in various spigot versions:
-	 * v1_7_R3: aT
-	 * v1_8_R3: bp
-	 * v1_9_R2: bT, returns SoundEffect
-	 * v1_10_R1: bW, returns SoundEffect
-	 * @return string "none"
-	 */
-	@Override
-	protected String bp()
-	{
-		return "none";
-	}
-
-	/**
-	 * Play hurt sound
-	 * Names of this function in various spigot versions:
-	 * v1_7_R3: aS
-	 * v1_8_R3: bo
-	 * v1_9_R2: bS, returns SoundEffect
-	 * v1_10_R1: bV, returns SoundEffect
-	 * @return string "none"
-	 */
-	@Override
-	protected String bo()
-	{
-		return "none";
+		return 0;
 	}
 
 	/**

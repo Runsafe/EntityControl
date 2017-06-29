@@ -46,46 +46,19 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
 	}
 
-	/*
-	* Play idle sound
-	* Names of this function in different spigot versions:
-	* v1_7_R3: t
-	* v1_8_R3: z
-	* v1_9_R2: G, returns SoundEffect
-	* v1_10_R1: G, returns SoundEffect
+	/**
+	 * Volume to make noises at.
+	 * Names of this method in various spigot versions:
+	 * v1_8_R3: bB
+	 * v1_9_R2: ce
+	 * v1_10_R1: ch
+	 * v1_11_R1: ci
+	 * @return Volume.
 	 */
 	@Override
-	protected String z()
+	protected float bB()
 	{
-		return "none";
-	}
-
-	/*
-	* Play death sound
-	* Names of this function in various spigot versions:
-	* v1_7_R3: aT
-	* v1_8_R3: bp
-	* v1_9_R2: bT, returns SoundEffect
-	* v1_10_R1: bW, returns SoundEffect
-	 */
-	@Override
-	protected String bp()
-	{
-		return "none";
-	}
-
-	/*
-	* Play hurt sound
-	* Names of this function in various spigot versions:
-	* v1_7_R3: aS
-	* v1_8_R3: bo
-	* v1_9_R2: bS, returns SoundEffect
-	* v1_10_R1: bV, returns SoundEffect
-	 */
-	@Override
-	protected String bo()
-	{
-		return "none";
+		return 0;
 	}
 
 	@Override
