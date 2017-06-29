@@ -2,6 +2,9 @@ package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_8_R3.*;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 public class PathfinderGoalFollowPlayer extends PathfinderGoal
 {
 	/**
@@ -32,15 +35,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public boolean a()
 	{
-		/*
-		* Function names:
-		* v1_7_R3: .f(player)
-		* v1_8_R3: .g(player)
-		* v1_9_R2: .g(player)
-		* v1_10_R1: .g(player)
-		* This function returns distance.
-		*/
-		return !(player == null || entity.g(player) < (double) (playerDistanceLimit));
+		return !(player == null || getOwnerDistance() < (double) (playerDistanceLimit));
 	}
 
 	/**
@@ -52,14 +47,13 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		/*
 		* Function names:
-		* v1_7_R3: g(), .f(player)
-		* v1_8_R3: m(), .g(player)
-		* v1_9_R2: n(), .g(player)
-		* v1_10_R1: n(), .g(player)
+		* v1_7_R3: g()
+		* v1_8_R3: m()
+		* v1_9_R2: n()
+		* v1_10_R1: n()
 		* First function returns true if the path is null OR when path has reached a certain point
-		* Second function returns player distance.
 		*/
-		return !entityNavigation.m() && entity.g(player) > (double) (closestPointToPlayer);
+		return !entityNavigation.m() && getOwnerDistance() > (double) (closestPointToPlayer);
 	}
 
 	@Override
@@ -116,15 +110,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		if (entity.cc())//If entity is leashed, stop function.
 			return;
 
-		/*
-		* Function names:
-		* v1_7_R3: .f(player)
-		* v1_8_R3: .g(player)
-		* v1_9_R2: .g(player)
-		* v1_10_R1: .g(player)
-		* This function returns distance.
-		*/
-		if (entity.g(player) >= 144.0D)//If player is more than 144 units(Blocks?) away
+		if (getOwnerDistance() >= 144.0D)//If player is more than 144 units(Blocks?) away
 		{
 			int blockLocX = MathHelper.floor(player.locX) - 2;
 			int blockLocZ = MathHelper.floor(player.locZ) - 2;
@@ -164,6 +150,18 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return Distance between companion and its owner.
+	 */
+	private double getOwnerDistance()
+	{
+		return sqrt(
+			pow(entity.locX - player.locX, 2)
+			+ pow(entity.locY - player.locY, 2)
+			+ pow(entity.locZ - player.locZ, 2)
+		);
 	}
 
 	private EntityInsentient entity;
