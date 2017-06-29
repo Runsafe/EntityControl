@@ -65,6 +65,7 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 	 * v1_9_R2: ce
 	 * v1_10_R1: ch
 	 * v1_11_R1: ci
+	 * v1_12_R1: co
 	 * @return Volume.
 	 */
 	@Override
@@ -87,10 +88,14 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 	}
 
 	/**
-	 * In spigot makes player interact with this object.
-	 * Here it does nothing.
-	 * Function name might change in future spigot versions.
-	 * @param entityhuman Player interacting with object.
+	 * Interact with a player.
+	 * Called when a player right clicks on this entity.
+	 * Method name stays the same up to 1.12, argument types differ.
+	 * Argument types:
+	 * v1_8_R3: EntityHuman
+	 * v1_9_R2/v1_10_R1: EntityHuman, EnumHand, ItemStack
+	 * v1_11_R1/v1_12_R1: EntityHuman, EnumHand
+	 * @param entityhuman Player that right clicked on this entity.
 	 * @return True if successful, otherwise false. Always false here.
 	 */
 	@Override
@@ -122,10 +127,16 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 		// Do nothing! We don't want loot.
 	}
 
+	/**
+	 * Entity base tick.
+	 * Names of this method in various spigot versions:
+	 * v1_8_R3: K
+	 * v1_9_R2/v1_10_R1/v1_11_R1: U
+	 * v1_12_R1: Y
+	 */
 	@Override
 	public void K()
 	{
-		// Entity base tick
 		super.K();
 
 		if (soundTicks > 0)
