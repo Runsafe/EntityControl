@@ -2,6 +2,7 @@ package no.runsafe.entitycontrol.pets.companions;
 
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
 import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.minecraft.Sound;
 
 public class BatCompanion extends CompanionPetAnimal
 {
@@ -11,8 +12,8 @@ public class BatCompanion extends CompanionPetAnimal
 	}
 
 	@Override
-	public String getInteractSound()
+	public Sound getInteractSound()
 	{
-		return "mob.bat.idle";
+		return Sound.Creature.Bat.Idle;
 	}
 }

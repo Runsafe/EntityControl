@@ -10,10 +10,4 @@ public class PriestCompanion extends CompanionPetVillager
 		super(world);
 		setProfession(2);
 	}
-
-	@Override
-	public String getInteractSound()
-	{
-		return "mob.villager.idle";
-	}
 }

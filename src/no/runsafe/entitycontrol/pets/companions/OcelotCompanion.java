@@ -7,6 +7,7 @@ import no.runsafe.entitycontrol.pets.PathfinderGoalFollowPlayer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
+import no.runsafe.framework.minecraft.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 
 import java.lang.reflect.Field;
@@ -30,6 +31,7 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 			e.printStackTrace();
 		}
 
+		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
 		setAge(-1000);
 	}
@@ -82,7 +84,7 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 	@Override
 	public boolean a(EntityHuman entityhuman)
 	{
-		playSound("mob.cat.hitt");
+		playSound(Sound.Creature.Cat.Meow);
 		return false;
 	}
 
@@ -110,21 +112,22 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 		if (isAlive())
 			setAge(-1000);
 
-		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()) || !CompanionHandler.entityIsSummoned(this))
+		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
 	}
 
-	public void playSound(String sound)
+	public void playSound(Sound sound)
 	{
-		if (soundTicks == 0)
+		if (soundTicks == 0 && sound != null)
 		{
 			final float SOUND_VOLUME = 1.0F;
 			final float SOUND_PITCH = (random.nextFloat() - random.nextFloat()) * 0.2F + 1.5F;
-			makeSound(sound, SOUND_VOLUME, SOUND_PITCH);
+			sound.Play(world.getLocation(locX, locY, locZ), SOUND_VOLUME, SOUND_PITCH);
 			soundTicks = 40;
 		}
 	}
 
+	private IWorld world;
 	private int soundTicks = 0;
 	protected EntityPlayer player;
 }

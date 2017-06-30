@@ -10,10 +10,4 @@ public class BlacksmithCompanion extends CompanionPetVillager
 		super(world);
 		setProfession(3);
 	}
-
-	@Override
-	public String getInteractSound()
-	{
-		return "mob.villager.idle";
-	}
 }

@@ -6,6 +6,7 @@ import no.runsafe.entitycontrol.pets.CompanionPetHumanoid;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
+import no.runsafe.framework.minecraft.Sound;
 import no.runsafe.framework.minecraft.item.meta.RunsafeSkull;
 
 public class ZombieCompanion extends CompanionPetHumanoid
@@ -16,9 +17,9 @@ public class ZombieCompanion extends CompanionPetHumanoid
 	}
 
 	@Override
-	public String getInteractSound()
+	public Sound getInteractSound()
 	{
-		return "mob.zombie.say";
+		return Sound.Creature.Zombie.Idle;
 	}
 
 	@Override

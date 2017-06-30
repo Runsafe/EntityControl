@@ -10,10 +10,4 @@ public class ButcherCompanion extends CompanionPetVillager
 		super(world);
 		setProfession(4);
 	}
-
-	@Override
-	public String getInteractSound()
-	{
-		return "mob.villager.idle";
-	}
 }
