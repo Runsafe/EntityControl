@@ -1,20 +1,19 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
+import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.minecraft.Sound;
 
 public class BatCompanion extends CompanionPetAnimal
 {
-	public BatCompanion(World world)
+	public BatCompanion(IWorld world)
 	{
 		super(world);
 	}
 
 	@Override
-	public boolean a(EntityHuman entityhuman)
+	public Sound getInteractSound()
 	{
-		playSound("mob.bat.idle");
-		return false;
+		return Sound.Creature.Bat.Idle;
 	}
 }

@@ -1,10 +1,10 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.World;
+import no.runsafe.framework.api.IWorld;
 
 public class CatCompanionMurps extends OcelotCompanion
 {
-	public CatCompanionMurps(World world)
+	public CatCompanionMurps(IWorld world)
 	{
 		super(world);
 		setCatType(2);

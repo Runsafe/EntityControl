@@ -1,21 +1,13 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetVillager;
+import no.runsafe.framework.api.IWorld;
 
 public class ButcherCompanion extends CompanionPetVillager
 {
-	public ButcherCompanion(World world)
+	public ButcherCompanion(IWorld world)
 	{
 		super(world);
 		setProfession(4);
-	}
-
-	@Override
-	public boolean a(EntityHuman entityhuman)
-	{
-		playSound("mob.villager.idle");
-		return false;
 	}
 }

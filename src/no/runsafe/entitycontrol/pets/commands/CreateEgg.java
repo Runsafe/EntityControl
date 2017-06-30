@@ -16,7 +16,7 @@ public class CreateEgg extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		CompanionType type = CompanionType.valueOf(parameters.get("companion"));
+		CompanionType type = CompanionType.valueOf(parameters.getRequired("companion"));
 		RunsafeMeta item = type.getSpawnerItem().getItem();
 		item.setDisplayName("§2Companion Egg");
 		item.addLore("§7Pet: " + type.getTitle());

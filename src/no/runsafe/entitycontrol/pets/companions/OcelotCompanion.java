@@ -4,17 +4,19 @@ import net.minecraft.server.v1_8_R3.*;
 import no.runsafe.entitycontrol.pets.CompanionHandler;
 import no.runsafe.entitycontrol.pets.ICompanionPet;
 import no.runsafe.entitycontrol.pets.PathfinderGoalFollowPlayer;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
+import no.runsafe.framework.minecraft.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 
 import java.lang.reflect.Field;
 
 public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 {
-	public OcelotCompanion(World world)
+	public OcelotCompanion(IWorld world)
 	{
-		super(world);
+		super(ObjectUnwrapper.getMinecraft(world));
 
 		// Remove all default path-finders.
 		try
@@ -29,8 +31,9 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 			e.printStackTrace();
 		}
 
+		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
-		setAge(-1000);
+		setAge(Integer.MIN_VALUE);
 	}
 
 	@Override
@@ -45,46 +48,20 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
 	}
 
-	/*
-	* Play idle sound
-	* Names of this function in different spigot versions:
-	* v1_7_R3: t
-	* v1_8_R3: z
-	* v1_9_R2: G, returns SoundEffect
-	* v1_10_R1: G, returns SoundEffect
+	/**
+	 * Volume to make noises at.
+	 * Names of this method in various spigot versions:
+	 * v1_8_R3: bB
+	 * v1_9_R2: ce
+	 * v1_10_R1: ch
+	 * v1_11_R1: ci
+	 * v1_12_R1: co
+	 * @return Volume.
 	 */
 	@Override
-	protected String z()
+	protected float bB()
 	{
-		return "none";
-	}
-
-	/*
-	* Play death sound
-	* Names of this function in various spigot versions:
-	* v1_7_R3: aT
-	* v1_8_R3: bp
-	* v1_9_R2: bT, returns SoundEffect
-	* v1_10_R1: bW, returns SoundEffect
-	 */
-	@Override
-	protected String bp()
-	{
-		return "none";
-	}
-
-	/*
-	* Play hurt sound
-	* Names of this function in various spigot versions:
-	* v1_7_R3: aS
-	* v1_8_R3: bo
-	* v1_9_R2: bS, returns SoundEffect
-	* v1_10_R1: bV, returns SoundEffect
-	 */
-	@Override
-	protected String bo()
-	{
-		return "none";
+		return 0;
 	}
 
 	@Override
@@ -93,10 +70,21 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 		return false;
 	}
 
+	/**
+	 * Interact with a player.
+	 * Called when a player right clicks on this entity.
+	 * Method name stays the same up to 1.12, argument types differ.
+	 * Argument types:
+	 * v1_8_R3: EntityHuman
+	 * v1_9_R2/v1_10_R1: EntityHuman, EnumHand, ItemStack
+	 * v1_11_R1/v1_12_R1: EntityHuman, EnumHand
+	 * @param entityhuman Player that right clicked on this entity.
+	 * @return True if successful, otherwise false. Always false here.
+	 */
 	@Override
 	public boolean a(EntityHuman entityhuman)
 	{
-		playSound("mob.cat.hitt");
+		playSound(Sound.Creature.Cat.Meow);
 		return false;
 	}
 
@@ -106,33 +94,37 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 		// Do nothing! We don't want loot.
 	}
 
+	/**
+	 * Entity base tick.
+	 * Names of this method in various spigot versions:
+	 * v1_8_R3: K
+	 * v1_9_R2/v1_10_R1/v1_11_R1: U
+	 * v1_12_R1: Y
+	 */
 	@Override
 	public void K()
 	{
-		// Entity base tick
 		super.K();
 
 		if (soundTicks > 0)
 			soundTicks--;
 
-		if (isAlive())
-			setAge(-1000);
-
-		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.worldData.getName()) || !CompanionHandler.entityIsSummoned(this))
+		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
 	}
 
-	public void playSound(String sound)
+	public void playSound(Sound sound)
 	{
-		if (soundTicks == 0)
+		if (soundTicks == 0 && sound != null)
 		{
 			final float SOUND_VOLUME = 1.0F;
 			final float SOUND_PITCH = (random.nextFloat() - random.nextFloat()) * 0.2F + 1.5F;
-			makeSound(sound, SOUND_VOLUME, SOUND_PITCH);
+			sound.Play(world.getLocation(locX, locY, locZ), SOUND_VOLUME, SOUND_PITCH);
 			soundTicks = 40;
 		}
 	}
 
+	private IWorld world;
 	private int soundTicks = 0;
 	protected EntityPlayer player;
 }

@@ -1,20 +1,19 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
+import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.minecraft.Sound;
 
 public class PigCompanion extends CompanionPetAnimal
 {
-	public PigCompanion(World world)
+	public PigCompanion(IWorld world)
 	{
 		super(world);
 	}
 
 	@Override
-	public boolean a(EntityHuman entityhuman)
+	public Sound getInteractSound()
 	{
-		playSound("mob.pig.say");
-		return false;
+		return Sound.Creature.Pig.Idle;
 	}
 }

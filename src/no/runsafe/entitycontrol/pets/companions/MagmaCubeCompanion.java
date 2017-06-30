@@ -1,21 +1,20 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
+import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.minecraft.Sound;
 
 public class MagmaCubeCompanion extends CompanionPetAnimal
 {
-	public MagmaCubeCompanion(World world)
+	public MagmaCubeCompanion(IWorld world)
 	{
 		super(world);
 		this.datawatcher.watch(16, (byte) 1);
 	}
 
 	@Override
-	public boolean a(EntityHuman entityhuman)
+	public Sound getInteractSound()
 	{
-		playSound("mob.magmacube.small");
-		return false;
+		return Sound.Creature.MagmaCube.Walk;
 	}
 }

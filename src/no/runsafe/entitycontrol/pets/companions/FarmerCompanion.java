@@ -1,21 +1,13 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetVillager;
+import no.runsafe.framework.api.IWorld;
 
 public class FarmerCompanion extends CompanionPetVillager
 {
-	public FarmerCompanion(World world)
+	public FarmerCompanion(IWorld world)
 	{
 		super(world);
 		setProfession(0);
-	}
-
-	@Override
-	public boolean a(EntityHuman entityhuman)
-	{
-		playSound("mob.villager.idle");
-		return false;
 	}
 }

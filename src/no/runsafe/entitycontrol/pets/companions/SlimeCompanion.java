@@ -1,21 +1,20 @@
 package no.runsafe.entitycontrol.pets.companions;
 
-import net.minecraft.server.v1_8_R3.EntityHuman;
-import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.entitycontrol.pets.CompanionPetAnimal;
+import no.runsafe.framework.api.IWorld;
+import no.runsafe.framework.minecraft.Sound;
 
 public class SlimeCompanion extends CompanionPetAnimal
 {
-	public SlimeCompanion(World world)
+	public SlimeCompanion(IWorld world)
 	{
 		super(world);
 		this.datawatcher.watch(16, (byte) 1);
 	}
 
 	@Override
-	public boolean a(EntityHuman entityhuman)
+	public Sound getInteractSound()
 	{
-		playSound("mob.slime.small");
-		return false;
+		return Sound.Creature.Slime.Walk;
 	}
 }
