@@ -33,7 +33,7 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 
 		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
-		setAge(-1000);
+		setAge(-2000000000);
 	}
 
 	@Override
@@ -108,9 +108,6 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 
 		if (soundTicks > 0)
 			soundTicks--;
-
-		if (isAlive())
-			setAge(-1000);
 
 		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;

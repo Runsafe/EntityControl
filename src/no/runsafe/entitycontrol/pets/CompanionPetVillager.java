@@ -35,7 +35,7 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 
 		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
-		setAge(-1000);
+		setAge(-2000000000);
 	}
 
 	/**
@@ -135,9 +135,6 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 
 		if (soundTicks > 0)
 			soundTicks--;
-
-		if (isAlive())
-			setAge(-1000);
 
 		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;

@@ -34,7 +34,7 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 
 		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
-		setAge(-1000);
+		setAge(-2000000000);
 	}
 
 	/**
@@ -142,9 +142,6 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 
 		if (soundTicks > 0)
 			soundTicks--;
-
-		if (isAlive())
-			setAge(-1000);
 
 		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
