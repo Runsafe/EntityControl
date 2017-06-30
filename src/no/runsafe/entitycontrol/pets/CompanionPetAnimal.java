@@ -34,7 +34,7 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 
 		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
-		setAge(-2000000000);
+		setAge(Integer.MIN_VALUE);
 	}
 
 	/**
