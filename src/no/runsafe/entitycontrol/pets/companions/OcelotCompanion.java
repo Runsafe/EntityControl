@@ -33,7 +33,7 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 
 		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
-		setAge(Integer.MIN_VALUE);
+		setAgeRaw(Integer.MIN_VALUE);
 	}
 
 	@Override
