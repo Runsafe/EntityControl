@@ -71,7 +71,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* e() gets a value and a() sets that same value.
 		* Might be related to whether or not the companion is traveling in water.
 		*/
-		h = 0;
+		playerTeleportTimer = 0;
 		Navigation entityNewNavigation = (Navigation) entity.getNavigation();
 		i = (entityNewNavigation).e();
 		(entityNewNavigation).a(false);
@@ -103,14 +103,14 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void e()
 	{
-		final float Z_PITCH = 40;  // Head tilt pitch
+		final float HEAD_TILT_PITCH = 40;
 		final float SPEED = 10.0F;
-		entity.getControllerLook().a(player, SPEED, Z_PITCH);
+		entity.getControllerLook().a(player, SPEED, HEAD_TILT_PITCH);
 
-		if (--this.h > 0)
+		if (--this.playerTeleportTimer > 0)
 			return;
 
-		this.h = 10;
+		this.playerTeleportTimer = 10;
 		if (this.entityNavigation.a(player, this.speed))
 			return;
 
@@ -182,7 +182,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private World world;
 	private double speed;
 	private Navigation entityNavigation;
-	private int h; // Time to wait until teleporting to a player.
+	private int playerTeleportTimer;
 	private float closestPointToPlayer; // Distance before entity will stop running to player.
 	private float playerDistanceLimit; // Distance before entity will run to player.
 	private boolean i; // Something to do with if the entity is traveling through water or not.
