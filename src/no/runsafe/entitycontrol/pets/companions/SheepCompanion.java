@@ -34,6 +34,13 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
 		setAgeRaw(Integer.MIN_VALUE);
+
+		/*
+		 * Silence default sounds.
+		 * v1_9_R2: c
+		 * v1_10_R1 and up: setSilent
+		 */
+		b(false);
 	}
 
 	@Override
@@ -46,22 +53,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	{
 		this.player = ObjectUnwrapper.getMinecraft(player);
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
-	}
-
-	/**
-	 * Volume to make noises at.
-	 * Names of this method in various spigot versions:
-	 * v1_8_R3: bB
-	 * v1_9_R2: ce
-	 * v1_10_R1: ch
-	 * v1_11_R1: ci
-	 * v1_12_R1: co
-	 * @return Volume.
-	 */
-	@Override
-	protected float bB()
-	{
-		return 0;
 	}
 
 	@Override
