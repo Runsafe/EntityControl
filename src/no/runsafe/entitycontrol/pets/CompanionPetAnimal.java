@@ -45,18 +45,6 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 	}
 
 	/**
-	 * In spigot this puts this object on a leash.
-	 * Here it doesn't do anything.
-	 * @param entity Nothing.
-	 * @param flag Nothing.
-	 */
-	@Override
-	public void setLeashHolder(Entity entity, boolean flag)
-	{
-		// No.
-	}
-
-	/**
 	 * Sets the player the object will follow.
 	 * @param player Player to follow.
 	 */

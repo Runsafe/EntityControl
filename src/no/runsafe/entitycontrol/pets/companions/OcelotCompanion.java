@@ -43,12 +43,6 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 		b(false);
 	}
 
-	@Override
-	public void setLeashHolder(Entity entity, boolean flag)
-	{
-		// No.
-	}
-
 	public void setFollowingPlayer(IPlayer player)
 	{
 		this.player = ObjectUnwrapper.getMinecraft(player);

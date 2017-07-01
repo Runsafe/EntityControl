@@ -43,12 +43,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 		b(false);
 	}
 
-	@Override
-	public void setLeashHolder(Entity entity, boolean flag)
-	{
-		// No.
-	}
-
 	public void setFollowingPlayer(IPlayer player)
 	{
 		this.player = ObjectUnwrapper.getMinecraft(player);
