@@ -3,21 +3,28 @@ package no.runsafe.entitycontrol.pets;
 import net.minecraft.server.v1_8_R3.EntityInsentient;
 import net.minecraft.server.v1_8_R3.World;
 import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.block.IBlock;
+import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.player.IPlayerChangedWorldEvent;
+import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClick;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
+import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChangedWorldEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.tools.nms.EntityRegister;
+import no.runsafe.framework.minecraft.Sound;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +32,18 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent, IPlayerQuitEvent
+public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent, IPlayerQuitEvent, IPlayerInteractEntityEvent
 {
 	/**
 	 * Constructor for CompanionHandler.
 	 * @param console The console.
 	 * @param server The server.
 	 */
-	public CompanionHandler(IConsole console, IServer server)
+	public CompanionHandler(IConsole console, IServer server, IScheduler scheduler)
 	{
 		this.console = console;
 		CompanionHandler.server = server;
+		this.scheduler = scheduler;
 	}
 
 	/**
@@ -194,14 +202,46 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	}
 
 	@Override
+	public void OnPlayerInteractEntityEvent(RunsafePlayerInteractEntityEvent event)
+	{
+		RunsafeEntity runsafePet = event.getRightClicked();
+		if (interactTimer.containsKey(runsafePet))
+		{
+			event.cancel();
+			return;
+		}
+
+		// Check if right clicked entity is a companion pet.
+		if (!(((CraftEntity) runsafePet.getRaw()).getHandle() instanceof ICompanionPet))
+			return;
+		ICompanionPet pet = (ICompanionPet) ((CraftEntity) runsafePet.getRaw()).getHandle();
+
+		// Play the companion's idle sound.
+		Sound interactSound = pet.getInteractSound();
+		if (interactSound != null)
+		{
+			interactSound.Play(runsafePet.getLocation(), 1.0F, 1.5F);
+			interactTimer.put(runsafePet, scheduler.startSyncTask(() ->
+			{
+				if (interactTimer.containsKey(runsafePet))
+					interactTimer.remove(runsafePet);
+			}, 2));
+		}
+
+		event.cancel();
+	}
+
+	@Override
 	public void OnServerReady()
 	{
 		for (CompanionType type : CompanionType.values())
 			EntityRegister.registerEntity(type.getEntityClass(), "Companion" + type.getName(), type.getId());
 	}
 
+	private final IScheduler scheduler;
 	private final IConsole console;
 	public static IServer server;
+	private static final ConcurrentHashMap<IEntity, Integer> interactTimer = new ConcurrentHashMap<>();
 	public static ConcurrentHashMap<UUID, List<SummonedPet>> summonedPets = new ConcurrentHashMap<UUID, List<SummonedPet>>(0);
 	//public static ConcurrentHashMap<String, List<CompanionType>> summonedPets = new ConcurrentHashMap<String, List<CompanionType>>(0);
 	//public static ConcurrentHashMap<String, List<Integer>> summonedPetIds = new ConcurrentHashMap<String, List<Integer>>(0);

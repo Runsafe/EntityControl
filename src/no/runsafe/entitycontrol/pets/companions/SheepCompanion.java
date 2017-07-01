@@ -62,21 +62,12 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	}
 
 	/**
-	 * Interact with a player.
-	 * Called when a player right clicks on this entity.
-	 * Method name stays the same up to 1.12, argument types differ.
-	 * Argument types:
-	 * v1_8_R3: EntityHuman
-	 * v1_9_R2/v1_10_R1: EntityHuman, EnumHand, ItemStack
-	 * v1_11_R1/v1_12_R1: EntityHuman, EnumHand
-	 * @param entityhuman Player that right clicked on this entity.
-	 * @return True if successful, otherwise false. Always false here.
+	 * Gets the sound to be made when right clicked by a player.
+	 * @return Sound to make when right clicked by a player.
 	 */
-	@Override
-	public boolean a(EntityHuman entityhuman)
+	public Sound getInteractSound()
 	{
-		playSound(Sound.Creature.Sheep.Idle);
-		return false;
+		return Sound.Creature.Sheep.Idle;
 	}
 
 	@Override
@@ -97,9 +88,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	{
 		super.K();
 
-		if (soundTicks > 0)
-			soundTicks--;
-
 		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
 
@@ -111,19 +99,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 		colourChangeTicks--;
 	}
 
-	public void playSound(Sound sound)
-	{
-		if (soundTicks == 0 && sound != null)
-		{
-			final float SOUND_VOLUME = 1.0F;
-			final float SOUND_PITCH = (random.nextFloat() - random.nextFloat()) * 0.2F + 1.5F;
-			sound.Play(world.getLocation(locX, locY, locZ), SOUND_VOLUME, SOUND_PITCH);
-			soundTicks = 40;
-		}
-	}
-
 	private IWorld world;
-	private int soundTicks = 0;
 	private int colourChangeTicks = 6000;
 	protected EntityPlayer player;
 }
