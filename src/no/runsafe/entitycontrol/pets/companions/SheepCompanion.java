@@ -45,7 +45,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 
 	public void setFollowingPlayer(IPlayer player)
 	{
-		this.player = ObjectUnwrapper.getMinecraft(player);
+		this.player = player;
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
 	}
 
@@ -82,7 +82,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
+		if (player == null || player.isDead() || !world.equals(player.getWorld()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
 
 		if (colourChangeTicks == 0)
@@ -95,5 +95,5 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 
 	private IWorld world;
 	private int colourChangeTicks = 6000;
-	protected EntityPlayer player;
+	protected IPlayer player;
 }

@@ -64,7 +64,7 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 	@Override
 	public void setFollowingPlayer(IPlayer player)
 	{
-		this.player = ObjectUnwrapper.getMinecraft(player);
+		this.player = player;
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
 	}
 
@@ -114,10 +114,10 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 	{
 		super.K();
 
-		if (player == null || !player.isAlive() || !player.world.worldData.getName().equals(world.getName()) || !CompanionHandler.entityIsSummoned(this))
+		if (player == null || player.isDead() || !world.equals(player.getWorld()) || !CompanionHandler.entityIsSummoned(this))
 			dead = true;
 	}
 
 	private IWorld world;
-	protected EntityPlayer player;
+	protected IPlayer player;
 }

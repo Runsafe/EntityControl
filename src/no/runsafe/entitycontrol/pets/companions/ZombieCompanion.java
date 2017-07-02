@@ -51,7 +51,7 @@ public class ZombieCompanion extends CompanionPetHumanoid
 		else if (ran == 0.7)
 		{
 			RunsafeSkull item = (RunsafeSkull) Item.Decoration.Head.Human.getItem();
-			item.setOwner(player.displayName);
+			item.setOwner(player.getName());
 			setEquipment(0, ObjectUnwrapper.getMinecraft(item));
 		}
 	}

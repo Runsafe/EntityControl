@@ -1,9 +1,8 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_8_R3.*;
-
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
+import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
 public class PathfinderGoalFollowPlayer extends PathfinderGoal
 {
@@ -15,12 +14,13 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * @param inputPlayerDistanceLimit Distance before entity will run to player.
 	 * @param inputClosestPointToPlayer Distance before entity will stop running to player.
 	 */
-	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float inputPlayerDistanceLimit, float inputClosestPointToPlayer
+	public PathfinderGoalFollowPlayer(IPlayer player, EntityInsentient entity, double entitySpeed, float inputPlayerDistanceLimit, float inputClosestPointToPlayer
 	)
 	{
 		this.entity = entity;
 		this.world = entity.world;
 		this.player = player;
+		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
 		this.speed = entitySpeed;
 		this.entityNavigation = (Navigation) entity.getNavigation();
 		this.playerDistanceLimit = inputPlayerDistanceLimit;
@@ -105,13 +105,13 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		final float HEAD_TILT_PITCH = 40;
 		final float SPEED = 10.0F;
-		entity.getControllerLook().a(player, SPEED, HEAD_TILT_PITCH);
+		entity.getControllerLook().a(rawPlayer, SPEED, HEAD_TILT_PITCH);
 
 		if (--this.playerTeleportTimer > 0)
 			return;
 
 		this.playerTeleportTimer = 10;
-		if (this.entityNavigation.a(player, this.speed))
+		if (this.entityNavigation.a(rawPlayer, this.speed))
 			return;
 
 		/*
@@ -126,9 +126,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 			return;
 
 		// Get the companion owner's location.
-		int blockLocX = MathHelper.floor(player.locX) - 2;
-		int blockLocZ = MathHelper.floor(player.locZ) - 2;
-		int blockLocY = MathHelper.floor(player.getBoundingBox().b);
+		int blockLocX = MathHelper.floor(rawPlayer.locX) - 2;
+		int blockLocZ = MathHelper.floor(rawPlayer.locZ) - 2;
+		int blockLocY = MathHelper.floor(rawPlayer.getBoundingBox().b);
 
 		// Check blocks around the companion owner in a hollow 3x3block square
 		for (int indexX = 0; indexX <= 4; ++indexX)
@@ -170,15 +170,14 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 */
 	private double getOwnerDistance()
 	{
-		return sqrt(
-			pow(entity.locX - player.locX, 2)
-			+ pow(entity.locY - player.locY, 2)
-			+ pow(entity.locZ - player.locZ, 2)
+		return player.getLocation().distance(
+			player.getWorld().getLocation(entity.locX, entity.locY, entity.locZ)
 		);
 	}
 
 	private EntityInsentient entity;
-	private EntityPlayer player;
+	private EntityPlayer rawPlayer;
+	private IPlayer player;
 	private World world;
 	private double speed;
 	private Navigation entityNavigation;
