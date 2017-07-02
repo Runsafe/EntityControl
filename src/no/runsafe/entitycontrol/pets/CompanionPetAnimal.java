@@ -51,7 +51,7 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 	public void setFollowingPlayer(IPlayer player)
 	{
 		this.player = player;
-		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this, 1.0D, 2F, 2F));
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this));
 	}
 
 	/**
