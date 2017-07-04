@@ -162,6 +162,9 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public static boolean entityIsSummoned(int entityId)
 	{
+		if (summonedPets.isEmpty())
+			return false;
+
 		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
 			for (SummonedPet pet : node.getValue())
 				if (entityId == pet.getEntityID())
