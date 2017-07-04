@@ -60,7 +60,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || player.isDead() || !CompanionHandler.entityIsSummoned(getId()))
+		if (player == null || !CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 
 		if (colourChangeTicks == 0)

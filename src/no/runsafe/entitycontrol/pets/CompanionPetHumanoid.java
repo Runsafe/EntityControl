@@ -66,7 +66,7 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || player.isDead() || !CompanionHandler.entityIsSummoned(getId()))
+		if (player == null || !CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 
 		if (randomThingTicks > 0)

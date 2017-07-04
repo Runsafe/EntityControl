@@ -12,6 +12,7 @@ import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.entity.IEntityDamageEvent;
 import no.runsafe.framework.api.event.player.IPlayerChangedWorldEvent;
+import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClick;
@@ -21,6 +22,7 @@ import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChangedWorldEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
@@ -35,7 +37,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CompanionHandler
 	implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent,
-	IPlayerQuitEvent, IPlayerInteractEntityEvent, IEntityDamageEvent
+	IPlayerQuitEvent, IPlayerInteractEntityEvent, IEntityDamageEvent,
+	IPlayerDeathEvent
 {
 	/**
 	 * Constructor for CompanionHandler.
@@ -187,6 +190,15 @@ public class CompanionHandler
 	}
 
 	/**
+	 * Removes all of a player's summoned companion pets.
+	 * @param player Pet owner.
+	 */
+	public void removeSummonedPets(IPlayer player)
+	{
+		summonedPets.remove(player.getUniqueId());
+	}
+
+	/**
 	 * Triggered when player changes world.
 	 * Kill player's companion pets.
 	 * @param event Event that happens when a player changes worlds.
@@ -194,7 +206,7 @@ public class CompanionHandler
 	@Override
 	public void OnPlayerChangedWorld(RunsafePlayerChangedWorldEvent event)
 	{
-		summonedPets.remove(event.getPlayer().getUniqueId());
+		removeSummonedPets(event.getPlayer());
 	}
 
 	/**
@@ -204,7 +216,13 @@ public class CompanionHandler
 	@Override
 	public void OnPlayerQuit(RunsafePlayerQuitEvent event)
 	{
-		summonedPets.remove(event.getPlayer().getUniqueId());
+		removeSummonedPets(event.getPlayer());
+	}
+
+	@Override
+	public void OnPlayerDeathEvent(RunsafePlayerDeathEvent event)
+	{
+		removeSummonedPets(event.getEntity());
 	}
 
 	@Override
