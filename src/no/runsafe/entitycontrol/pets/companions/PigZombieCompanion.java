@@ -14,38 +14,4 @@ public class PigZombieCompanion extends CompanionPetHumanoid
 	{
 		super(world);
 	}
-
-	@Override
-	protected void randomThing()
-	{
-		super.randomThing();
-		float ran = random.nextFloat();
-
-		if (ran == 0.2)
-		{
-			setEquipment(0, new ItemStack(Items.POISONOUS_POTATO));
-		}
-		else if (ran == 0.3)
-		{
-			setEquipment(0, new ItemStack(Items.FIRE_CHARGE));
-		}
-		else if (ran == 0.4)
-		{
-			setEquipment(0, new ItemStack(Items.GOLDEN_SWORD));
-		}
-		else if (ran == 0.5)
-		{
-			setEquipment(0, new ItemStack(Items.BONE));
-		}
-		else if (ran == 0.6)
-		{
-			setEquipment(0, new ItemStack(Items.BLAZE_ROD));
-		}
-		else if (ran == 0.7)
-		{
-			RunsafeSkull item = (RunsafeSkull) Item.Decoration.Head.Human.getItem();
-			item.setOwner(player.getName());
-			setEquipment(0, ObjectUnwrapper.getMinecraft(item));
-		}
-	}
 }

@@ -51,52 +51,6 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	 */
 	public void setFollowingPlayer(IPlayer player)
 	{
-		this.player = player;
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(player, this));
 	}
-
-	/**
-	 * Entity base tick.
-	 * Names of this method in various spigot versions:
-	 * v1_8_R3: K
-	 * v1_9_R2/v1_10_R1/v1_11_R1: U
-	 * v1_12_R1: Y
-	 */
-	@Override
-	public void K()
-	{
-		super.K();
-
-		if (randomThingTicks > 0)
-			randomThingTicks--;
-		else
-			randomThing();
-
-		if (randomThingProgress > 1)
-			randomThingProgress--;
-		else if (randomThingProgress == 1)
-			removeRandomThings();
-	}
-
-	protected void randomThing()
-	{
-		randomThingTicks = 12000;
-		randomThingProgress = 1200;
-	}
-
-	private void removeRandomThings()
-	{
-		randomThingProgress = 0;
-		setEquipment(0, null);
-		setEquipment(1, null);
-		setEquipment(2, null);
-		setEquipment(3, null);
-		setEquipment(4, null);
-	}
-
-	private int randomThingTicks = 12000;
-	private int randomThingProgress = 0;
-	@Nonnull
-	protected IPlayer player;
-	protected final Random random = new Random();
 }
