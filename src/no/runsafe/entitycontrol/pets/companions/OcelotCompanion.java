@@ -9,6 +9,7 @@ import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 
 public class OcelotCompanion extends EntityOcelot implements ICompanionPet
@@ -59,9 +60,10 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || !CompanionHandler.entityIsSummoned(getId()))
+		if (!CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 	}
 
+	@Nonnull
 	protected IPlayer player;
 }

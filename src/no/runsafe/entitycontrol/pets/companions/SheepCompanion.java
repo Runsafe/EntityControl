@@ -9,6 +9,8 @@ import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
+
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import static net.minecraft.server.v1_8_R3.EnumColor.fromInvColorIndex;
 
@@ -60,7 +62,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || !CompanionHandler.entityIsSummoned(getId()))
+		if (!CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 
 		if (colourChangeTicks == 0)
@@ -72,5 +74,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	}
 
 	private int colourChangeTicks = 6000;
+
+	@Nonnull
 	protected IPlayer player;
 }

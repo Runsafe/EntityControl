@@ -7,6 +7,7 @@ import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 
 public class CompanionPetAnimal extends EntityPig implements ICompanionPet
@@ -65,9 +66,10 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || !CompanionHandler.entityIsSummoned(getId()))
+		if (!CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 	}
 
+	@Nonnull
 	protected IPlayer player;
 }

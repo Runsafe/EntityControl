@@ -4,6 +4,8 @@ import net.minecraft.server.v1_8_R3.*;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
+import javax.annotation.Nonnull;
+
 public class PathfinderGoalFollowPlayer extends PathfinderGoal
 {
 	/**
@@ -11,7 +13,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * @param player Player to follow
 	 * @param entity This entity.
 	 */
-	public PathfinderGoalFollowPlayer(IPlayer player, EntityInsentient entity)
+	public PathfinderGoalFollowPlayer(@Nonnull IPlayer player, EntityInsentient entity)
 	{
 		this.entity = entity;
 		this.world = entity.world;
@@ -29,7 +31,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public boolean a()
 	{
-		return !(player == null || getOwnerDistance() < playerDistanceLimit);
+		return !(getOwnerDistance() < playerDistanceLimit);
 	}
 
 	/**
@@ -170,6 +172,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 
 	private EntityInsentient entity;
 	private EntityPlayer rawPlayer;
+	@Nonnull
 	private IPlayer player;
 	private World world;
 	private double speed = 1;

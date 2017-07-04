@@ -29,6 +29,7 @@ import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.tools.nms.EntityRegister;
 import no.runsafe.framework.minecraft.Sound;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class CompanionHandler
 	 * @param type Companion type to spawn.
 	 * @param follower Player the companion will follow.
 	 */
-	public void spawnCompanion(ILocation location, CompanionType type, IPlayer follower)
+	public void spawnCompanion(ILocation location, CompanionType type, @Nonnull IPlayer follower)
 	{
 		IWorld world = location.getWorld();
 		World rawWorld = ObjectUnwrapper.getMinecraft(location.getWorld());
