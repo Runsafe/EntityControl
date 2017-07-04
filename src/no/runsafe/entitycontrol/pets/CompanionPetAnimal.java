@@ -100,7 +100,7 @@ public class CompanionPetAnimal extends EntityPig implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || player.isDead() || !world.equals(player.getWorld()) || !CompanionHandler.entityIsSummoned(this))
+		if (player == null || player.isDead() || !world.equals(player.getWorld()) || !CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 	}
 

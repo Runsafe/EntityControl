@@ -157,14 +157,14 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 
 	/**
 	 * Find whether or not an entity is summoned.
-	 * @param entity Entity to find if summoned.
+	 * @param entityId Entity to find if summoned.
 	 * @return True if entity is summoned, otherwise false.
 	 */
-	public static boolean entityIsSummoned(EntityInsentient entity)
+	public static boolean entityIsSummoned(int entityId)
 	{
 		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
 			for (SummonedPet pet : node.getValue())
-				if (entity.getId() == pet.getEntityID())
+				if (entityId == pet.getEntityID())
 					return true;
 
 		return false;
