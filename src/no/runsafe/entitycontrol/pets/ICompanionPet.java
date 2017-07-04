@@ -7,5 +7,4 @@ public interface ICompanionPet
 {
 	void setFollowingPlayer(IPlayer player);
 	void setLocation(double x, double y, double z, float f, float f1);
-	Sound getInteractSound();
 }

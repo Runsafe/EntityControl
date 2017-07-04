@@ -50,15 +50,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	}
 
 	/**
-	 * Gets the sound to be made when right clicked by a player.
-	 * @return Sound to make when right clicked by a player.
-	 */
-	public Sound getInteractSound()
-	{
-		return Sound.Creature.Sheep.Idle;
-	}
-
-	/**
 	 * Entity base tick.
 	 * Names of this method in various spigot versions:
 	 * v1_8_R3: K

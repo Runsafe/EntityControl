@@ -8,6 +8,7 @@ import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.entity.IEntity;
+import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.event.IServerReady;
 import no.runsafe.framework.api.event.entity.IEntityDamageEvent;
 import no.runsafe.framework.api.event.player.IPlayerChangedWorldEvent;
@@ -18,7 +19,6 @@ import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChangedWorldEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
@@ -26,7 +26,6 @@ import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 import no.runsafe.framework.tools.nms.EntityRegister;
 import no.runsafe.framework.minecraft.Sound;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -211,7 +210,7 @@ public class CompanionHandler
 	@Override
 	public void OnPlayerInteractEntityEvent(RunsafePlayerInteractEntityEvent event)
 	{
-		RunsafeEntity runsafePet = event.getRightClicked();
+		IEntity runsafePet = event.getRightClicked();
 		if (interactTimer.containsKey(runsafePet))
 		{
 			event.cancel();
@@ -219,12 +218,12 @@ public class CompanionHandler
 		}
 
 		// Check if right clicked entity is a companion pet.
-		if (!(((CraftEntity) runsafePet.getRaw()).getHandle() instanceof ICompanionPet))
+		if (!entityIsSummoned(runsafePet.getEntityId()))
 			return;
-		ICompanionPet pet = (ICompanionPet) ((CraftEntity) runsafePet.getRaw()).getHandle();
+		ILivingEntity pet = (ILivingEntity) runsafePet;
 
 		// Play the companion's idle sound.
-		Sound interactSound = pet.getInteractSound();
+		Sound interactSound = pet.getIdleSound();
 		if (interactSound != null)
 		{
 			interactSound.Play(runsafePet.getLocation(), 1.0F, 1.5F);

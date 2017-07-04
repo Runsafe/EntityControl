@@ -56,15 +56,6 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	}
 
 	/**
-	 * Gets the sound to be made when right clicked by a player.
-	 * @return Sound to make when right clicked by a player.
-	 */
-	public Sound getInteractSound()
-	{
-		return null;
-	}
-
-	/**
 	 * Entity base tick.
 	 * Names of this method in various spigot versions:
 	 * v1_8_R3: K

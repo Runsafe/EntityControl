@@ -7,7 +7,6 @@ import no.runsafe.entitycontrol.pets.PathfinderGoalFollowPlayer;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
-import no.runsafe.framework.minecraft.Sound;
 import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
 
 import java.lang.reflect.Field;
@@ -47,15 +46,6 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 	{
 		this.player = player;
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this));
-	}
-
-	/**
-	 * Gets the sound to be made when right clicked by a player.
-	 * @return Sound to make when right clicked by a player.
-	 */
-	public Sound getInteractSound()
-	{
-		return Sound.Creature.Cat.Meow;
 	}
 
 	/**

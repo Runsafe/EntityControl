@@ -69,15 +69,6 @@ public class CompanionPetVillager extends EntityVillager implements ICompanionPe
 	}
 
 	/**
-	 * Gets the sound to be made when right clicked by a player.
-	 * @return Sound to make when right clicked by a player.
-	 */
-	public Sound getInteractSound()
-	{
-		return Sound.Get("villager_idle");
-	}
-
-	/**
 	 * Entity base tick.
 	 * Names of this method in various spigot versions:
 	 * v1_8_R3: K
