@@ -9,6 +9,7 @@ import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.event.IServerReady;
+import no.runsafe.framework.api.event.entity.IEntityDamageEvent;
 import no.runsafe.framework.api.event.player.IPlayerChangedWorldEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
@@ -18,6 +19,7 @@ import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
 import no.runsafe.framework.minecraft.entity.RunsafeEntity;
+import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChangedWorldEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
@@ -32,7 +34,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent, IPlayerQuitEvent, IPlayerInteractEntityEvent
+public class CompanionHandler
+	implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent,
+	IPlayerQuitEvent, IPlayerInteractEntityEvent, IEntityDamageEvent
 {
 	/**
 	 * Constructor for CompanionHandler.
@@ -232,6 +236,13 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 		}
 
 		event.cancel();
+	}
+
+	@Override
+	public void OnEntityDamage(RunsafeEntityDamageEvent event)
+	{
+		if (entityIsSummoned(event.getEntity().getEntityId()))
+			event.cancel();
 	}
 
 	@Override

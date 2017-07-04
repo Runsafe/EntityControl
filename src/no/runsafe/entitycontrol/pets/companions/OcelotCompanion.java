@@ -49,12 +49,6 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this));
 	}
 
-	@Override
-	public boolean damageEntity(DamageSource damagesource, float f)
-	{
-		return false;
-	}
-
 	/**
 	 * Gets the sound to be made when right clicked by a player.
 	 * @return Sound to make when right clicked by a player.
@@ -62,12 +56,6 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 	public Sound getInteractSound()
 	{
 		return Sound.Creature.Cat.Meow;
-	}
-
-	@Override
-	protected void dropDeathLoot(boolean flag, int i)
-	{
-		// Do nothing! We don't want loot.
 	}
 
 	/**

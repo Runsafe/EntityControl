@@ -56,37 +56,12 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	}
 
 	/**
-	 * Damages entity if possible.
-	 * This entity can't be damaged.
-	 * @param damagesource Source of damage
-	 * @param f Amount of damage
-	 * @return true if damaged, otherwise false. Always false here.
-	 */
-	@Override
-	public boolean damageEntity(DamageSource damagesource, float f)
-	{
-		return false;
-	}
-
-	/**
 	 * Gets the sound to be made when right clicked by a player.
 	 * @return Sound to make when right clicked by a player.
 	 */
 	public Sound getInteractSound()
 	{
 		return null;
-	}
-
-	/**
-	 * Decides amount of loot to drop on death and drops it.
-	 * Object will never drop loot.
-	 * @param flag Nothing
-	 * @param i Nothing / Number of items to drop.
-	 */
-	@Override
-	protected void dropDeathLoot(boolean flag, int i)
-	{
-		// Do nothing! We don't want loot.
 	}
 
 	/**
