@@ -1,18 +1,18 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_8_R3.EntityInsentient;
+import no.runsafe.framework.api.entity.ILivingEntity;
 
 public class SummonedPet
 {
 	/**
 	 * Constructor for SummonedPet.
 	 * @param type Companion pet type.
-	 * @param entityID ID for the companion pet.
+	 * @param pet the companion pet object.
 	 */
-	public SummonedPet(CompanionType type, int entityID, EntityInsentient pet)
+	public SummonedPet(CompanionType type, ILivingEntity pet)
 	{
 		this.type = type;
-		this.entityID = entityID;
+		this.entityID = pet.getEntityId();
 		this.pet = pet;
 	}
 
@@ -37,12 +37,12 @@ public class SummonedPet
 	/**
 	 * @return The pet's object.
 	 */
-	public EntityInsentient getPet()
+	public ILivingEntity getPet()
 	{
 		return pet;
 	}
 
 	private final CompanionType type;
 	private final int entityID;
-	private final EntityInsentient pet;
+	private final ILivingEntity pet;
 }

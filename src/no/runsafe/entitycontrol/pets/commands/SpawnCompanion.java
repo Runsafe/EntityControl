@@ -17,7 +17,7 @@ public class SpawnCompanion extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		handler.spawnCompanion(executor.getLocation(), CompanionType.valueOf(parameters.getRequired("companion")), executor);
+		handler.spawnCompanion(CompanionType.valueOf(parameters.getRequired("companion")), executor);
 		return null;
 	}
 

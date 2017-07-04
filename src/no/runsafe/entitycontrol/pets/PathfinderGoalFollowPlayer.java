@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_8_R3.*;
+import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
@@ -13,13 +14,14 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * @param player Player to follow
 	 * @param entity This entity.
 	 */
-	public PathfinderGoalFollowPlayer(@Nonnull IPlayer player, EntityInsentient entity)
+	public PathfinderGoalFollowPlayer(@Nonnull IPlayer player, ILivingEntity entity)
 	{
 		this.entity = entity;
-		this.world = entity.world;
+		this.rawEntity = ((EntityInsentient) ObjectUnwrapper.getMinecraft(entity));
+		this.world = this.rawEntity.world;
 		this.player = player;
 		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
-		this.entityNavigation = (Navigation) entity.getNavigation();
+		this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
 		this.a(3); // Something to do with whether or not certain tasks can run concurrently.
 	}
 
@@ -67,7 +69,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* Might be related to whether or not the companion is traveling in water.
 		*/
 		playerTeleportTimer = 0;
-		Navigation entityNewNavigation = (Navigation) entity.getNavigation();
+		Navigation entityNewNavigation = (Navigation) rawEntity.getNavigation();
 		i = (entityNewNavigation).e();
 		(entityNewNavigation).a(false);
 	}
@@ -88,7 +90,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* Second method might be related to whether or not the companion is traveling in water.
 		*/
 		entityNavigation.n();
-		((Navigation) entity.getNavigation()).a(this.i);
+		((Navigation) rawEntity.getNavigation()).a(this.i);
 	}
 
 	/**
@@ -100,7 +102,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		final float HEAD_TILT_PITCH = 40;
 		final float SPEED = 10.0F;
-		entity.getControllerLook().a(rawPlayer, SPEED, HEAD_TILT_PITCH);
+		rawEntity.getControllerLook().a(rawPlayer, SPEED, HEAD_TILT_PITCH);
 
 		if (--this.playerTeleportTimer > 0)
 			return;
@@ -114,7 +116,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		 * v1_8_R3: .cc()
 		 * v1_9_R2 and up: .isLeashed()
 		 */
-		if (entity.cc()) // Stop if entity is leashed.
+		if (rawEntity.cc()) // Stop if entity is leashed.
 			return;
 
 		if (getOwnerDistance() < 144.0D) // Check if the companion owner is 144 blocks away.
@@ -139,12 +141,12 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 					continue;
 
 				// Teleport to the companion owner.
-				entity.setPositionRotation(
+				rawEntity.setPositionRotation(
 					blockLocX + indexX + 0.5F,
 					blockLocY,
 					blockLocZ + indexZ + 0.5F,
-					entity.yaw,
-					entity.pitch
+					rawEntity.yaw,
+					rawEntity.pitch
 				);
 
 				/*
@@ -165,12 +167,11 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 */
 	private double getOwnerDistance()
 	{
-		return player.getLocation().distance(
-			player.getWorld().getLocation(entity.locX, entity.locY, entity.locZ)
-		);
+		return player.getLocation().distance(entity.getLocation());
 	}
 
-	private EntityInsentient entity;
+	private ILivingEntity entity;
+	private EntityInsentient rawEntity;
 	private EntityPlayer rawPlayer;
 	@Nonnull
 	private IPlayer player;

@@ -1,54 +1,51 @@
 package no.runsafe.entitycontrol.pets;
 
-import no.runsafe.entitycontrol.pets.companions.*;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
+import no.runsafe.framework.api.entity.IAgeable;
+import no.runsafe.framework.api.entity.ILivingEntity;
+import no.runsafe.framework.api.entity.ISlime;
+import no.runsafe.framework.api.entity.animals.IOcelot;
+import no.runsafe.framework.api.entity.monsters.IZombie;
+import no.runsafe.framework.api.entity.villagers.IVillager;
+import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
+import no.runsafe.framework.minecraft.entity.LivingEntity;
+import org.bukkit.entity.Ocelot;
+import org.bukkit.entity.Villager;
+
+import javax.annotation.Nonnull;
 
 public enum CompanionType
 {
-	ZOMBIE("Zombie", ZombieCompanion.class, 54, "Brainy (Zombie)", Item.Miscellaneous.MonsterEgg.Zombie),
-	CHICKEN("Chicken", ChickenCompanion.class, 93, "Cluckers (Chicken)", Item.Miscellaneous.MonsterEgg.Chicken),
-	COW("Cow", CowCompanion.class, 92, "Moops (Cow)", Item.Miscellaneous.MonsterEgg.Cow),
-	MOOSHROOM("Mooshroom", MooshroomCompanion.class, 96, "Mushy (Mooshroom)", Item.Miscellaneous.MonsterEgg.Mooshroom),
-	BACON("Pig", PigCompanion.class, 90, "Oinkers (Pig)", Item.Miscellaneous.MonsterEgg.Pig),
-	PIG_ZOMBIE("PigZombie", PigZombieCompanion.class, 57, "Chomp (Pig Zombie)", Item.Miscellaneous.MonsterEgg.ZombiePigman),
-	SHEEP("Sheep", SheepCompanion.class, 91, "Bart (Sheep)", Item.Miscellaneous.MonsterEgg.Sheep),
-	WOLF("Wolf", WolfCompanion.class, 95, "Whiskers (Wolf)", Item.Miscellaneous.MonsterEgg.Wolf),
-	SLIME("Slime", SlimeCompanion.class, 55, "Slippy (Slime)", Item.Miscellaneous.MonsterEgg.Slime),
-	MAGMA_CUBE("MagmaCube", MagmaCubeCompanion.class, 62, "Flames (Magma Cube)", Item.Miscellaneous.MonsterEgg.MagmaCube),
-	LIBRARIAN("Librarian", LibrarianCompanion.class, 120, "Vinny (Villager - Librarian)", Item.Miscellaneous.MonsterEgg.Villager),
-	FARMER("Farmer", FarmerCompanion.class, 120, "Chuck (Villager - Farmer)", Item.Miscellaneous.MonsterEgg.Villager),
-	PRIEST("Priest", PriestCompanion.class, 120, "Davy (Villager - Priest)", Item.Miscellaneous.MonsterEgg.Villager),
-	BLACKSMITH("Blacksmith", BlacksmithCompanion.class, 120, "Manny (Villager - Blacksmith)", Item.Miscellaneous.MonsterEgg.Villager),
-	BUTCHER("Butcher", ButcherCompanion.class, 120, "Vug (Villager - Butcher)", Item.Miscellaneous.MonsterEgg.Villager),
-	OCELOT("Ocelot", OcelotCompanion.class, 98, "Nibbles (Ocelot)", Item.Miscellaneous.MonsterEgg.Ocelot),
-	SILVERFISH("Silverfish", SilverfishCompanion.class, 60, "Yoppers (Silverfish)", Item.Miscellaneous.MonsterEgg.Silverfish),
-	BAT("Bat", BatCompanion.class, 65, "Flappy (Bat)", Item.Miscellaneous.MonsterEgg.Bat),
-	FLUFFERS("Fluffers", CatCompanionFluffers.class, 98, "Fluffers (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot),
-	MITTENS("Mittens", CatCompanionMittens.class, 98, "Mittens (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot),
-	MURPS("Murps", CatCompanionMurps.class, 98, "Murps (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot);
+	ZOMBIE(LivingEntity.Zombie, "Brainy (Zombie)", Item.Miscellaneous.MonsterEgg.Zombie),
+	CHICKEN(LivingEntity.Chicken, "Cluckers (Chicken)", Item.Miscellaneous.MonsterEgg.Chicken),
+	COW(LivingEntity.Cow, "Moops (Cow)", Item.Miscellaneous.MonsterEgg.Cow),
+	MOOSHROOM(LivingEntity.MushroomCow, "Mushy (Mooshroom)", Item.Miscellaneous.MonsterEgg.Mooshroom),
+	BACON(LivingEntity.Pig, "Oinkers (Pig)", Item.Miscellaneous.MonsterEgg.Pig),
+	PIG_ZOMBIE(LivingEntity.PigZombie, "Chomp (Pig Zombie)", Item.Miscellaneous.MonsterEgg.ZombiePigman),
+	SHEEP(LivingEntity.Sheep, "Bart (Sheep)", Item.Miscellaneous.MonsterEgg.Sheep),
+	WOLF(LivingEntity.Wolf, "Whiskers (Wolf)", Item.Miscellaneous.MonsterEgg.Wolf),
+	SLIME(LivingEntity.Slime, "Slippy (Slime)", Item.Miscellaneous.MonsterEgg.Slime),
+	MAGMA_CUBE(LivingEntity.LavaSlime, "Flames (Magma Cube)", Item.Miscellaneous.MonsterEgg.MagmaCube),
+	LIBRARIAN( LivingEntity.Villager, "Vinny (Villager - Librarian)", Item.Miscellaneous.MonsterEgg.Villager),
+	FARMER(LivingEntity.Villager, "Chuck (Villager - Farmer)", Item.Miscellaneous.MonsterEgg.Villager),
+	PRIEST(LivingEntity.Villager, "Davy (Villager - Priest)", Item.Miscellaneous.MonsterEgg.Villager),
+	BLACKSMITH(LivingEntity.Villager, "Manny (Villager - Blacksmith)", Item.Miscellaneous.MonsterEgg.Villager),
+	BUTCHER(LivingEntity.Villager, "Vug (Villager - Butcher)", Item.Miscellaneous.MonsterEgg.Villager),
+	OCELOT(LivingEntity.Ocelot, "Nibbles (Ocelot)", Item.Miscellaneous.MonsterEgg.Ocelot),
+	SILVERFISH(LivingEntity.Silverfish, "Yoppers (Silverfish)", Item.Miscellaneous.MonsterEgg.Silverfish),
+	BAT(LivingEntity.Bat, "Flappy (Bat)", Item.Miscellaneous.MonsterEgg.Bat),
+	FLUFFERS(LivingEntity.Ocelot, "Fluffers (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot),
+	MITTENS(LivingEntity.Ocelot, "Mittens (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot),
+	MURPS(LivingEntity.Ocelot, "Murps (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot);
 
-	private CompanionType(String name, Class entityClass, int id, String title, Item spawnerItem)
+	private CompanionType(LivingEntity entityType, String title, Item spawnerItem)
 	{
-		this.name = name;
-		this.entityClass = entityClass;
-		this.id = id;
+		this.entityType = entityType;
 		this.title = title;
 		this.spawnerItem = spawnerItem;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public Class getEntityClass()
-	{
-		return this.entityClass;
-	}
-
-	public int getId()
-	{
-		return id;
 	}
 
 	public String getTitle()
@@ -61,9 +58,47 @@ public enum CompanionType
 		return spawnerItem;
 	}
 
-	private final String name;
-	private final Class entityClass;
-	private final int id;
+	public ILivingEntity spawnCompanion(@Nonnull IPlayer owner)
+	{
+		// Spawn companion.
+		ILivingEntity pet = ((ILivingEntity) entityType.spawn(owner.getLocation()));
+
+		owner.getLeggings();
+		// Set new pathfinding.
+		pet.stopPathfinding();
+		pet.setNewPathfindingGoal(0, new PathfinderGoalFloat((EntityInsentient) ObjectUnwrapper.getMinecraft(pet)));
+		pet.setNewPathfindingGoal(1, new PathfinderGoalFollowPlayer(owner, pet));
+
+		// Make companion a baby if possible.
+		if (pet instanceof IAgeable)
+			((IAgeable) pet).setBaby();
+		else if (pet instanceof IZombie)
+			((IZombie) pet).setBaby(true);
+
+		// Silence default sounds.
+		pet.setSilent(false);
+
+		pet.setPersistance(false);
+
+		// Do companion-specific things.
+		switch(this)
+		{
+			case SLIME: ((ISlime) pet).setSize(1); break;
+			case MAGMA_CUBE: ((ISlime) pet).setSize(1); break;
+			case LIBRARIAN: ((IVillager) pet).setProfession(Villager.Profession.LIBRARIAN); break;
+			case FARMER: ((IVillager) pet).setProfession(Villager.Profession.FARMER); break;
+			case PRIEST: ((IVillager) pet).setProfession(Villager.Profession.PRIEST); break;
+			case BLACKSMITH: ((IVillager) pet).setProfession(Villager.Profession.BLACKSMITH); break;
+			case BUTCHER: ((IVillager) pet).setProfession(Villager.Profession.BUTCHER); break;
+			case FLUFFERS: ((IOcelot) pet).setCatType(Ocelot.Type.BLACK_CAT); break;
+			case MITTENS: ((IOcelot) pet).setCatType(Ocelot.Type.SIAMESE_CAT); break;
+			case MURPS: ((IOcelot) pet).setCatType(Ocelot.Type.RED_CAT); break;
+		}
+
+		return pet;
+	}
+
+	private final LivingEntity entityType;
 	private final String title;
 	private final Item spawnerItem;
 }
