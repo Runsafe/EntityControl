@@ -33,7 +33,6 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 			e.printStackTrace();
 		}
 
-		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
 		setBaby(true);
 
@@ -67,7 +66,7 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || player.isDead() || !world.equals(player.getWorld()) || !CompanionHandler.entityIsSummoned(getId()))
+		if (player == null || player.isDead() || !CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 
 		if (randomThingTicks > 0)
@@ -97,7 +96,6 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 		setEquipment(4, null);
 	}
 
-	private IWorld world;
 	private int randomThingTicks = 12000;
 	private int randomThingProgress = 0;
 	protected IPlayer player;

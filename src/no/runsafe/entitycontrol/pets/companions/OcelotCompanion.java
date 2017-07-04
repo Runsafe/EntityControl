@@ -30,7 +30,6 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 			e.printStackTrace();
 		}
 
-		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
 		setAgeRaw(Integer.MIN_VALUE);
 
@@ -60,10 +59,9 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || player.isDead() || !world.equals(player.getWorld()) || !CompanionHandler.entityIsSummoned(getId()))
+		if (player == null || player.isDead() || !CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 	}
 
-	private IWorld world;
 	protected IPlayer player;
 }

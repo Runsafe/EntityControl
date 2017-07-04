@@ -31,7 +31,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 			e.printStackTrace();
 		}
 
-		this.world = world;
 		goalSelector.a(0, new PathfinderGoalFloat(this));
 		setAgeRaw(Integer.MIN_VALUE);
 
@@ -61,7 +60,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	{
 		super.K();
 
-		if (player == null || player.isDead() || !world.equals(player.getWorld()) || !CompanionHandler.entityIsSummoned(getId()))
+		if (player == null || player.isDead() || !CompanionHandler.entityIsSummoned(getId()))
 			dead = true;
 
 		if (colourChangeTicks == 0)
@@ -72,7 +71,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 		colourChangeTicks--;
 	}
 
-	private IWorld world;
 	private int colourChangeTicks = 6000;
 	protected IPlayer player;
 }
