@@ -79,7 +79,7 @@ public class CompanionHandler
 			if (!summonedPets.containsKey(playerUUID))
 				summonedPets.put(playerUUID, new ArrayList<SummonedPet>(1));
 
-			summonedPets.get(playerUUID).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
+			summonedPets.get(playerUUID).add(new SummonedPet(type, ((EntityInsentient) pet).getId(), (EntityInsentient) pet));
 		}
 		catch (Exception e)
 		{
@@ -187,6 +187,7 @@ public class CompanionHandler
 	 */
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
+		pet.getPet().dead = true;
 		summonedPets.get(player.getUniqueId()).remove(pet);
 	}
 
@@ -196,6 +197,8 @@ public class CompanionHandler
 	 */
 	public void removeSummonedPets(IPlayer player)
 	{
+		for (SummonedPet pet : summonedPets.get(player.getUniqueId()))
+			pet.getPet().dead = true;
 		summonedPets.remove(player.getUniqueId());
 	}
 

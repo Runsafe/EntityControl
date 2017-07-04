@@ -52,7 +52,7 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	public void setFollowingPlayer(IPlayer player)
 	{
 		this.player = player;
-		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this));
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(player, this));
 	}
 
 	/**
@@ -66,9 +66,6 @@ public class CompanionPetHumanoid extends EntityZombie implements ICompanionPet
 	public void K()
 	{
 		super.K();
-
-		if (!CompanionHandler.entityIsSummoned(getId()))
-			dead = true;
 
 		if (randomThingTicks > 0)
 			randomThingTicks--;

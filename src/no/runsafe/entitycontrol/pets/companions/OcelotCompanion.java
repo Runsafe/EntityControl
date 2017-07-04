@@ -44,26 +44,6 @@ public class OcelotCompanion extends EntityOcelot implements ICompanionPet
 
 	public void setFollowingPlayer(IPlayer player)
 	{
-		this.player = player;
-		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this));
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(player, this));
 	}
-
-	/**
-	 * Entity base tick.
-	 * Names of this method in various spigot versions:
-	 * v1_8_R3: K
-	 * v1_9_R2/v1_10_R1/v1_11_R1: U
-	 * v1_12_R1: Y
-	 */
-	@Override
-	public void K()
-	{
-		super.K();
-
-		if (!CompanionHandler.entityIsSummoned(getId()))
-			dead = true;
-	}
-
-	@Nonnull
-	protected IPlayer player;
 }

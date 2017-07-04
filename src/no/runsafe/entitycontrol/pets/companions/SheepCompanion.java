@@ -46,8 +46,7 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 
 	public void setFollowingPlayer(IPlayer player)
 	{
-		this.player = player;
-		goalSelector.a(1, new PathfinderGoalFollowPlayer(this.player, this));
+		goalSelector.a(1, new PathfinderGoalFollowPlayer(player, this));
 	}
 
 	/**
@@ -62,9 +61,6 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	{
 		super.K();
 
-		if (!CompanionHandler.entityIsSummoned(getId()))
-			dead = true;
-
 		if (colourChangeTicks == 0)
 		{
 			colourChangeTicks = 6000;
@@ -74,7 +70,4 @@ public class SheepCompanion extends EntitySheep implements ICompanionPet
 	}
 
 	private int colourChangeTicks = 6000;
-
-	@Nonnull
-	protected IPlayer player;
 }
