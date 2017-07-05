@@ -11,6 +11,7 @@ import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
 import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClick;
+import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;
@@ -30,7 +31,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CompanionHandler
-	implements IPlayerRightClick, IPlayerChangedWorldEvent,
+	implements IPluginDisabled, IPlayerRightClick, IPlayerChangedWorldEvent,
 	IPlayerQuitEvent, IPlayerInteractEntityEvent, IEntityDamageEvent,
 	IPlayerDeathEvent
 {
@@ -247,6 +248,15 @@ public class CompanionHandler
 	{
 		if (entityIsSummoned(event.getEntity().getEntityId()))
 			event.cancel();
+	}
+
+	@Override
+	public void OnPluginDisabled()
+	{
+		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
+			for (SummonedPet pet : summonedPets.get(node.getKey()))
+				pet.getPet().remove();
+		summonedPets = null;
 	}
 
 	private final IScheduler scheduler;
