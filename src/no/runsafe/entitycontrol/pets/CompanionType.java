@@ -75,7 +75,7 @@ public enum CompanionType
 			((IZombie) pet).setBaby(true);
 
 		// Silence default sounds.
-		pet.setSilent(false);
+		pet.setSilent(true);
 
 		pet.setPersistance(false);
 
