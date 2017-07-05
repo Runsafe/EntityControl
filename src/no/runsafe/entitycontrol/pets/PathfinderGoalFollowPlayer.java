@@ -2,10 +2,14 @@ package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_8_R3.*;
 import no.runsafe.framework.api.entity.ILivingEntity;
+import no.runsafe.framework.api.entity.ISlime;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
 import javax.annotation.Nonnull;
+
+import static java.lang.Math.atan2;
+import static java.lang.Math.toDegrees;
 
 public class PathfinderGoalFollowPlayer extends PathfinderGoal
 {
@@ -23,6 +27,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
 		this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
 		this.a(3); // Something to do with whether or not certain tasks can run concurrently.
+
+		if (entity instanceof ISlime)
+			speed = 2.5;
 	}
 
 	/**
@@ -100,6 +107,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void e()
 	{
+		if (entity instanceof ISlime)
+			rawEntity.yaw = (float) (180 - toDegrees(atan2(rawEntity.locX - rawPlayer.locX, rawEntity.locZ - rawPlayer.locZ)));
+
 		final float HEAD_TILT_PITCH = 40;
 		final float SPEED = 10.0F;
 		rawEntity.getControllerLook().a(rawPlayer, SPEED, HEAD_TILT_PITCH);
