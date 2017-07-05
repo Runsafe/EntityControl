@@ -63,7 +63,6 @@ public enum CompanionType
 		// Spawn companion.
 		ILivingEntity pet = ((ILivingEntity) entityType.spawn(owner.getLocation()));
 
-		owner.getLeggings();
 		// Set new pathfinding.
 		pet.stopPathfinding();
 		pet.setNewPathfindingGoal(0, new PathfinderGoalFloat((EntityInsentient) ObjectUnwrapper.getMinecraft(pet)));
