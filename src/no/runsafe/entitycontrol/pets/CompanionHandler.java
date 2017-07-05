@@ -1,70 +1,69 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.World;
-import no.runsafe.framework.api.ILocation;
+import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.IServer;
-import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.block.IBlock;
-import no.runsafe.framework.api.event.IServerReady;
+import no.runsafe.framework.api.entity.IEntity;
+import no.runsafe.framework.api.entity.ILivingEntity;
+import no.runsafe.framework.api.event.entity.IEntityDamageEvent;
 import no.runsafe.framework.api.event.player.IPlayerChangedWorldEvent;
+import no.runsafe.framework.api.event.player.IPlayerDeathEvent;
+import no.runsafe.framework.api.event.player.IPlayerInteractEntityEvent;
 import no.runsafe.framework.api.event.player.IPlayerQuitEvent;
 import no.runsafe.framework.api.event.player.IPlayerRightClick;
+import no.runsafe.framework.api.event.plugin.IPluginDisabled;
 import no.runsafe.framework.api.log.IConsole;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.Item;
+import no.runsafe.framework.minecraft.event.entity.RunsafeEntityDamageEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerChangedWorldEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerDeathEvent;
+import no.runsafe.framework.minecraft.event.player.RunsafePlayerInteractEntityEvent;
 import no.runsafe.framework.minecraft.event.player.RunsafePlayerQuitEvent;
 import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
-import no.runsafe.framework.tools.nms.EntityRegister;
+import no.runsafe.framework.minecraft.Sound;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlayerChangedWorldEvent, IPlayerQuitEvent
+public class CompanionHandler
+	implements IPluginDisabled, IPlayerRightClick, IPlayerChangedWorldEvent,
+	IPlayerQuitEvent, IPlayerInteractEntityEvent, IEntityDamageEvent,
+	IPlayerDeathEvent
 {
 	/**
 	 * Constructor for CompanionHandler.
 	 * @param console The console.
 	 * @param server The server.
 	 */
-	public CompanionHandler(IConsole console, IServer server)
+	public CompanionHandler(IConsole console, IServer server, IScheduler scheduler)
 	{
 		this.console = console;
 		CompanionHandler.server = server;
+		this.scheduler = scheduler;
 	}
 
 	/**
 	 * Attempt to spawn a companion.
-	 * @param location Companion spawn point.
 	 * @param type Companion type to spawn.
 	 * @param follower Player the companion will follow.
 	 */
-	public void spawnCompanion(ILocation location, CompanionType type, IPlayer follower)
+	public void spawnCompanion(CompanionType type, @Nonnull IPlayer follower)
 	{
-		IWorld world = location.getWorld();
-		World rawWorld = ObjectUnwrapper.getMinecraft(location.getWorld());
-
-		if (rawWorld == null)
-			return;
-
 		try
 		{
-			ICompanionPet pet = (ICompanionPet) type.getEntityClass().getConstructor(IWorld.class).newInstance(world);
-			pet.setLocation(location.getX(), location.getY(), location.getZ(), 0, 0);
-			pet.setFollowingPlayer(follower);
-			rawWorld.addEntity((EntityInsentient) pet);
+			ILivingEntity pet = type.spawnCompanion(follower);
 
 			UUID playerUUID = follower.getUniqueId();
 
 			if (!summonedPets.containsKey(playerUUID))
 				summonedPets.put(playerUUID, new ArrayList<SummonedPet>(1));
 
-			summonedPets.get(playerUUID).add(new SummonedPet(type, ((EntityInsentient) pet).getId()));
+			summonedPets.get(playerUUID).add(new SummonedPet(type, pet));
 		}
 		catch (Exception e)
 		{
@@ -121,7 +120,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 		SummonedPet summonedPet = getPlayerSummoned(player, type);
 
 		if (summonedPet == null)
-			spawnCompanion(player.getLocation(), type, player);
+			spawnCompanion(type, player);
 		else
 			removeSummonedPet(player, summonedPet);
 
@@ -149,14 +148,17 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 
 	/**
 	 * Find whether or not an entity is summoned.
-	 * @param entity Entity to find if summoned.
+	 * @param entityId Entity to find if summoned.
 	 * @return True if entity is summoned, otherwise false.
 	 */
-	public static boolean entityIsSummoned(EntityInsentient entity)
+	public static boolean entityIsSummoned(int entityId)
 	{
+		if (summonedPets.isEmpty())
+			return false;
+
 		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
 			for (SummonedPet pet : node.getValue())
-				if (entity.getId() == pet.getEntityID())
+				if (entityId == pet.getEntityID())
 					return true;
 
 		return false;
@@ -169,7 +171,19 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	 */
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
+		pet.getPet().remove();
 		summonedPets.get(player.getUniqueId()).remove(pet);
+	}
+
+	/**
+	 * Removes all of a player's summoned companion pets.
+	 * @param player Pet owner.
+	 */
+	public void removeSummonedPets(IPlayer player)
+	{
+		for (SummonedPet pet : summonedPets.get(player.getUniqueId()))
+			pet.getPet().remove();
+		summonedPets.remove(player.getUniqueId());
 	}
 
 	/**
@@ -180,7 +194,7 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	@Override
 	public void OnPlayerChangedWorld(RunsafePlayerChangedWorldEvent event)
 	{
-		summonedPets.remove(event.getPlayer().getUniqueId());
+		removeSummonedPets(event.getPlayer());
 	}
 
 	/**
@@ -190,18 +204,65 @@ public class CompanionHandler implements IServerReady, IPlayerRightClick, IPlaye
 	@Override
 	public void OnPlayerQuit(RunsafePlayerQuitEvent event)
 	{
-		summonedPets.remove(event.getPlayer().getUniqueId());
+		removeSummonedPets(event.getPlayer());
 	}
 
 	@Override
-	public void OnServerReady()
+	public void OnPlayerDeathEvent(RunsafePlayerDeathEvent event)
 	{
-		for (CompanionType type : CompanionType.values())
-			EntityRegister.registerEntity(type.getEntityClass(), "Companion" + type.getName(), type.getId());
+		removeSummonedPets(event.getEntity());
 	}
 
+	@Override
+	public void OnPlayerInteractEntityEvent(RunsafePlayerInteractEntityEvent event)
+	{
+		IEntity runsafePet = event.getRightClicked();
+		if (interactTimer.containsKey(runsafePet))
+		{
+			event.cancel();
+			return;
+		}
+
+		// Check if right clicked entity is a companion pet.
+		if (!entityIsSummoned(runsafePet.getEntityId()))
+			return;
+		ILivingEntity pet = (ILivingEntity) runsafePet;
+
+		// Play the companion's idle sound.
+		Sound interactSound = pet.getIdleSound();
+		if (interactSound != null)
+		{
+			interactSound.Play(runsafePet.getLocation(), 1.0F, 1.5F);
+			interactTimer.put(runsafePet, scheduler.startSyncTask(() ->
+			{
+				if (interactTimer.containsKey(runsafePet))
+					interactTimer.remove(runsafePet);
+			}, 2));
+		}
+
+		event.cancel();
+	}
+
+	@Override
+	public void OnEntityDamage(RunsafeEntityDamageEvent event)
+	{
+		if (entityIsSummoned(event.getEntity().getEntityId()))
+			event.cancel();
+	}
+
+	@Override
+	public void OnPluginDisabled()
+	{
+		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
+			for (SummonedPet pet : summonedPets.get(node.getKey()))
+				pet.getPet().remove();
+		summonedPets = null;
+	}
+
+	private final IScheduler scheduler;
 	private final IConsole console;
 	public static IServer server;
+	private static final ConcurrentHashMap<IEntity, Integer> interactTimer = new ConcurrentHashMap<>();
 	public static ConcurrentHashMap<UUID, List<SummonedPet>> summonedPets = new ConcurrentHashMap<UUID, List<SummonedPet>>(0);
 	//public static ConcurrentHashMap<String, List<CompanionType>> summonedPets = new ConcurrentHashMap<String, List<CompanionType>>(0);
 	//public static ConcurrentHashMap<String, List<Integer>> summonedPetIds = new ConcurrentHashMap<String, List<Integer>>(0);

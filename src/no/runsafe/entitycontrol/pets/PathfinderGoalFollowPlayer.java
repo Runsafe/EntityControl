@@ -1,9 +1,18 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_8_R3.*;
+import no.runsafe.framework.api.entity.IBat;
+import no.runsafe.framework.api.entity.ILivingEntity;
+import no.runsafe.framework.api.entity.ISlime;
+import no.runsafe.framework.api.player.IPlayer;
+import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
+import javax.annotation.Nonnull;
+
+import static java.lang.Math.abs;
+import static java.lang.Math.atan2;
+import static java.lang.Math.signum;
+import static java.lang.Math.toDegrees;
 
 public class PathfinderGoalFollowPlayer extends PathfinderGoal
 {
@@ -11,21 +20,19 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 * Constructor for PathfinderGoalFollowPlayer
 	 * @param player Player to follow
 	 * @param entity This entity.
-	 * @param entitySpeed a double.
-	 * @param inputPlayerDistanceLimit Distance before entity will run to player.
-	 * @param inputClosestPointToPlayer Distance before entity will stop running to player.
 	 */
-	public PathfinderGoalFollowPlayer(EntityPlayer player, EntityInsentient entity, double entitySpeed, float inputPlayerDistanceLimit, float inputClosestPointToPlayer
-	)
+	public PathfinderGoalFollowPlayer(@Nonnull IPlayer player, ILivingEntity entity)
 	{
 		this.entity = entity;
-		this.world = entity.world;
+		this.rawEntity = ((EntityInsentient) ObjectUnwrapper.getMinecraft(entity));
+		this.world = this.rawEntity.world;
 		this.player = player;
-		this.speed = entitySpeed;
-		this.entityNavigation = (Navigation) entity.getNavigation();
-		this.playerDistanceLimit = inputPlayerDistanceLimit;
-		this.closestPointToPlayer = inputClosestPointToPlayer;
+		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
+		this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
 		this.a(3); // Something to do with whether or not certain tasks can run concurrently.
+
+		if (entity instanceof ISlime)
+			speed = 2.5;
 	}
 
 	/**
@@ -36,7 +43,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public boolean a()
 	{
-		return !(player == null || getOwnerDistance() < playerDistanceLimit);
+		return !(getOwnerDistance() < playerDistanceLimit);
 	}
 
 	/**
@@ -71,8 +78,8 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* e() gets a value and a() sets that same value.
 		* Might be related to whether or not the companion is traveling in water.
 		*/
-		h = 0;
-		Navigation entityNewNavigation = (Navigation) entity.getNavigation();
+		playerTeleportTimer = 0;
+		Navigation entityNewNavigation = (Navigation) rawEntity.getNavigation();
 		i = (entityNewNavigation).e();
 		(entityNewNavigation).a(false);
 	}
@@ -93,7 +100,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		* Second method might be related to whether or not the companion is traveling in water.
 		*/
 		entityNavigation.n();
-		((Navigation) entity.getNavigation()).a(this.i);
+		((Navigation) rawEntity.getNavigation()).a(this.i);
 	}
 
 	/**
@@ -103,15 +110,39 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void e()
 	{
-		final float Z_PITCH = 40;  // Head tilt pitch
-		final float SPEED = 10.0F;
-		entity.getControllerLook().a(player, SPEED, Z_PITCH);
+		if (entity instanceof IBat)
+		{
+			double xDistance = rawPlayer.locX - rawEntity.locX;
+			double zDistance = rawPlayer.locZ - rawEntity.locZ;
+			double newLocX = rawEntity.locX;
+			double newLocZ = rawEntity.locZ;
 
-		if (--this.h > 0)
+			if (abs(xDistance) > closestPointToPlayer + 0.3)
+				newLocX += 1 * signum(xDistance);
+			else if (abs(xDistance) < closestPointToPlayer - 0.3)
+				newLocX -= 0.2 * signum(xDistance);
+
+			if (abs(zDistance) > closestPointToPlayer + 0.3)
+				newLocZ += 1 * signum(zDistance);
+			else if (abs(zDistance) < closestPointToPlayer - 0.3)
+				newLocZ -= 0.2 * signum(zDistance);
+
+			rawEntity.setPositionRotation(
+				newLocX, rawPlayer.locY + 1.5, newLocZ, rawEntity.yaw, rawEntity.pitch
+			);
+		}
+		else if (entity instanceof ISlime)
+			rawEntity.yaw = (float) (180 - toDegrees(atan2(rawEntity.locX - rawPlayer.locX, rawEntity.locZ - rawPlayer.locZ)));
+
+		final float HEAD_TILT_PITCH = 40;
+		final float SPEED = 10.0F;
+		rawEntity.getControllerLook().a(rawPlayer, SPEED, HEAD_TILT_PITCH);
+
+		if (--this.playerTeleportTimer > 0)
 			return;
 
-		this.h = 10;
-		if (this.entityNavigation.a(player, this.speed))
+		this.playerTeleportTimer = 10;
+		if (this.entityNavigation.a(rawPlayer, this.speed))
 			return;
 
 		/*
@@ -119,16 +150,16 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		 * v1_8_R3: .cc()
 		 * v1_9_R2 and up: .isLeashed()
 		 */
-		if (entity.cc()) // Stop if entity is leashed.
+		if (rawEntity.cc()) // Stop if entity is leashed.
 			return;
 
 		if (getOwnerDistance() < 144.0D) // Check if the companion owner is 144 blocks away.
 			return;
 
 		// Get the companion owner's location.
-		int blockLocX = MathHelper.floor(player.locX) - 2;
-		int blockLocZ = MathHelper.floor(player.locZ) - 2;
-		int blockLocY = MathHelper.floor(player.getBoundingBox().b);
+		int blockLocX = MathHelper.floor(rawPlayer.locX) - 2;
+		int blockLocZ = MathHelper.floor(rawPlayer.locZ) - 2;
+		int blockLocY = MathHelper.floor(rawPlayer.getBoundingBox().b);
 
 		// Check blocks around the companion owner in a hollow 3x3block square
 		for (int indexX = 0; indexX <= 4; ++indexX)
@@ -144,12 +175,12 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 					continue;
 
 				// Teleport to the companion owner.
-				entity.setPositionRotation(
+				rawEntity.setPositionRotation(
 					blockLocX + indexX + 0.5F,
 					blockLocY,
 					blockLocZ + indexZ + 0.5F,
-					entity.yaw,
-					entity.pitch
+					rawEntity.yaw,
+					rawEntity.pitch
 				);
 
 				/*
@@ -170,20 +201,19 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 */
 	private double getOwnerDistance()
 	{
-		return sqrt(
-			pow(entity.locX - player.locX, 2)
-			+ pow(entity.locY - player.locY, 2)
-			+ pow(entity.locZ - player.locZ, 2)
-		);
+		return player.getLocation().distance(entity.getLocation());
 	}
 
-	private EntityInsentient entity;
-	private EntityPlayer player;
+	private ILivingEntity entity;
+	private EntityInsentient rawEntity;
+	private EntityPlayer rawPlayer;
+	@Nonnull
+	private IPlayer player;
 	private World world;
-	private double speed;
+	private double speed = 1;
 	private Navigation entityNavigation;
-	private int h; // Time to wait until teleporting to a player.
-	private float closestPointToPlayer; // Distance before entity will stop running to player.
-	private float playerDistanceLimit; // Distance before entity will run to player.
+	private int playerTeleportTimer;
+	private float closestPointToPlayer = 2F; // Distance before entity will stop running to player.
+	private float playerDistanceLimit = 2F; // Distance before entity will run to player.
 	private boolean i; // Something to do with if the entity is traveling through water or not.
 }
