@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_8_R3.*;
+import no.runsafe.framework.api.entity.IBat;
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.entity.ISlime;
 import no.runsafe.framework.api.player.IPlayer;
@@ -8,7 +9,9 @@ import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 
 import javax.annotation.Nonnull;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.atan2;
+import static java.lang.Math.signum;
 import static java.lang.Math.toDegrees;
 
 public class PathfinderGoalFollowPlayer extends PathfinderGoal
@@ -107,7 +110,28 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void e()
 	{
-		if (entity instanceof ISlime)
+		if (entity instanceof IBat)
+		{
+			double xDistance = rawPlayer.locX - rawEntity.locX;
+			double zDistance = rawPlayer.locZ - rawEntity.locZ;
+			double newLocX = rawEntity.locX;
+			double newLocZ = rawEntity.locZ;
+
+			if (abs(xDistance) > closestPointToPlayer + 0.3)
+				newLocX += 1 * signum(xDistance);
+			else if (abs(xDistance) < closestPointToPlayer - 0.3)
+				newLocX -= 0.2 * signum(xDistance);
+
+			if (abs(zDistance) > closestPointToPlayer + 0.3)
+				newLocZ += 1 * signum(zDistance);
+			else if (abs(zDistance) < closestPointToPlayer - 0.3)
+				newLocZ -= 0.2 * signum(zDistance);
+
+			rawEntity.setPositionRotation(
+				newLocX, rawPlayer.locY + 1.5, newLocZ, rawEntity.yaw, rawEntity.pitch
+			);
+		}
+		else if (entity instanceof ISlime)
 			rawEntity.yaw = (float) (180 - toDegrees(atan2(rawEntity.locX - rawPlayer.locX, rawEntity.locZ - rawPlayer.locZ)));
 
 		final float HEAD_TILT_PITCH = 40;
