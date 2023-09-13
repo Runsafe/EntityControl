@@ -181,6 +181,9 @@ public class CompanionHandler
 	 */
 	public void removeSummonedPets(IPlayer player)
 	{
+		if (summonedPets.get(player.getUniqueId()) == null)
+			return;
+
 		for (SummonedPet pet : summonedPets.get(player.getUniqueId()))
 			pet.getPet().remove();
 		summonedPets.remove(player.getUniqueId());
