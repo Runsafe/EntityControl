@@ -69,17 +69,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void c()
 	{
-		/*
-		* Method names:
-		* v1_8_R3: e(), a(false)
-		* v1_9_R2: Both have been removed.
-		* e() gets whether or not to avoid water and a() sets gets whether or not to avoid water.
-		* TODO: work out a way to replace removed methods
-		*/
 		playerTeleportTimer = 0;
-		Navigation entityNewNavigation = (Navigation) rawEntity.getNavigation();
-		i = (entityNewNavigation).x1();
-		(entityNewNavigation).x2(false);
 	}
 
 	/**
@@ -90,16 +80,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	public void d()
 	{
 		/*
-		* Method names:
-		* v1_8_R3: .n(), a(this.i)
-		* v1_9_R2/v1_10_R1/v1_11_R1: .o(), Removed.
-		* v1_12_R1: .p(), N/A
-		* First method sets path equal to null.
-		* Second method sets whether or not the entity should avoid water.
-		* TODO: find replacement for second method
+		* v1_12_R1: .p()
+		* sets path equal to null.
 		*/
 		entityNavigation.p();
-		((Navigation) rawEntity.getNavigation()).x(this.i);
 	}
 
 	/**
@@ -207,5 +191,4 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private int playerTeleportTimer;
 	private float closestPointToPlayer = 2F; // Distance before entity will stop running to player.
 	private float playerDistanceLimit = 2F; // Distance before entity will run to player.
-	private boolean i; // Something to do with if the entity is traveling through water or not.
 }
