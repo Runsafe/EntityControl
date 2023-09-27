@@ -38,7 +38,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	/**
 	 * Check if player is too far away so the companion can run to them.
 	 * Method name stays the same up to v1_12_R1.
-	 * @return True if the player is further away than playerDistanceLimit squared.
+	 * @return If we should being executing.
 	 */
 	@Override
 	public boolean a()
@@ -49,19 +49,17 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	/**
 	 * Check if companion should keep running towards the player.
 	 * Method name stays the same up to v1_12_R1.
-	 * @return True when distance from player is further than closestPointToPlayer squared.
+	 * @return If an already running instance should continue running.
 	 */
 	@Override
 	public boolean b()
 	{
 		/*
 		 * Method names:
-		 * v1_8_R3: m
-		 * v1_9_R2/v1_10_R1/v1_11_R1: n
 		 * v1_12_R1: o
 		 * Check if path is null or the end is reached.
 		 */
-		return !entityNavigation.m() && getOwnerDistance() > closestPointToPlayer;
+		return !entityNavigation.o() && getOwnerDistance() > closestPointToPlayer;
 	}
 
 	/**
@@ -74,14 +72,14 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		/*
 		* Method names:
 		* v1_8_R3: e(), a(false)
-		* v1_9_R2: Both might have been removed.
-		* e() gets a value and a() sets that same value.
-		* Might be related to whether or not the companion is traveling in water.
+		* v1_9_R2: Both have been removed.
+		* e() gets whether or not to avoid water and a() sets gets whether or not to avoid water.
+		* TODO: work out a way to replace removed methods
 		*/
 		playerTeleportTimer = 0;
 		Navigation entityNewNavigation = (Navigation) rawEntity.getNavigation();
-		i = (entityNewNavigation).e();
-		(entityNewNavigation).a(false);
+		i = (entityNewNavigation).x1();
+		(entityNewNavigation).x2(false);
 	}
 
 	/**
@@ -94,13 +92,14 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		/*
 		* Method names:
 		* v1_8_R3: .n(), a(this.i)
-		* v1_9_R2/v1_10_R1/v1_11_R1: .o(), Might have been removed.
-		* v1_12_R1: .p(), ?
+		* v1_9_R2/v1_10_R1/v1_11_R1: .o(), Removed.
+		* v1_12_R1: .p(), N/A
 		* First method sets path equal to null.
-		* Second method might be related to whether or not the companion is traveling in water.
+		* Second method sets whether or not the entity should avoid water.
+		* TODO: find replacement for second method
 		*/
-		entityNavigation.n();
-		((Navigation) rawEntity.getNavigation()).a(this.i);
+		entityNavigation.p();
+		((Navigation) rawEntity.getNavigation()).x(this.i);
 	}
 
 	/**
@@ -145,12 +144,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		if (this.entityNavigation.a(rawPlayer, this.speed))
 			return;
 
-		/*
-		 * Method names:
-		 * v1_8_R3: .cc()
-		 * v1_9_R2 and up: .isLeashed()
-		 */
-		if (rawEntity.cc()) // Stop if entity is leashed.
+		if (rawEntity.isLeashed()) // Stop if entity is leashed.
 			return;
 
 		if (getOwnerDistance() < 144.0D) // Check if the companion owner is 144 blocks away.
@@ -185,12 +179,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 
 				/*
 				 * Method names:
-				 * v1_8_R3: .n()
-				 * v1_9_R2/v1_10_R1/v1_11_R1: .o()
 				 * v1_12_R1: .p()
 				 * Set path equal to null
 				 */
-				this.entityNavigation.n();
+				this.entityNavigation.p();
 				return;
 			}
 		}

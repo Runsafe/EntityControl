@@ -46,8 +46,11 @@ public class EntityGuardian extends EntityIronGolem
 		return super.damageEntity(damagesource, 0);
 	}
 
+	/*
+	 * Overrides method in EntityInsentient.class
+	 */
 	@Override
-	protected boolean a(EntityHuman entityhuman)
+	protected boolean a(EntityHuman entityhuman, EnumHand enumhand)
 	{
 		return false;
 	}
