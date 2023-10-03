@@ -7,7 +7,6 @@ import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.entity.ISlime;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
-import no.runsafe.framework.internal.wrapper.ObjectWrapper;
 
 import javax.annotation.Nonnull;
 
@@ -27,7 +26,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		this.entity = entity;
 		this.rawEntity = ((EntityInsentient) ObjectUnwrapper.getMinecraft(entity));
-		this.world = ObjectWrapper.convert((org.bukkit.World) this.rawEntity.world);
+		this.world = entity.getWorld();
 		this.player = player;
 		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
 		this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
