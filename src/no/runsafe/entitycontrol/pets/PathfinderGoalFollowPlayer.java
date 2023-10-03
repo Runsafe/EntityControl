@@ -1,11 +1,13 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_12_R1.*;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.entity.IBat;
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.entity.ISlime;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
+import no.runsafe.framework.internal.wrapper.ObjectWrapper;
 
 import javax.annotation.Nonnull;
 
@@ -25,7 +27,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		this.entity = entity;
 		this.rawEntity = ((EntityInsentient) ObjectUnwrapper.getMinecraft(entity));
-		this.world = this.rawEntity.world;
+		this.world = ObjectWrapper.convert((org.bukkit.World) this.rawEntity.world);
 		this.player = player;
 		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
 		this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
@@ -146,9 +148,11 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 			{
 				// Make sure there's a safe block to teleport to around the player.
 				if (!((indexX < 1 || indexZ < 1 || indexX > 3 || indexZ > 3)
-					&& World.a(world, new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ))
-					&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
-					&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
+					// Check for solid block to teleport on
+					&& !world.getBlockAt(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ).canPassThrough()
+					// Check that the companion can exist within this location
+					&& world.getBlockAt(blockLocX + indexX, blockLocY, blockLocZ + indexZ).canPassThrough()
+					&& world.getBlockAt(blockLocX + indexX, blockLocY + 1, blockLocZ + indexZ).canPassThrough()
 				))
 					continue;
 
@@ -185,7 +189,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private EntityPlayer rawPlayer;
 	@Nonnull
 	private IPlayer player;
-	private World world;
+	private IWorld world;
 	private double speed = 1;
 	private Navigation entityNavigation;
 	private int playerTeleportTimer;
