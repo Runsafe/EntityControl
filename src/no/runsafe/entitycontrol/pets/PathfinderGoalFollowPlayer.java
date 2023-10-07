@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
+import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.entity.IBat;
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.entity.ISlime;
@@ -25,7 +26,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	{
 		this.entity = entity;
 		this.rawEntity = ((EntityInsentient) ObjectUnwrapper.getMinecraft(entity));
-		this.world = this.rawEntity.world;
+		this.world = entity.getWorld();
 		this.player = player;
 		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
 		this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
@@ -38,7 +39,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	/**
 	 * Check if player is too far away so the companion can run to them.
 	 * Method name stays the same up to v1_12_R1.
-	 * @return True if the player is further away than playerDistanceLimit squared.
+	 * @return If we should being executing.
 	 */
 	@Override
 	public boolean a()
@@ -49,19 +50,17 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	/**
 	 * Check if companion should keep running towards the player.
 	 * Method name stays the same up to v1_12_R1.
-	 * @return True when distance from player is further than closestPointToPlayer squared.
+	 * @return If an already running instance should continue running.
 	 */
 	@Override
 	public boolean b()
 	{
 		/*
 		 * Method names:
-		 * v1_8_R3: m
-		 * v1_9_R2/v1_10_R1/v1_11_R1: n
 		 * v1_12_R1: o
 		 * Check if path is null or the end is reached.
 		 */
-		return !entityNavigation.m() && getOwnerDistance() > closestPointToPlayer;
+		return !entityNavigation.o() && getOwnerDistance() > closestPointToPlayer;
 	}
 
 	/**
@@ -71,17 +70,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public void c()
 	{
-		/*
-		* Method names:
-		* v1_8_R3: e(), a(false)
-		* v1_9_R2: Both might have been removed.
-		* e() gets a value and a() sets that same value.
-		* Might be related to whether or not the companion is traveling in water.
-		*/
 		playerTeleportTimer = 0;
-		Navigation entityNewNavigation = (Navigation) rawEntity.getNavigation();
-		i = (entityNewNavigation).e();
-		(entityNewNavigation).a(false);
 	}
 
 	/**
@@ -92,15 +81,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	public void d()
 	{
 		/*
-		* Method names:
-		* v1_8_R3: .n(), a(this.i)
-		* v1_9_R2/v1_10_R1/v1_11_R1: .o(), Might have been removed.
-		* v1_12_R1: .p(), ?
-		* First method sets path equal to null.
-		* Second method might be related to whether or not the companion is traveling in water.
+		* v1_12_R1: .p()
+		* sets path equal to null.
 		*/
-		entityNavigation.n();
-		((Navigation) rawEntity.getNavigation()).a(this.i);
+		entityNavigation.p();
 	}
 
 	/**
@@ -145,12 +129,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		if (this.entityNavigation.a(rawPlayer, this.speed))
 			return;
 
-		/*
-		 * Method names:
-		 * v1_8_R3: .cc()
-		 * v1_9_R2 and up: .isLeashed()
-		 */
-		if (rawEntity.cc()) // Stop if entity is leashed.
+		if (rawEntity.isLeashed()) // Stop if entity is leashed.
 			return;
 
 		if (getOwnerDistance() < 144.0D) // Check if the companion owner is 144 blocks away.
@@ -168,9 +147,11 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 			{
 				// Make sure there's a safe block to teleport to around the player.
 				if (!((indexX < 1 || indexZ < 1 || indexX > 3 || indexZ > 3)
-					&& World.a(world, new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ))
-					&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
-					&& !world.getType(new BlockPosition(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ)).getBlock().isOccluding()
+					// Check for solid block to teleport on
+					&& !world.getBlockAt(blockLocX + indexX, blockLocY - 1, blockLocZ + indexZ).canPassThrough()
+					// Check that the companion can exist within this location
+					&& world.getBlockAt(blockLocX + indexX, blockLocY, blockLocZ + indexZ).canPassThrough()
+					&& world.getBlockAt(blockLocX + indexX, blockLocY + 1, blockLocZ + indexZ).canPassThrough()
 				))
 					continue;
 
@@ -185,12 +166,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 
 				/*
 				 * Method names:
-				 * v1_8_R3: .n()
-				 * v1_9_R2/v1_10_R1/v1_11_R1: .o()
 				 * v1_12_R1: .p()
 				 * Set path equal to null
 				 */
-				this.entityNavigation.n();
+				this.entityNavigation.p();
 				return;
 			}
 		}
@@ -209,11 +188,10 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	private EntityPlayer rawPlayer;
 	@Nonnull
 	private IPlayer player;
-	private World world;
+	private IWorld world;
 	private double speed = 1;
 	private Navigation entityNavigation;
 	private int playerTeleportTimer;
 	private float closestPointToPlayer = 2F; // Distance before entity will stop running to player.
 	private float playerDistanceLimit = 2F; // Distance before entity will run to player.
-	private boolean i; // Something to do with if the entity is traveling through water or not.
 }

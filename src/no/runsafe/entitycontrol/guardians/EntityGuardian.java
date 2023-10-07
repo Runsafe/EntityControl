@@ -1,7 +1,7 @@
 package no.runsafe.entitycontrol.guardians;
 
-import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.craftbukkit.v1_8_R3.util.UnsafeList;
+import net.minecraft.server.v1_12_R1.*;
+import org.bukkit.craftbukkit.v1_12_R1.util.UnsafeList;
 
 import java.lang.reflect.Field;
 
@@ -46,8 +46,11 @@ public class EntityGuardian extends EntityIronGolem
 		return super.damageEntity(damagesource, 0);
 	}
 
+	/*
+	 * Overrides method in EntityInsentient.class
+	 */
 	@Override
-	protected boolean a(EntityHuman entityhuman)
+	protected boolean a(EntityHuman entityhuman, EnumHand enumhand)
 	{
 		return false;
 	}

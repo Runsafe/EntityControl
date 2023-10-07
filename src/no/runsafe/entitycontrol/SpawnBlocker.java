@@ -1,6 +1,6 @@
 package no.runsafe.entitycontrol;
 
-import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_12_R1.Entity;
 import no.runsafe.framework.api.IConfiguration;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.event.entity.INaturalSpawn;

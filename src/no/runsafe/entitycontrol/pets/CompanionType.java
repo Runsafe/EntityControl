@@ -1,7 +1,7 @@
 package no.runsafe.entitycontrol.pets;
 
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_12_R1.EntityInsentient;
+import net.minecraft.server.v1_12_R1.PathfinderGoalFloat;
 import no.runsafe.framework.api.entity.IAgeable;
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.entity.ISlime;
