@@ -8,6 +8,6 @@ public class GuardianHandler implements IServerReady
 	@Override
 	public void OnServerReady()
 	{
-		EntityRegister.registerEntity(EntityGuardian.class, "Guardian", 99);
+		EntityRegister.registerEntity(EntityGuardian.class, "Guardian", 302);
 	}
 }
