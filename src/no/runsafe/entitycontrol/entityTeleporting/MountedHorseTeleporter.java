@@ -33,6 +33,13 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 			if (!livingEntity.isLeashed() || !(livingEntity.getLeashHolder() instanceof IPlayer))
 				continue;
 
+			//deal with parrots
+			if (livingEntity.getVehicle() == player)
+			{
+				entity.eject();
+				continue;
+			}
+
 			IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
 			if (!leashHolder.equals(player))
 				continue;
