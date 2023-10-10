@@ -20,9 +20,6 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 	@Override
 	public boolean OnPlayerTeleport(IPlayer player, ILocation from, final ILocation to)
 	{
-		if (from.distance(to) < 200)
-			return true;
-
 		// Check if we're going to a different world
 		if (!from.getWorld().isWorld(to.getWorld()))
 		{
@@ -52,6 +49,9 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 			}
 			return true;
 		}
+
+		if (from.distance(to) < 200)
+			return true;
 
 		IWorld world = from.getWorld();
 		for (IEntity entity : world.getEntities())
