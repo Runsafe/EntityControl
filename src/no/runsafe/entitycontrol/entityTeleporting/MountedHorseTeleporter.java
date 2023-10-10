@@ -20,8 +20,38 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 	@Override
 	public boolean OnPlayerTeleport(IPlayer player, ILocation from, final ILocation to)
 	{
-		if (!from.getWorld().isWorld(to.getWorld()) || from.distance(to) < 200)
+		if (from.distance(to) < 200)
 			return true;
+
+		// Check if we're going to a different world
+		if (!from.getWorld().isWorld(to.getWorld()))
+		{
+			//deal with parrots. these technically could be other entities, but they're most likely to be parrots.
+			IEntity parrot = player.getLeftShoulderEntity();
+			if(parrot instanceof ILivingEntity)
+			{
+				// Delete shoulder entity
+				player.setLeftShoulderEntity(null);
+
+				// Create new entity in origin world
+				final Class<?> entityClass = ObjectUnwrapper.getMinecraft(parrot).getClass();
+				final String entityData = EntityCompacter.convertEntityToString((ILivingEntity) parrot);
+
+				scheduler.startSyncTask(() -> EntityCompacter.spawnEntityFromString(entityClass, from, entityData), 10L);
+			}
+			parrot = player.getRightShoulderEntity();
+			if(parrot instanceof ILivingEntity)
+			{
+				// Delete shoulder entity
+				player.setRightShoulderEntity(null);
+				// Create new entity in origin world
+				final Class<?> entityClass = ObjectUnwrapper.getMinecraft(parrot).getClass();
+				final String entityData = EntityCompacter.convertEntityToString((ILivingEntity) parrot);
+
+				scheduler.startSyncTask(() -> EntityCompacter.spawnEntityFromString(entityClass, from, entityData), 10L);
+			}
+			return true;
+		}
 
 		IWorld world = from.getWorld();
 		for (IEntity entity : world.getEntities())
@@ -33,12 +63,6 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 			if (!livingEntity.isLeashed() || !(livingEntity.getLeashHolder() instanceof IPlayer))
 				continue;
 
-			//deal with parrots
-			if (livingEntity.getVehicle() == player)
-			{
-				entity.eject();
-				continue;
-			}
 
 			IPlayer leashHolder = (IPlayer) livingEntity.getLeashHolder();
 			if (!leashHolder.equals(player))
