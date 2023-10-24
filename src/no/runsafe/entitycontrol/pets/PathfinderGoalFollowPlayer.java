@@ -118,11 +118,15 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 				newLocZ -= 0.2 * signum(zDistance);
 
 			rawEntity.setPositionRotation(
-				newLocX, rawPlayer.locY + 1.5, newLocZ, rawEntity.yaw, rawEntity.pitch
+				newLocX,
+				rawPlayer.locY + 1.5,
+				newLocZ,
+				(float) toDegrees(atan2(rawEntity.locX - rawPlayer.locX, rawEntity.locZ - rawPlayer.locZ)),
+				rawEntity.pitch
 			);
 		}
 		else if (entity instanceof ISlime)
-			rawEntity.yaw = (float) (180 - toDegrees(atan2(rawEntity.locX - rawPlayer.locX, rawEntity.locZ - rawPlayer.locZ)));
+			rawEntity.yaw = (float) toDegrees(atan2(rawEntity.locX - rawPlayer.locX, rawEntity.locZ - rawPlayer.locZ));
 
 		final float HEAD_TILT_PITCH = 40;
 		final float SPEED = 10.0F;
