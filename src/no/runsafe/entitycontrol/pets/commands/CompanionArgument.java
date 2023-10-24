@@ -22,7 +22,7 @@ public class CompanionArgument extends RequiredArgument implements ITabComplete,
 	@Override
 	public List<String> getAlternatives(IPlayer executor, String partial)
 	{
-		List<String> options = new ArrayList<String>();
+		List<String> options = new ArrayList<>();
 
 		for (CompanionType type : CompanionType.values())
 			options.add(type.name());
@@ -31,7 +31,7 @@ public class CompanionArgument extends RequiredArgument implements ITabComplete,
 			return ImmutableList.copyOf(options);
 
 		String match = partial.toLowerCase();
-		List<String> alternatives = new ArrayList<String>(options.size());
+		List<String> alternatives = new ArrayList<>(options.size());
 
 		for (String option : options)
 			if (option.toLowerCase().startsWith(match))

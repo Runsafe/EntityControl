@@ -27,7 +27,6 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CompanionHandler
@@ -58,12 +57,10 @@ public class CompanionHandler
 		{
 			ILivingEntity pet = type.spawnCompanion(follower);
 
-			UUID playerUUID = follower.getUniqueId();
+			if (!summonedPets.containsKey(follower))
+				summonedPets.put(follower, new ArrayList<>(1));
 
-			if (!summonedPets.containsKey(playerUUID))
-				summonedPets.put(playerUUID, new ArrayList<SummonedPet>(1));
-
-			summonedPets.get(playerUUID).add(new SummonedPet(type, pet));
+			summonedPets.get(follower).add(new SummonedPet(type, pet));
 		}
 		catch (Exception e)
 		{
@@ -135,11 +132,10 @@ public class CompanionHandler
 	 */
 	public SummonedPet getPlayerSummoned(IPlayer player, CompanionType type)
 	{
-		UUID playerUUID = player.getUniqueId();
-		if (!summonedPets.containsKey(playerUUID))
+		if (!summonedPets.containsKey(player))
 			return null;
 
-		for (SummonedPet summonedPet : summonedPets.get(playerUUID))
+		for (SummonedPet summonedPet : summonedPets.get(player))
 			if (summonedPet.getType() == type)
 				return summonedPet;
 
@@ -156,7 +152,7 @@ public class CompanionHandler
 		if (summonedPets.isEmpty())
 			return false;
 
-		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
+		for (Map.Entry<IPlayer, List<SummonedPet>> node : summonedPets.entrySet())
 			for (SummonedPet pet : node.getValue())
 				if (entityId == pet.getEntityID())
 					return true;
@@ -172,7 +168,7 @@ public class CompanionHandler
 	public void removeSummonedPet(IPlayer player, SummonedPet pet)
 	{
 		pet.getPet().remove();
-		summonedPets.get(player.getUniqueId()).remove(pet);
+		summonedPets.get(player).remove(pet);
 	}
 
 	/**
@@ -181,12 +177,12 @@ public class CompanionHandler
 	 */
 	public void removeSummonedPets(IPlayer player)
 	{
-		if (summonedPets.get(player.getUniqueId()) == null)
+		if (summonedPets.get(player) == null)
 			return;
 
-		for (SummonedPet pet : summonedPets.get(player.getUniqueId()))
+		for (SummonedPet pet : summonedPets.get(player))
 			pet.getPet().remove();
-		summonedPets.remove(player.getUniqueId());
+		summonedPets.remove(player);
 	}
 
 	/**
@@ -236,11 +232,7 @@ public class CompanionHandler
 		if (interactSound != null)
 		{
 			interactSound.Play(runsafePet.getLocation(), 1.0F, 1.5F);
-			interactTimer.put(runsafePet, scheduler.startSyncTask(() ->
-			{
-				if (interactTimer.containsKey(runsafePet))
-					interactTimer.remove(runsafePet);
-			}, 2));
+			interactTimer.put(runsafePet, scheduler.startSyncTask(() -> interactTimer.remove(runsafePet), 2));
 		}
 
 		event.cancel();
@@ -256,7 +248,7 @@ public class CompanionHandler
 	@Override
 	public void OnPluginDisabled()
 	{
-		for (Map.Entry<UUID, List<SummonedPet>> node : summonedPets.entrySet())
+		for (Map.Entry<IPlayer, List<SummonedPet>> node : summonedPets.entrySet())
 			for (SummonedPet pet : summonedPets.get(node.getKey()))
 				pet.getPet().remove();
 		summonedPets = null;
@@ -266,7 +258,5 @@ public class CompanionHandler
 	private final IConsole console;
 	public static IServer server;
 	private static final ConcurrentHashMap<IEntity, Integer> interactTimer = new ConcurrentHashMap<>();
-	public static ConcurrentHashMap<UUID, List<SummonedPet>> summonedPets = new ConcurrentHashMap<UUID, List<SummonedPet>>(0);
-	//public static ConcurrentHashMap<String, List<CompanionType>> summonedPets = new ConcurrentHashMap<String, List<CompanionType>>(0);
-	//public static ConcurrentHashMap<String, List<Integer>> summonedPetIds = new ConcurrentHashMap<String, List<Integer>>(0);
+	public static ConcurrentHashMap<IPlayer, List<SummonedPet>> summonedPets = new ConcurrentHashMap<>(0);
 }

@@ -21,5 +21,5 @@ public class EntityDeath implements IEntityDeathEvent
 			Item.Special.DragonEgg.Drop(entity.getLocation(), 1);
 	}
 
-	private Options options;
+	private final Options options;
 }

@@ -15,8 +15,8 @@ public class EntityGuardian extends EntityIronGolem
 		{
 			Field gsa = PathfinderGoalSelector.class.getDeclaredField("b");
 			gsa.setAccessible(true);
-			gsa.set(this.goalSelector, new UnsafeList());
-			gsa.set(this.targetSelector, new UnsafeList());
+			gsa.set(this.goalSelector, new UnsafeList<>());
+			gsa.set(this.targetSelector, new UnsafeList<>());
 		}
 		catch (Exception e)
 		{
@@ -29,7 +29,7 @@ public class EntityGuardian extends EntityIronGolem
 		goalSelector.a(4, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 6.0F));
 		goalSelector.a(5, new PathfinderGoalRandomLookaround(this));
 		targetSelector.a(1, new PathfinderGoalHurtByTarget(this, false));
-		targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityPigZombie.class, false, true));
+		targetSelector.a(2, new PathfinderGoalNearestAttackableTarget<>(this, EntityPigZombie.class, false, true));
 	}
 
 	@Override

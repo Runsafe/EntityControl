@@ -26,5 +26,5 @@ public class SpawnBlocker implements INaturalSpawn, IConfigurationChanged
 		worlds = configuration.getConfigValueAsList("preventNaturalSpawning");
 	}
 
-	private List<String> worlds = new ArrayList<String>(0);
+	private List<String> worlds = new ArrayList<>(0);
 }

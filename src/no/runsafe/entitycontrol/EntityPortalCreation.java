@@ -18,5 +18,5 @@ public class EntityPortalCreation implements IEntityCreatePortalEvent
 			event.cancel();
 	}
 
-	private Options options;
+	private final Options options;
 }
