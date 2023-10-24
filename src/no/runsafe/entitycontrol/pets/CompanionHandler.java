@@ -61,7 +61,7 @@ public class CompanionHandler
 			UUID playerUUID = follower.getUniqueId();
 
 			if (!summonedPets.containsKey(playerUUID))
-				summonedPets.put(playerUUID, new ArrayList<SummonedPet>(1));
+				summonedPets.put(playerUUID, new ArrayList<>(1));
 
 			summonedPets.get(playerUUID).add(new SummonedPet(type, pet));
 		}
@@ -236,11 +236,7 @@ public class CompanionHandler
 		if (interactSound != null)
 		{
 			interactSound.Play(runsafePet.getLocation(), 1.0F, 1.5F);
-			interactTimer.put(runsafePet, scheduler.startSyncTask(() ->
-			{
-				if (interactTimer.containsKey(runsafePet))
-					interactTimer.remove(runsafePet);
-			}, 2));
+			interactTimer.put(runsafePet, scheduler.startSyncTask(() -> interactTimer.remove(runsafePet), 2));
 		}
 
 		event.cancel();
@@ -267,6 +263,4 @@ public class CompanionHandler
 	public static IServer server;
 	private static final ConcurrentHashMap<IEntity, Integer> interactTimer = new ConcurrentHashMap<>();
 	public static ConcurrentHashMap<UUID, List<SummonedPet>> summonedPets = new ConcurrentHashMap<UUID, List<SummonedPet>>(0);
-	//public static ConcurrentHashMap<String, List<CompanionType>> summonedPets = new ConcurrentHashMap<String, List<CompanionType>>(0);
-	//public static ConcurrentHashMap<String, List<Integer>> summonedPetIds = new ConcurrentHashMap<String, List<Integer>>(0);
 }

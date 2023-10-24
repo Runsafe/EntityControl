@@ -29,7 +29,12 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		this.world = entity.getWorld();
 		this.player = player;
 		this.rawPlayer= ObjectUnwrapper.getMinecraft(player);
-		this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
+
+		if (rawEntity != null)
+			this.entityNavigation = (Navigation) this.rawEntity.getNavigation();
+		else
+			this.entityNavigation = null;
+
 		this.a(3); // Something to do with whether or not certain tasks can run concurrently.
 
 		if (entity instanceof ISlime)
@@ -44,6 +49,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	@Override
 	public boolean a()
 	{
+		float playerDistanceLimit = 2F; // Distance before entity will run to player.
 		return !(getOwnerDistance() < playerDistanceLimit);
 	}
 
@@ -183,15 +189,14 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		return player.getLocation().distance(entity.getLocation());
 	}
 
-	private ILivingEntity entity;
-	private EntityInsentient rawEntity;
-	private EntityPlayer rawPlayer;
+	private final ILivingEntity entity;
+	private final EntityInsentient rawEntity;
+	private final EntityPlayer rawPlayer;
 	@Nonnull
-	private IPlayer player;
-	private IWorld world;
+	private final IPlayer player;
+	private final IWorld world;
 	private double speed = 1;
-	private Navigation entityNavigation;
+	private final Navigation entityNavigation;
 	private int playerTeleportTimer;
-	private float closestPointToPlayer = 2F; // Distance before entity will stop running to player.
-	private float playerDistanceLimit = 2F; // Distance before entity will run to player.
+	private final float closestPointToPlayer = 2F; // Distance before entity will stop running to player.
 }
