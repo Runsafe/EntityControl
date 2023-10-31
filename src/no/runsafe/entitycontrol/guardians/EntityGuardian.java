@@ -4,6 +4,7 @@ import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.craftbukkit.v1_12_R1.util.UnsafeList;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 public class EntityGuardian extends EntityIronGolem
 {
@@ -15,6 +16,7 @@ public class EntityGuardian extends EntityIronGolem
 		{
 			Field gsa = PathfinderGoalSelector.class.getDeclaredField("b");
 			gsa.setAccessible(true);
+			gsa.set(gsa, gsa.getModifiers() & ~Modifier.FINAL); // remove final flag so we can edit this
 			gsa.set(this.goalSelector, new UnsafeList<>());
 			gsa.set(this.targetSelector, new UnsafeList<>());
 		}
