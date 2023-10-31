@@ -16,7 +16,12 @@ public class EntityGuardian extends EntityIronGolem
 		{
 			Field gsa = PathfinderGoalSelector.class.getDeclaredField("b");
 			gsa.setAccessible(true);
-			gsa.set(gsa, gsa.getModifiers() & ~Modifier.FINAL); // remove final flag so we can edit this
+
+			// remove final flag so we can edit this
+			Field modifiersField = Field.class.getDeclaredField("modifiers");
+			modifiersField.setAccessible(true);
+			modifiersField.setInt(gsa, gsa.getModifiers() & ~Modifier.FINAL);
+
 			gsa.set(this.goalSelector, new UnsafeList<>());
 			gsa.set(this.targetSelector, new UnsafeList<>());
 		}
