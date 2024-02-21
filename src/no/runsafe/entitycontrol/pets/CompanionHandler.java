@@ -1,5 +1,6 @@
 package no.runsafe.entitycontrol.pets;
 
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.block.IBlock;
@@ -56,6 +57,11 @@ public class CompanionHandler
 		try
 		{
 			ILivingEntity pet = type.spawnCompanion(follower);
+			if (pet == null)
+			{
+				console.logWarning("Companion of type %s could not be spawned for %s", type, follower.getPrettyName());
+				return;
+			}
 
 			if (!summonedPets.containsKey(follower))
 				summonedPets.put(follower, new ArrayList<>(1));
@@ -231,8 +237,12 @@ public class CompanionHandler
 		Sound interactSound = pet.getIdleSound();
 		if (interactSound != null)
 		{
-			interactSound.Play(runsafePet.getLocation(), 1.0F, 1.5F);
-			interactTimer.put(runsafePet, scheduler.startSyncTask(() -> interactTimer.remove(runsafePet), 2));
+			ILocation location = runsafePet.getLocation();
+			if (location != null)
+			{
+				interactSound.Play(location, 1.0F, 1.5F);
+				interactTimer.put(runsafePet, scheduler.startSyncTask(() -> interactTimer.remove(runsafePet), 2));
+			}
 		}
 
 		event.cancel();

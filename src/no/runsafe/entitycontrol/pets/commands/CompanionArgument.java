@@ -45,6 +45,6 @@ public class CompanionArgument extends RequiredArgument implements ITabComplete,
 	public String expand(ICommandExecutor context, @Nullable String value)
 	{
 		List<String> options = getAlternatives((IPlayer) context, value);
-		return options.isEmpty() || options.size() > 1 ? null : options.get(0);
+		return options.size() != 1 ? null : options.get(0);
 	}
 }

@@ -1,5 +1,6 @@
 package no.runsafe.entitycontrol.entityTeleporting;
 
+import net.minecraft.server.v1_12_R1.Entity;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IScheduler;
 import no.runsafe.framework.api.IWorld;
@@ -9,6 +10,8 @@ import no.runsafe.framework.api.event.player.IPlayerTeleport;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.tools.EntityCompacter;
+
+import java.util.Objects;
 
 public class MountedHorseTeleporter implements IPlayerTeleport
 {
@@ -31,7 +34,8 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 				player.setLeftShoulderEntity(null);
 
 				// Create new entity in origin world
-				final Class<?> entityClass = ObjectUnwrapper.getMinecraft(parrot).getClass();
+				Entity rawParrot = ObjectUnwrapper.getMinecraft(parrot);
+				final Class<?> entityClass = Objects.requireNonNull(rawParrot).getClass();
 				final String entityData = EntityCompacter.convertEntityToString((ILivingEntity) parrot);
 
 				scheduler.startSyncTask(() -> EntityCompacter.spawnEntityFromString(entityClass, from, entityData), 10L);
@@ -42,7 +46,8 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 				// Delete shoulder entity
 				player.setRightShoulderEntity(null);
 				// Create new entity in origin world
-				final Class<?> entityClass = ObjectUnwrapper.getMinecraft(parrot).getClass();
+				Entity rawParrot = ObjectUnwrapper.getMinecraft(parrot);
+				final Class<?> entityClass = Objects.requireNonNull(rawParrot).getClass();
 				final String entityData = EntityCompacter.convertEntityToString((ILivingEntity) parrot);
 
 				scheduler.startSyncTask(() -> EntityCompacter.spawnEntityFromString(entityClass, from, entityData), 10L);
@@ -68,7 +73,8 @@ public class MountedHorseTeleporter implements IPlayerTeleport
 			if (!leashHolder.equals(player))
 				continue;
 
-			final Class<?> entityClass = ObjectUnwrapper.getMinecraft(livingEntity).getClass();
+			Entity rawEntity = ObjectUnwrapper.getMinecraft(livingEntity);
+			final Class<?> entityClass = Objects.requireNonNull(rawEntity).getClass();
 			final String entityData = EntityCompacter.convertEntityToString(livingEntity);
 			livingEntity.remove();
 

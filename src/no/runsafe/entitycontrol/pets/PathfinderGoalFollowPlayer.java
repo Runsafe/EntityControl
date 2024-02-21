@@ -1,6 +1,7 @@
 package no.runsafe.entitycontrol.pets;
 
 import net.minecraft.server.v1_12_R1.*;
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.entity.IBat;
 import no.runsafe.framework.api.entity.ILivingEntity;
@@ -50,7 +51,8 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	public boolean a()
 	{
 		float playerDistanceLimit = 2F; // Distance before entity will run to player.
-		return !(getOwnerDistance() < playerDistanceLimit);
+		double distance = getOwnerDistance();
+		return Double.isNaN(distance) || distance >= playerDistanceLimit;
 	}
 
 	/**
@@ -190,6 +192,9 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 	 */
 	private double getOwnerDistance()
 	{
+		ILocation location = player.getLocation();
+		if (location == null)
+			return Double.NaN;
 		return player.getLocation().distance(entity.getLocation());
 	}
 

@@ -1,7 +1,9 @@
 package no.runsafe.entitycontrol.pets;
 
+import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.EntityInsentient;
 import net.minecraft.server.v1_12_R1.PathfinderGoalFloat;
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.entity.IAgeable;
 import no.runsafe.framework.api.entity.ILivingEntity;
 import no.runsafe.framework.api.entity.ISlime;
@@ -16,6 +18,7 @@ import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Villager;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public enum CompanionType
 {
@@ -41,7 +44,7 @@ public enum CompanionType
 	MITTENS(LivingEntity.Ocelot, "Mittens (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot),
 	MURPS(LivingEntity.Ocelot, "Murps (Cat)", Item.Miscellaneous.MonsterEgg.Ocelot);
 
-	private CompanionType(LivingEntity entityType, String title, Item spawnerItem)
+	CompanionType(LivingEntity entityType, String title, Item spawnerItem)
 	{
 		this.entityType = entityType;
 		this.title = title;
@@ -58,21 +61,29 @@ public enum CompanionType
 		return spawnerItem;
 	}
 
+	@Nullable
 	public ILivingEntity spawnCompanion(@Nonnull IPlayer owner)
 	{
 		// Spawn companion.
-		ILivingEntity pet = ((ILivingEntity) entityType.spawn(owner.getLocation()));
+		ILocation location = owner.getLocation();
+		if (location == null)
+		{
+			return null;
+		}
+		ILivingEntity pet = ((ILivingEntity) entityType.spawn(location));
+		Entity entity = ObjectUnwrapper.getMinecraft(pet);
+		if (entity == null)
+		{
+			return null;
+		}
 
 		// Set new pathfinding.
 		pet.stopPathfinding();
-		pet.setNewPathfindingGoal(0, new PathfinderGoalFloat((EntityInsentient) ObjectUnwrapper.getMinecraft(pet)));
+		pet.setNewPathfindingGoal(0, new PathfinderGoalFloat((EntityInsentient) entity));
 		pet.setNewPathfindingGoal(1, new PathfinderGoalFollowPlayer(owner, pet));
 
 		// Make companion a baby if possible.
-		if (pet instanceof IAgeable)
-			((IAgeable) pet).setBaby();
-		else if (pet instanceof IZombie)
-			((IZombie) pet).setBaby(true);
+		MakeBaby(pet);
 
 		// Silence default sounds.
 		pet.setSilent(true);
@@ -82,7 +93,7 @@ public enum CompanionType
 		// Do companion-specific things.
 		switch(this)
 		{
-			case SLIME: ((ISlime) pet).setSize(1); break;
+			case SLIME:
 			case MAGMA_CUBE: ((ISlime) pet).setSize(1); break;
 			case LIBRARIAN: ((IVillager) pet).setProfession(Villager.Profession.LIBRARIAN); break;
 			case FARMER: ((IVillager) pet).setProfession(Villager.Profession.FARMER); break;
@@ -95,6 +106,19 @@ public enum CompanionType
 		}
 
 		return pet;
+	}
+
+	private static void MakeBaby(ILivingEntity pet)
+	{
+		if (pet instanceof IAgeable)
+		{
+			((IAgeable) pet).setBaby();
+			return;
+		}
+		if (pet instanceof IZombie)
+		{
+			((IZombie) pet).setBaby(true);
+		}
 	}
 
 	private final LivingEntity entityType;
