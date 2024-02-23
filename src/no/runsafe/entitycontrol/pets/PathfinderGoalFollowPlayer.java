@@ -36,7 +36,7 @@ public class PathfinderGoalFollowPlayer extends PathfinderGoal
 		else
 			this.entityNavigation = null;
 
-		this.a(3); // Something to do with whether or not certain tasks can run concurrently.
+		this.a(3); // Something to do with whether certain tasks can run concurrently.
 
 		if (entity instanceof ISlime)
 			speed = 2.5;

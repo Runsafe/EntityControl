@@ -88,7 +88,7 @@ public enum CompanionType
 		// Silence default sounds.
 		pet.setSilent(true);
 
-		pet.setPersistance(false);
+		pet.setPersistence(false);
 
 		// Do companion-specific things.
 		switch(this)

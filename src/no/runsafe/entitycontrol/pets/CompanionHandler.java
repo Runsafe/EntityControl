@@ -149,7 +149,7 @@ public class CompanionHandler
 	}
 
 	/**
-	 * Find whether or not an entity is summoned.
+	 * Find whether an entity is summoned.
 	 * @param entityId Entity to find if summoned.
 	 * @return True if entity is summoned, otherwise false.
 	 */
@@ -228,7 +228,7 @@ public class CompanionHandler
 			return;
 		}
 
-		// Check if right clicked entity is a companion pet.
+		// Check if right-clicked entity is a companion pet.
 		if (!entityIsSummoned(runsafePet.getEntityId()))
 			return;
 		ILivingEntity pet = (ILivingEntity) runsafePet;
